@@ -1,0 +1,43 @@
+variable_name,units,description,comment
+lake,NA,"Name assigned to the lake, based on the naming system in the original data file",Name formatting system is available in the lake_name_formatting.csv file in the suplementary_data folder
+lake_lat,decimal degrees,lake latitude (sampling location or lake centroid),
+late_long,decimal degrees,lake longitude (sampling location or lake centroid),
+tsi,Range from 0-100,Calculated from mean chlorophyll-a concentration across all years the lake was sampled,Used to assign trophic status
+trophic_status,"oligotrophic, mesotrophic, eutrophic, hypereutrophic",Trophic status class assigned based on TSI,TSI thresholds were provided by the North American Lake Management Society
+lake_elev,m,Elevation (m above sea level) of the lake,assigned using the HydroLakes database
+area,km2,Total lake surface area,assigned using the HydroLakes database
+volume,km3,Total lake volume,assigned using the HydroLakes database
+mean_depth,m,Mean lake depth,assigned using the HydroLakes database
+climate_zone,NA,Climate zone that the majority of the lake is in,assigned using the HydroLakes database
+year,integer,Year the bloom occurs,assigned using the HydroATLAS database
+season,"spring, summer, single_bloom",Time of year when the algal bloom is detected ,A single bloom occurs when there is no decrease in chlorophyll-a concentration between the spring and summer
+num_samples,integer,Number of samples collected during the year the growth period was detected,
+start_day,Julian day,Day of year that the growth window begins,First trough in the data or first day that the rate of increase in chlorophyll-a surpasses the defined threshold
+end_day,Julian day,Day of year that the growth window ends,Ends at the first peak in the data after the start day
+gw_length,days,"Duration of the growht window, including the start and end dates",
+chla_rate,µg/L/day,Rate of increase from the start to the end of the growth window ,Chlorophyll-a rate of change between sampling points are used to define the growth window period
+max_chla,µg/L,Maximum chlorophyll-a concentration reached during the growth window,
+acc_chla,µg/L,"Accumulated chlorophyll-a over the growth window, calculated using the numpy.trapz function",
+specific_chla_rate,day-1,Chlorophyll-a rate divided by initial concentration,Can be compared across lakes
+temp_corrected_specific_chla_rate,day-1,Temperature correction function provided in supplementary data  ,"Initial parameters: min temp=0°C, max temp=40°C, optimal temp=25°C"
+poc_rate ,mg/L,Rate of increase or decrease between consecutive sampling points,Represents the rate of change in total algal biomass
+chla_to_poc,unitless,Ratio of the chlorophyll-a and POC rates of change,Can be used to see how the chlorophyll-a rate of production changes in proportion to total algal biomass 
+mean_temp,°C,Mean surface water temperature during the growth window,
+prev_7days_mean_temp,°C,Mean surface water temperature for the 7 days leading up to the growth window,
+prev_14days_mean_temp,°C,Mean surface water temperature for the 14 days leading up to the growth window,
+mean_tp,mg/L,Mean total phosphorus during the growth window,
+mean_secchi,m,Mean Secchi depth during the growth window,
+mean_ph,pH units,Mean pH during the growth window,
+mean_srp,mg/L,Mean soluble reactive phosphorus during the growth window,
+mean_tkn,mg/L,Mean total Kjeldahl nitrogen during the growth window,
+ssr_station,NA,,
+ssr_id,NA,,
+ssr_id_type,NA,,
+ssr_lat,decimal degrees,SSR station latitude (sampling location),
+ssr_long,decimal degrees,SSR station longitude (sampling location),
+geo_dist_km,km,Geodic distance (m) between the paired lake ans SSR station,
+ssr_elev,m,Elevation (m above sea level) of the SSR station,
+ssr_lake_elev_diff,m,Difference in elevation between the paired lake ans SSR station,
+mean_ssr,W/m2,Mean solar radiation during the growth window,
+prev_7days_mean_ssr,W/m2,Mean solar radiation for the 7 days leading up to the growth window,
+prev_14days_mean_ssr,W/m2,Mean solar radiation for the 14 days leading up to the growth window,
