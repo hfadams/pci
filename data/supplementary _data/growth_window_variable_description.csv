@@ -21,7 +21,7 @@ acc_chla,µg/L,"Accumulated chlorophyll-a over the growth window, calculated usin
 specific_chla_rate,day-1,Chlorophyll-a rate divided by initial concentration,Can be compared across lakes
 temp_corrected_specific_chla_rate,day-1,Temperature correction function provided in supplementary data  ,"Initial parameters: min temp=0°C, max temp=40°C, optimal temp=25°C"
 poc_rate ,mg/L,Rate of increase or decrease between consecutive sampling points,Represents the rate of change in total algal biomass
-chla_to_poc,unitless,Ratio of the chlorophyll-a and POC rates of change,Can be used to see how the chlorophyll-a rate of production changes in proportion to total algal biomass 
+chla_to_poc,mg chlorophyll : mg POC,Ratio of the chlorophyll-a and POC rates of change,Can be used to see how the chlorophyll-a rate of production changes in proportion to total algal biomass 
 mean_temp,°C,Mean surface water temperature during the growth window,
 prev_7days_mean_temp,°C,Mean surface water temperature for the 7 days leading up to the growth window,
 prev_14days_mean_temp,°C,Mean surface water temperature for the 14 days leading up to the growth window,
@@ -29,7 +29,7 @@ mean_tp,mg/L,Mean total phosphorus during the growth window,
 mean_secchi,m,Mean Secchi depth during the growth window,
 mean_ph,pH units,Mean pH during the growth window,
 mean_srp,mg/L,Mean soluble reactive phosphorus during the growth window,
-mean_tkn,mg/L,Mean total Kjeldahl nitrogen during the growth window,
+mean_tkn,mg/l,Mean total Kjeldahl nitrogen during the growth window,
 ssr_station,NA,,
 ssr_id,NA,,
 ssr_id_type,NA,,

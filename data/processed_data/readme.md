@@ -1,9 +1,7 @@
-*This readme.md file was generated on 2021-07-27 by Hannah Adams*
-
 # Chlorophyll-*a* growth window data
 
 ## Dataset summary
-Complete summary is available in the growth_window_variable_description.csv file
+Complete summary is available in the *growth\_window\_variable\_description.csv* file
 
 ##### Number of variables: 
 42
@@ -53,9 +51,14 @@ Complete summary is available in the growth_window_variable_description.csv file
 
 * **specific\_chla\_rate:** chlorophyll-a rate divided by the initial concentration at the start of the growth window (day^-1)
 
-* **temp\_corrected\_specific\_chla\_rate:** specific chlorophyll-a rate corrected for the influence of temperature using the equation from Rosso et al (1995):
+* **temp\_corrected\_specific\_chla\_rate:** specific chlorophyll-a rate corrected for the influence of temperature using the equation from [Rosso et al (1995)](https://journals.asm.org/doi/abs/10.1128/aem.61.2.610-616.1995):
 
-	### INCLUDE FTEMP EQUATION HERE!!!
+
+		group.loc[:, 'f_temp'] = (mean_temp - t_max) * (mean_temp - t_min) ** 2 / ((t_opt - t_min) * ((t_opt - t_min) * (mean_temp - t_opt) - (t_opt - t_max) * (t_opt + t_min - 2 * mean_temp)))
+
+        # divide specific growth rate by f_temp
+        group.loc[:, 'temp_corrected_specific_chla_rate'] = group.loc[:, 'specific_chla_rate'] / group.loc[:, 'f_temp']
+
 
 * **max\_chla:** Maximum chlorophyll-a concentration reached during the growth window (ug/L)
 
