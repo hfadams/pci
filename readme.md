@@ -64,32 +64,30 @@ All data processing and analyses for this project were implemented using Python 
 Contains the growth window dataset, metadata, and relevant supplementary information.
 
 #### subfolder a: processed_data 
-Contains the growth window dataset and summary of parameters for all lake sampling locations.
+Growth window dataset and summary of parameters for all lake sampling locations.
 		
- * growth\_window\_data.csv: Compiled growth window dataset
+ * [growth\_window\_data.csv](https://github.com/hfadams/growth_window/blob/3354fa0c2aea2bd1af4f02e528693c68157a8335/data/processed_data/growth_window_data.csv): Compiled growth window dataset
   	   	   
- * lake\_summary.csv: Summary of growth window data
+ * [lake\_summary.csv](https://github.com/hfadams/growth_window/blob/3354fa0c2aea2bd1af4f02e528693c68157a8335/data/processed_data/lake_summary.csv): Summary of growth window data
+
+* [daily\_mean.csv](https://github.com/hfadams/growth_window/blob/3354fa0c2aea2bd1af4f02e528693c68157a8335/data/processed_data/daily_mean.csv): formatted *in situ* water quality data that has been rounded to daily mean (processed by format_lakes function)
   	   	    
 	
 #### subfolder b: supplementary_data
   	   
- Contains metadata and relevant supplementary files
-		
-* **daily\_mean.csv:** formatted *in situ* water quality data that has been rounded to daily mean (processed by format_lakes function)
-
-* all\_lake\_coordinates.csv:
+ Metadata and relevant supplementary files
   	   	     
-* [Growth_window_variable_description.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/growth_window_variable_description.csv)
+* [Growth_window_variable_description.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/growth_window_variable_description.csv): Units and description of each variable in the growth window dataset
   	   	       
-* [lake_name_formatting.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_name_formatting.csv)
+* [lake_name_formatting.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_name_formatting.csv): conversion of lake names from original sampling location ID to name in the growth window dataset
   	   	     
-* [lake_database\_summary.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_database_summary.csv)
+* [lake_database\_summary.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_database_summary.csv): summary of all databases used for *in situ* water quality data collection
 
-* [HydroATLASclimatezones.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/HydroATLASclimatezones.csv)
+* [HydroATLASclimatezones.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/HydroATLASclimatezones.csv): legend for HydroATLAS climate zone values
   	   	     
 ### Folder 2: code    
       	
-Contains scripts for formatting data and detecting growth windows
+Scripts for formatting data and detecting growth windows
 
 * [growth_window_functions.py](https://github.com/hfadams/growth_window/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_functions.py)
   	   	   
