@@ -79,13 +79,13 @@ Contains the growth window dataset and summary of parameters for all lake sampli
 
 * all\_lake\_coordinates.csv:
   	   	     
-* Growth\_window\_variable\_description.csv
+* [Growth_window_variable_description.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/growth_window_variable_description.csv)
   	   	       
-* lake\_name\_formatting.csv
+* [lake_name_formatting.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_name_formatting.csv)
   	   	     
-* lake_database\_summary.csv:
-* 
-* HydroATLASclimatezones.csv: 
+* [lake_database\_summary.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_database_summary.csv)
+
+* [HydroATLASclimatezones.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/HydroATLASclimatezones.csv)
   	   	     
 ### Folder 2: code    
       	
@@ -94,13 +94,14 @@ Contains scripts for formatting data and detecting growth windows
 * [growth_window_functions.py](https://github.com/hfadams/growth_window/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_functions.py)
   	   	   
 * [growth_window_calculations.py](https://github.com/hfadams/growth_window/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_calculations.py)
-  	   	   
-* lake\_name\_formatting.csv
 
-* ssr\_lakes\_pairing\_qgis.py
-* lakes\_dem\_extraction.py
-* ssr\_dem\_extraction.py
-* paired\_stations\_ssr\_calcs.py
+* [ssr\_lakes\_pairing\_qgis.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_lakes_pairing_qgis.py)
+
+* [lake\_dem\_extraction.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/lake_dem_extraction.py)
+
+* [ssr\_dem\_extraction.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_dem_extraction.py)
+
+* [paired\_stations\_ssr\_calcs.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/paired_stations_ssr_calcs.py)
   	   	   
 
 ## Sharing and accessing the data
