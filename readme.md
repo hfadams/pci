@@ -89,17 +89,17 @@ Growth window dataset and summary of parameters for all lake sampling locations.
       	
 Scripts for formatting data and detecting growth windows
 
-* [growth_window_functions.py](https://github.com/hfadams/growth_window/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_functions.py)
+* [growth_window_functions.py](https://github.com/hfadams/growth_window/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_functions.py): all functions used to generate the growth window dataset
   	   	   
-* [growth_window_calculations.py](https://github.com/hfadams/growth_window/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_calculations.py)
+* [growth_window_calculations.py](https://github.com/hfadams/growth_window/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_calculations.py): script used to call on the growth window functions
 
-* [ssr\_lakes\_pairing\_qgis.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_lakes_pairing_qgis.py)
+* [ssr\_lakes\_pairing\_qgis.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_lakes_pairing_qgis.py): pairs lakes and SSR stations using PYQGIS
 
-* [lake\_dem\_extraction.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/lake_dem_extraction.py)
+* [lake\_dem\_extraction.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/lake_dem_extraction.py): uses DEM in PYQGIS to extract lake elevation
 
-* [ssr\_dem\_extraction.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_dem_extraction.py)
+* [ssr\_dem\_extraction.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_dem_extraction.py): uses DEM in PYQGIS to extract SSR station elevation
 
-* [paired\_stations\_ssr\_calcs.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/paired_stations_ssr_calcs.py)
+* [paired\_stations\_ssr\_calcs.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/paired_stations_ssr_calcs.py): calculates mean SSR during the growth window and pre-growth window period
   	   	   
 
 ## Sharing and accessing the data
