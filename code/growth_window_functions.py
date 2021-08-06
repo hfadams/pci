@@ -89,16 +89,12 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
         output:
             master_gw_df: Water quality data for all detected growth windows, compiled into one DplyFrame
             springsummer_gw_doy: Dataframe containing the day of year for the start and end of each growth window
-            master_prev_1week_gw_df: Compiled water quality data for each 1 week pre-growth window
             master_prev_2weeks_gw_df: Compiled water quality data for each 2 week pre-growth window
         """
 
     # make empty dataframes (will be appended to later)
     master_gw_df = pd.DataFrame(columns=['lake', 'date', 'year', 'season', 'day_of_year', 'start_day', 'end_day', 'chla_increase', 'chla_roc',
                                          'chla', 'poc', 'tp', 'srp', 'par', 'ph', 'tkn', 'tdn', 'nh4',  'no2',
-                                         'no3', 'nox'])
-    master_prev_1week_gw_df = pd.DataFrame(columns=['lake', 'date', 'year', 'season', 'day_of_year', 'start_day', 'end_day',
-                                         'chla', 'chla_roc', 'poc', 'tp', 'srp', 'par', 'ph', 'tkn', 'tdn', 'nh4',  'no2',
                                          'no3', 'nox'])
     master_prev_2weeks_gw_df = pd.DataFrame(columns=['lake', 'date', 'year', 'season', 'day_of_year', 'start_day', 'end_day',
                                          'chla', 'chla_roc', 'poc', 'tp', 'srp', 'par', 'ph', 'tkn', 'tdn', 'nh4',  'no2',
@@ -180,14 +176,7 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
             spring_gw.loc[:, 'end_day'] = spring_end_day
 
             # sift out 1 and 2 week pre-growth window data
-            spring_prev_week_start_day = spring_start_day - 8
             spring_prev_2weeks_start_day = spring_start_day - 15
-
-            prev_week_spring_df = group >> sift(X.day_of_year >= spring_prev_week_start_day) >> sift(
-                X.day_of_year <= spring_start_day)
-            prev_week_spring_df.loc[:, 'season'] = 'spring'
-            prev_week_spring_df.loc[:, 'start_day'] = spring_prev_week_start_day
-            prev_week_spring_df.loc[:, 'end_day'] = spring_start_day
 
             prev_2weeks_spring_df = group >> sift(X.day_of_year >= spring_prev_2weeks_start_day) >> sift(
                 X.day_of_year <= spring_start_day)
@@ -197,7 +186,6 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
 
             # append spring gw data to main dataframe
             master_gw_df = pd.concat([master_gw_df, spring_gw], axis=0)
-            master_prev_1week_gw_df = pd.concat([master_prev_1week_gw_df, prev_week_spring_df], axis=0)
             master_prev_2weeks_gw_df = pd.concat([master_prev_2weeks_gw_df, prev_2weeks_spring_df], axis=0)
 
             # sift out spring data and repeat for summer
@@ -233,14 +221,7 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
             summer_gw.loc[:, 'end_day'] = summer_end_day
 
             # sift out 1 and 2 week pre-growth window data
-            summer_prev_week_start_day = summer_start_day - 8
             summer_prev_2weeks_start_day = summer_start_day - 15
-
-            prev_week_summer_df = group >> sift(X.day_of_year >= summer_prev_week_start_day) >> sift(
-                X.day_of_year <= summer_start_day)
-            prev_week_summer_df.loc[:, 'season'] = 'summer'
-            prev_week_summer_df.loc[:, 'start_day'] = summer_prev_week_start_day
-            prev_week_summer_df.loc[:, 'end_day'] = summer_start_day
 
             prev_2weeks_summer_df = group >> sift(X.day_of_year >= summer_prev_2weeks_start_day) >> sift(
                 X.day_of_year <= summer_start_day)
@@ -250,7 +231,6 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
 
             # append summer gw data to main dataframe
             master_gw_df = pd.concat([master_gw_df, summer_gw], axis=0)
-            master_prev_1week_gw_df = pd.concat([master_prev_1week_gw_df, prev_week_summer_df], axis=0)
             master_prev_2weeks_gw_df = pd.concat([master_prev_2weeks_gw_df, prev_2weeks_summer_df], axis=0)
 
         if num_peaks == 1:  # single growth window
@@ -285,14 +265,7 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
             single_gw_gw.loc[:, 'end_day'] = single_gw_end_day
 
             # sift out 1 and 2 week pre-growth window data
-            single_gw_prev_week_start_day = single_gw_start_day - 8
             single_gw_prev_2weeks_start_day = single_gw_start_day - 15
-
-            prev_week_single_gw_df = group >> sift(X.day_of_year >= single_gw_prev_week_start_day) >> sift(
-                X.day_of_year <= single_gw_start_day)
-            prev_week_single_gw_df.loc[:, 'season'] = 'single'
-            prev_week_single_gw_df.loc[:, 'start_day'] = single_gw_prev_week_start_day
-            prev_week_single_gw_df.loc[:, 'end_day'] = single_gw_start_day
 
             prev_2weeks_single_gw_df = group >> sift(X.day_of_year >= single_gw_prev_2weeks_start_day) >> sift(
                 X.day_of_year <= single_gw_start_day)
@@ -302,17 +275,16 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
 
             # append single gw data to main dataframe
             master_gw_df = pd.concat([master_gw_df, single_gw_gw], axis=0)
-            master_prev_1week_gw_df = pd.concat([master_prev_1week_gw_df, prev_week_single_gw_df], axis=0)
             master_prev_2weeks_gw_df = pd.concat([master_prev_2weeks_gw_df, prev_2weeks_single_gw_df], axis=0)
 
         # create a separate doy file
         springsummer_gw_doy = DplyFrame(master_gw_df) >> select(X.lake, X.year, X.season, X.start_day, X.end_day)
         springsummer_gw_doy.drop_duplicates(inplace=True)
 
-    return master_gw_df, springsummer_gw_doy, master_prev_1week_gw_df, master_prev_2weeks_gw_df
+    return master_gw_df, springsummer_gw_doy, master_prev_2weeks_gw_df
 
 
-def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_week_springsummer_data, prev_2weeks_springsummer_data, min_gw_length, t_max, t_min, t_opt):
+def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_2weeks_springsummer_data, min_gw_length, t_max, t_min, t_opt):
     """
     This function calculates chlorophyll-a rate, maximum chlorophyll-a concentration, accumulated chlorophyll-a,and mean
     values for environmental variables during each growth window. Mean water temperature, solar radiation, and total
@@ -323,7 +295,6 @@ def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_
         spring_and_summer_doy: dataframe with the start and end day of year for each growth window
         spring_and_summer_selected: dataframe with the chlorophyll concentration and temperature for each sampling
                                   day within each growth window
-        prev_week_springsummer_data: dataframe containing all lake data for the week leading up to the spring and summer growth windows
         prev_2weeks_springsummer_data: dataframe containing all lake data for the 2 weeks leading up to the spring and summer growth windows
         min_gw_length: minimum length for the growth window (set to 5 for now)
         t_max: maximum temperature for the f_temp function
@@ -344,8 +315,8 @@ def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_
 
     # make an empty dataframe
     springsummer_gw_data = pd.DataFrame(columns=['lake', 'year', 'season', 'chla_rate', 'max_chla', 'poc_rate', 'chla_to_poc',
-                                               'mean_temp', 'mean_tp', 'mean_srp', 'mean_secchi', 'mean_par', 'mean_ph',
-                                               'mean_tkn', 'mean_tdn', 'growth_window_length', 'gw_length',
+                                               'gw_temp', 'gw_tp', 'gw_srp', 'gw_secchi', 'gw_ph',
+                                               'gw_tkn', 'gw_tdn', 'gw_length',
                                                'start_day', 'end_day', 'specific_chla_rate', 'f_temp',
                                                'temp_corrected_specific_chla_rate'])
 
@@ -372,15 +343,14 @@ def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_
         group.loc[:, 'chla_to_poc'] = (group.loc[:, 'chla']/1000) /group.loc[:, 'poc']
 
         # calculate mean environmental variables during the window
-        group.loc[:, 'mean_temp'] = group.loc[:, 'temp'].mean()
+        group.loc[:, 'gw_temp'] = group.loc[:, 'temp'].mean()
         mean_temp = group.loc[:, 'temp'].mean()  # save mean temperature as an object for f_temp calculation
-        group.loc[:, 'mean_tp'] = group.loc[:, 'tp'].mean()
-        group.loc[:, 'mean_secchi'] = group.loc[:, 'secchi'].mean()
-        group.loc[:, 'mean_poc'] = group.loc[:, 'poc'].mean()
-        group.loc[:, 'mean_par'] = group.loc[:, 'par'].mean()
-        group.loc[:, 'mean_ph'] = group.loc[:, 'ph'].mean()
-        group.loc[:, 'mean_tkn'] = group.loc[:, 'tkn'].mean()
-        group.loc[:, 'mean_srp'] = group.loc[:, 'srp'].mean()
+        group.loc[:, 'gw_tp'] = group.loc[:, 'tp'].mean()
+        group.loc[:, 'gw_secchi'] = group.loc[:, 'secchi'].mean()
+        group.loc[:, 'gw_poc'] = group.loc[:, 'poc'].mean()
+        group.loc[:, 'gw_ph'] = group.loc[:, 'ph'].mean()
+        group.loc[:, 'gw_tkn'] = group.loc[:, 'tkn'].mean()
+        group.loc[:, 'gw_srp'] = group.loc[:, 'srp'].mean()
 
         # calculate f_temp
         group.loc[:, 'f_temp'] = (mean_temp - t_max) * (mean_temp - t_min) ** 2 / (
@@ -394,42 +364,23 @@ def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_
         chla_temp = group.head(1)
         springsummer_gw_data = pd.concat([springsummer_gw_data, chla_temp], axis=0)
 
-    # 1 week pre-growth window calculations
-    prev_week_data = pd.DataFrame(columns=['lake', 'year', 'season', 'prev_week_mean_temp',
-                                           'prev_week_mean_par', 'prev_week_mean_tp', 'prev_week_mean_tkn'])
-
-    for name, group in prev_week_springsummer_data.groupby(['lake', 'year', 'season']):
-
-        # calculate mean water quality variables during the window
-        group.loc[:, 'prev_week_mean_temp'] = group.loc[:, 'temp'].mean()
-        group.loc[:, 'prev_week_mean_par'] = group.loc[:, 'par'].mean()
-        group.loc[:, 'prev_week_mean_tp'] = group.loc[:, 'tp'].mean()
-        group.loc[:, 'prev_week_mean_tkn'] = group.loc[:, 'tkn'].mean()
-
-        # now keep one row for each lake/year/season and concatenate onto the prev_week_data dataframe
-        prev_1wktemp = group.head(1)
-        prev_1wktemp = DplyFrame(prev_1wktemp) >> select(X.lake, X.year, X.season, X.prev_week_mean_temp, X.prev_week_mean_par, X.prev_week_mean_tp, X.prev_week_mean_tkn)
-        prev_week_data = pd.concat([prev_week_data, prev_1wktemp], axis=0)
-
     # 2 week pre-growth window calculations
-    prev_2weeks_data = pd.DataFrame(columns=['lake', 'year', 'season', 'prev_2weeks_mean_temp', 'prev_2weeks_mean_par', 'prev_2weeks_mean_tp', 'prev_2weeks_mean_tkn'])
+    prev_2weeks_data = pd.DataFrame(columns=['lake', 'year', 'season', 'pre_gw_temp', 'pre_gw_tp', 'pre_gw_tkn'])
 
     for name, group in prev_2weeks_springsummer_data.groupby(['lake', 'year', 'season']):
 
         # calculate mean water quality variables during the window
-        group.loc[:, 'prev_2weeks_mean_temp'] = group.loc[:, 'temp'].mean()
-        group.loc[:, 'prev_2weeks_mean_par'] = group.loc[:, 'par'].mean()
-        group.loc[:, 'prev_2weeks_mean_tp'] = group.loc[:, 'tp'].mean()
-        group.loc[:, 'prev_2weeks_mean_tkn'] = group.loc[:, 'tkn'].mean()
+        group.loc[:, 'pre_gw_temp'] = group.loc[:, 'temp'].mean()
+        group.loc[:, 'pre_gw_tp'] = group.loc[:, 'tp'].mean()
+        group.loc[:, 'pre_gw_tkn'] = group.loc[:, 'tkn'].mean()
 
         # keep one row and concatenate onto the prev_2weeks_data dataframe
-        prev_2wktemp = group.head(1)
-        prev_2wktemp = DplyFrame(prev_2wktemp) >> select(X.lake, X.year, X.season, X.prev_2weeks_mean_temp, X.prev_2weeks_mean_par, X.prev_2weeks_mean_tp, X.prev_2weeks_mean_tkn)
-        prev_2weeks_data = pd.concat([prev_2weeks_data, prev_2wktemp], axis=0)
+        prev_2wks = group.head(1)
+        prev_2wks = DplyFrame(prev_2wks) >> select(X.lake, X.year, X.season, X.pre_gw_temp, X.pre_gw_tp,
+                                                         X.pre_gw_tkn)
+        prev_2weeks_data = pd.concat([prev_2weeks_data, prev_2wks], axis=0)
 
     # merge the three dataframes together
-    springsummer_gw_data = pd.merge(springsummer_gw_data, prev_week_data, left_on=['lake', 'year', 'season'],
-                                  right_on=['lake', 'year', 'season'], how='left')
     springsummer_gw_data = pd.merge(springsummer_gw_data, prev_2weeks_data, left_on=['lake', 'year', 'season'],
                                   right_on=['lake', 'year', 'season'], how='left')
 
@@ -440,14 +391,11 @@ def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_
     # select columns to export
     springsummer_gw_data = springsummer_gw_data >> select(X.lake, X.year, X.season, X.start_day, X.end_day, X.gw_length,
                                                           X.chla_rate, X.max_chla, X.acc_chla, X.poc_rate,
-                                                          X.chla_to_poc, X.mean_temp, X.mean_tp,
-                                                          X.mean_secchi, X.mean_ph, X.mean_srp, X.mean_tkn, X.mean_par,
+                                                          X.chla_to_poc, X.gw_temp, X.gw_tp,
+                                                          X.gw_secchi, X.gw_ph, X.gw_srp, X.gw_tkn,
                                                           X.specific_chla_rate, X.f_temp,
-                                                          X.temp_corrected_specific_chla_rate,
-                                                          X.prev_week_mean_temp, X.prev_2weeks_mean_temp,
-                                                          X.prev_week_mean_par, X.prev_2weeks_mean_par, X.num_samples,
-                                                          X.prev_week_mean_tp, X.prev_2weeks_mean_tp,
-                                                          X.prev_week_mean_tkn, X.prev_2weeks_mean_tkn)
+                                                          X.temp_corrected_specific_chla_rate, X.pre_gw_temp,
+                                                          X.num_samples, X.pre_gw_tp, X.pre_gw_tkn)
 
     return springsummer_gw_data
 

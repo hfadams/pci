@@ -1,8 +1,7 @@
-
 # Chlorophyll-*a* growth window dataset
 The scripts within this repository were used to standardize and compile a dataset of *in situ* chlorophyll-*a* data and related water quality data and for lakes at or above 40°N across the Northern hemisphere. Original data files are not included, but can be found by following the links listed under "Data sources" below. 
 
-The chlorophyll-*a* growth window dataset contains chlorophyll-*a* rate of increase along with  mean water quality variables (i.e., surface water temperature, nutrients, and solar radiation) during periods of rapid algal growth referred to as the _**growth window**_. Growth windows were defined based on the rate of change in the fluctuating chlorophyll-*a* concentration sampled over the year, and categorized as occurring in the spring, summer, or as a "single" growth window when there was one main period of growth. Additional lake parameters were included from the HydroLAKES and HydroATLAS databases, and trophic status index was calculated from the chlorophyll-*a* data.
+The chlorophyll-*a* growth window dataset contains chlorophyll-*a* rate of increase along with  mean water quality variables (i.e., surface water temperature, nutrients, and solar radiation) during periods of rapid algal growth referred to as the _**growth window**_. Growth windows were defined based on the rate of change in the fluctuating chlorophyll-*a* concentration sampled over the year, and categorized as occurring in the spring, summer, or as a "single" growth window when there was one main period of growth. Additional lake parorgameters were included from the [HydroLAKES](https://hydrosheds./page/hydrolakes) and [HydroATLAS](https://hydrosheds.org/page/hydroatlas) databases, and trophic status index was calculated from chlorophyll-*a* data.
 
 This dataset is meant to be used to explore trends between different environmental conditions and algal growth. However, as a compiled dataset, the growth window data is based on lakes samples collected from a variety of organizations with differing methods. Great care was taken to standardize the data and provide all relevant metadata wherever possible. However, it is recommended that the dataset be uniquely subsetted depending on the research question (e.g., for sampling frequency or depth). 
 
@@ -37,7 +36,7 @@ This dataset is meant to be used to explore trends between different environment
 * [HydroLAKES](https://hydrosheds.org/page/hydrolakes)
 * [HydroATLAS](https://hydrosheds.org/page/hydroatlas)
 
-*A full summary of data sources is available in the [lake_database.csv]() and [ssr_database.csv]() files*
+*A full summary of data sources is available in the [database_summary.csv]() file*
 
 
 ## Methods
@@ -62,43 +61,38 @@ All data processing and analyses for this project were implemented using Python 
 
 ### Folder 1:  Data: 
 Contains the growth window dataset, metadata, and relevant supplementary information.
-
-#### subfolder a: processed_data 
-Growth window dataset and summary of parameters for all lake sampling locations.
 		
  * [growth\_window\_data.csv](https://github.com/hfadams/growth_window/blob/3354fa0c2aea2bd1af4f02e528693c68157a8335/data/processed_data/growth_window_data.csv): Compiled growth window dataset
-  	   	   
  * [lake\_summary.csv](https://github.com/hfadams/growth_window/blob/3354fa0c2aea2bd1af4f02e528693c68157a8335/data/processed_data/lake_summary.csv): Summary of growth window data
-
-* [daily\_mean.csv](https://github.com/hfadams/growth_window/blob/3354fa0c2aea2bd1af4f02e528693c68157a8335/data/processed_data/daily_mean.csv): formatted *in situ* water quality data that has been rounded to daily mean (processed by format_lakes function)
-  	   	    
+* [daily\_mean.csv](https://github.com/hfadams/growth_window/blob/3354fa0c2aea2bd1af4f02e528693c68157a8335/data/processed_data/daily_mean.csv): formatted *in situ* water quality data that has been rounded to daily mean (processed by format_lakes function)	   	    
 	
-#### subfolder b: supplementary_data
+#### subfolder a: supplementary_data
   	   
  Metadata and relevant supplementary files
   	   	     
 * [Growth_window_variable_description.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/growth_window_variable_description.csv): Units and description of each variable in the growth window dataset
-  	   	       
 * [lake_name_formatting.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_name_formatting.csv): conversion of lake names from original sampling location ID to name in the growth window dataset
-  	   	     
 * [lake_database\_summary.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_database_summary.csv): summary of all databases used for *in situ* water quality data collection
-
 * [HydroATLASclimatezones.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/HydroATLASclimatezones.csv): legend for HydroATLAS climate zone values
+
+	**subfolder i: shapefiles**
+
+	Lake and SSR shapefiles can be used to link with HydroATLAS and HydroSHEDS shapefiles. Style files can be used to format the points as seen in figure 1 of the manuscript.
+
+	* lakes.zip: shapefile (and associated files) showing the lake locations and relevant attributes
+	* ssr_stations.zip: shapefile (and associated files) showing the SSR station locations and relevant attributes
+	* lake_coords.style: QGIS style file that can be used to format the lakes shapefile
+	* ssr_coords.style: QGIS style file that can be used to format the SSR station shapefile
   	   	     
 ### Folder 2: code    
       	
 Scripts for formatting data and detecting growth windows
 
-* [growth_window_functions.py](https://github.com/hfadams/growth_window/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_functions.py): all functions used to generate the growth window dataset
-  	   	   
+* [growth_window_functions.py](https://github.com/hfadams/growth_window/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_functions.py): all functions used to generate the growth window dataset   	   
 * [growth_window_calculations.py](https://github.com/hfadams/growth_window/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_calculations.py): script used to call on the growth window functions
-
 * [ssr\_lakes\_pairing\_qgis.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_lakes_pairing_qgis.py): pairs lakes and SSR stations using PYQGIS
-
 * [lake\_dem\_extraction.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/lake_dem_extraction.py): uses DEM in PYQGIS to extract lake elevation
-
 * [ssr\_dem\_extraction.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_dem_extraction.py): uses DEM in PYQGIS to extract SSR station elevation
-
 * [paired\_stations\_ssr\_calcs.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/paired_stations_ssr_calcs.py): calculates mean SSR during the growth window and pre-growth window period
   	   	   
 
@@ -110,20 +104,26 @@ This work is funded by the Canada First Research Excellence Fund’s Global Wate
 
 ## Recommended citation 
 
-Adams, H., Ye, J., Slowinski, S., Persaud, B., Kheyrollah Pour, H., van Cappellen, P. (2021). Chlorophyll-a rate and environmental variables during periods of seasonal algal growth in northern, temperate lakes.
+Adams, H., Ye, J., Slowinski, S., Persaud, B., Kheyrollah Pour, H., van Cappellen, P. (2021). Chlorophyll-a rate and environmental variables during periods of seasonal algal growth in northern, temperate lakes. DOI: ___
 
 ## Authors
-**Hannah Adams:** University of Waterloo, hfadams@uwaterloo.ca
+### Scripts
+**Hannah Adams** - *Author* - [LinkedIn](https://www.linkedin.com/in/hannah-adams-624122219/), [GitHub](https://github.com/hfadams)
 
-**Jane Ye:** University of Waterloo, jane.ye@uwaterloo.ca
+**Jane Ye:** - *Co-author* - [LinkedIn](https://www.linkedin.com/in/janeye98/), [GitHub](https://github.com/jane801)
 
-**Stephanie Slowinski:** University of Waterloo, seslowinski@uwaterloo.ca
+### Manuscript
+**Hannah Adams** - *Author* - [LinkedIn](https://www.linkedin.com/in/hannah-adams-624122219/), [GitHub](https://github.com/hfadams)
 
-**Bhaleka Persaud:** University of Waterloo, bd2persaud@uwaterloo.ca
+**Jane Ye:** - *Co-author* - [LinkedIn](https://www.linkedin.com/in/janeye98/), [GitHub](https://github.com/jane801)
 
-**Homa Kheyrollah-Pour:** Wilfrid Laurier University, hpour@wlu.ca
+**Stephanie Slowinski:** -*Co-author* - [LinkedIn](https://www.linkedin.com/in/steph-slowinski/), [GitHub](https://github.com/s-slowinski)
 
-**Philippe van Cappellen:** University of Waterloo, pvc@uwaterloo.ca
+**Bhaleka Persaud:** -*Co-author* - [GitHub]()
+
+**Homa Kheyrollah-Pour:** -*Principle Investigator* - [Google Scholar](https://scholar.google.ca/citations?hl=en&user=0gMCo6wAAAAJ), [ReSEC lab](https://www.wlu.ca/academics/faculties/faculty-of-science/faculty-profiles/homa-kheyrollah-pour/index.html?ref=academics%2Ffaculties%2Ffaculty-of-arts%2Ffaculty-profiles%2Fhoma-kheyrollah-pour%2Findex.html)
+
+**Philippe van Cappellen:** -*Principle Investigator*- [Google Scholar](https://scholar.google.ca/citations?user=E0Vw3FwAAAAJ&hl=en), [Ecohydrology Research Group](https://uwaterloo.ca/ecohydrology/people-profiles/philippe-van-cappellen) 
 
 
 

@@ -36,12 +36,12 @@ all_lakes = DplyFrame(all_lakes)
 all_lakes, daily_mean = format_lake_data(all_lakes)
 
 # use growth window function on the dataset of daily means
-spring_and_summer_df, spring_and_summer_doy, prev_week_spring_and_summer_df, prev_2weeks_spring_and_summer_df = \
+spring_and_summer_df, spring_and_summer_doy, prev_2weeks_spring_and_summer_df = \
     calc_growth_window(df=daily_mean, threshold_inc=threshold_inc, num_sample_threshold=6)
 
 # calculate chlorophyll-a rate and mean temperature during each growth window
-springsummer_gw_data = growth_window_means(spring_and_summer_doy, spring_and_summer_df, prev_week_spring_and_summer_df,
-                                         prev_2weeks_spring_and_summer_df, min_gw_length, t_max, t_min, t_opt)
+springsummer_gw_data = growth_window_means(spring_and_summer_doy, spring_and_summer_df,
+                                           prev_2weeks_spring_and_summer_df, min_gw_length, t_max, t_min, t_opt)
 
 # select only the lakes that make it to the final gw data output
 selected_daily_mean = select_daily_mean(daily_mean, springsummer_gw_data)
