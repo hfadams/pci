@@ -1,20 +1,10 @@
-# Chlorophyll-*a* growth window dataset and associated files
-This folder contains the growth window dataset along with the *in situ* data that has been converted to a daily mean and a summary file for all lakes and ssr stations that make up the dataset.
+# Chlorophyll-*a* growth window dataset description and supplementary files
+This folder contains source files used to generate the growth window dataset. *lake\_name\_formatting.csv* and *all_lake_coordinates.csv* files are used for generating the growth window dataset, in addition to the daily mean *in situ* water quality data, which can be found in the [FRDR repository]() along with the growth window dataset.
 
 ## Folder directory
-* growth\_window\_data.csv: Containing water quality and other associated environmental data for 3137 growth windows
-* daily_mean.csv: *in situ* water quality data where each variable has been rounded to daily mean (see growth_window_functions.py). Chlorophyll-*a* concentrations within the file are used to generate the growth window dataset
-* lake_summary.csv: summary file for all lakes in the growth window dataset; each row provides the lake parameters, monitoring period, data source, and paired SSR station where relevant.
-
-#### Subfolder A: supplementary_data
-Data and metadata associated with the growth window dataset (see supplementary data readme.md for more information). 
-
-* growth_window_variable_description.csv
-* lake_name_formatting.csv
-* database\_summary.csv
-* HydroATLASclimatezones.csv
-
-	**Subfolder i: shapefiles**
+* [lake_name_formatting.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_name_formatting.csv): conversion of lake names from original sampling location ID to name in the growth window dataset
+* [all\_lake\_coords.csv](https://github.com/hfadams/growth_window/blob/ac46b91a203430bf76440d42d7880bbb072b425e/supplementary_data/all_lake_coordinates.csv): list of coordinates for all lakes in the dataset, used in the growth window calculation scripts. Coordinates were collected from the original data files or searched within the database where possible, otherwise they were estimated based on sampling location name.
+* [HydroATLASclimatezones.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/HydroATLASclimatezones.csv): legend for HydroATLAS climate zone values
 
 ## Dataset summary
 The growth window dataset consists of 3137 rows of unique growth windows with 42 variables/ lake and SSR station parameters. There are 357 lake sampling locations and 30 paired SSR stations ≥ 40°N, monitored between 1964-2019.
@@ -66,18 +56,22 @@ The growth window dataset consists of 3137 rows of unique growth windows with 42
 | gw_ssr                            | Wm<sup>-2                                            | Mean solar radiation during the growth window                                                                                                                                                                                                                                                    |   |
 | pre_gw_mean_ssr                   | Wm<sup>-2                                            | Mean solar radiation during the 14 days leading up to the growth window                                                                                                                                                                                                                          |   |
 
-		*group.loc[:, 'f_temp'] = (mean_temp - t_max) * (mean_temp - t_min) ** 2 / ((t_opt - t_min) * ((t_opt - t_min) * (mean_temp - t_opt) - (t_opt - t_max) * (t_opt + t_min - 2 * mean_temp)))
+*calculation used for temperature correction:
+
+		group.loc[:, 'f_temp'] = (mean_temp - t_max) * (mean_temp - t_min) ** 2 / ((t_opt - t_min) * ((t_opt - t_min) * (mean_temp - t_opt) - (t_opt - t_max) * (t_opt + t_min - 2 * mean_temp)))
 
         # divide specific growth rate by f_temp
         group.loc[:, 'temp_corrected_specific_chla_rate'] = group.loc[:, 'specific_chla_rate'] / group.loc[:, 'f_temp']
 
 
+## Additional documentation
+HydroATLAS technical document and shapefile download is available through the [Hydrosheds HydroATLAS webpage](https://hydrosheds.org/page/hydroatlas).
+
+HydroLAKES technical document and shapefile download is available through the [Hydrosheds HydroLAKES webpage](https://hydrosheds.org/page/hydrolakes).
+
 ## References
-Formal references provided where available, otherwise a link to the data location is provided along with the DOI.
 
-N. Lead PI, J. Magnuson, S. Carpenter, and E. Stanley. 2019. North Temperate Lakes LTER: Chlorophyll - Trout Lake Area 1981 - current ver 30. Environmental Data Initiative. https://doi.org/10.6073/pasta/6c8ee65f6876a7274bfe7714ae7c3a70. Accessed 2021-08-05.
+Linke, S., Lehner, B., Ouellet Dallaire, C., Ariwi, J., Grill, G., Anand, M., … Thieme, M. (2019). Global hydro-environmental sub-basin and river reach characteristics at high spatial resolution. Scientific Data, 6(1), 1–15. [https://doi.org/10.1038/s41597-019-0300-6](https://doi.org/10.1038/s41597-019-0300-6)
 
-National Institute for Environmental Studies (2016) Lake Kasumigaura Database, National Institute for Environmental Studies, Japan. Accessed via https://db.cger.nies.go.jp/gem/moni-e/inter/GEMS/ database / kasumi / index.html on DD-MM-YYYY.
-
-Maberly, S.C.; Brierley, B.; Carter, H.T.; Clarke, M.A.; De Ville, M.M.; Fletcher, J.M.; James, J.B.; Keenan, P.; Kelly, J.L.; Mackay, E.B.; Parker, J.E.; Patel, M.; Pereira, M.G.; Rhodes, G.; Tanna, B.; Thackeray, S.J.; Vincent, C.J.; Feuchtmayr, H. (2017). Surface temperature, surface oxygen, water clarity, water chemistry and phytoplankton chlorophyll a data from Windermere North Basin, 1945 to 2013. NERC Environmental Information Data Centre. https://doi.org/10.5285/f385b60a-2a6b-432e-aadd-a9690415a0ca.
+Messager, M. L., Lehner, B., Grill, G., Nedeva, I., & Schmitt, O. (2016). Estimating the volume and age of water stored in global lakes using a geo-statistical approach. Nature Communications, 7, 1–11. [https://doi.org/10.1038/ncomms13603](https://doi.org/10.1038/ncomms13603)
 

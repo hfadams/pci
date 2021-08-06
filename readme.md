@@ -8,7 +8,7 @@ This dataset is intended to be used to explore trends between changing environme
  
 ## Data sources
 
-To create the dataset, *in situ* lake physiochemical data and solar radiation data were collected from open source international, federal, and regional databases between May 2020 and January 2021. A summary of the sources are listed below:
+To create the dataset, *in situ* lake physiochemical data and solar radiation data were collected from open source international, federal, and regional databases between May 2020 and January 2021. Original data files are not provided, but links to the data sources are listed below:
  
 ### Lake data 
  | Database                                                         | Region    | Lake(s)                                                                                                                                                                                                                                                                                                                                                  | DOI                                                                                            | Data licence                                                                                                       | Citation                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
@@ -69,14 +69,13 @@ Data files from varying sources were formatted to have consistent units and colu
 
 All data processing and analyses for this project were implemented using Python (ver. 3.7.6) and QGIS/PYQGIS (ver. 3.14).
 
-##  Data and file overview
-
+##  Repository directory
 
 ### Folder 1:  Supplementary data: 
 Source files used to generate the growth window dataset
   	   	     
 * [lake_name_formatting.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_name_formatting.csv): conversion of lake names from original sampling location ID to name in the growth window dataset
-* all\_lake\_coords.csv: list of coordinates for all lakes in the dataset, used in the growth window calculation scripts. Coordinates were collected from the original data files or searched within the database where possible, otherwise they were estimated based on sampling location name.
+* [all\_lake\_coords.csv](https://github.com/hfadams/growth_window/blob/ac46b91a203430bf76440d42d7880bbb072b425e/supplementary_data/all_lake_coordinates.csv): list of coordinates for all lakes in the dataset, used in the growth window calculation scripts. Coordinates were collected from the original data files or searched within the database where possible, otherwise they were estimated based on sampling location name.
 * [HydroATLASclimatezones.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/HydroATLASclimatezones.csv): legend for HydroATLAS climate zone values
   	   	     
 ### Folder 2: code    

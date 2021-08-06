@@ -39,20 +39,20 @@ This folder contains the main scripts for the growth window dataset preparation.
 * [QGIS (version 3.16)](https://qgis.org/en/site/forusers/download.html)
 
 #### General
-* [Pandas library](https://pandas.pydata.org/)
-* [NumPy library](https://numpy.org/)
-* [Dplython library](https://pythonhosted.org/dplython/)
+* [Pandas library (version 1.3.1)](https://pandas.pydata.org/)
+* [NumPy library (version 1.21.1)](https://numpy.org/)
+* [Dplython library (version 0.0.4)](https://pythonhosted.org/dplython/)
 * [glob module](https://docs.python.org/3.7/library/glob.html)
 
 #### Growth window analysis
-* [scipy.signal find_peaks function](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html)
-* [scipy.signal savgol_filter function](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.savgol_filter.html)
+* [scipy.signal find_peaks function (SciPy version 1.4.1)](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html)
+* [scipy.signal savgol_filter function (SciPy version 1.4.1)](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.savgol_filter.html)
 
 #### Plotting
-* [Matplotlib library](https://matplotlib.org/)
-* [Ptitprince package](https://pypi.org/project/ptitprince/)
-* [RainCloudPlots package](https://github.com/RainCloudPlots/RainCloudPlots)
-* [Seaborn library](https://seaborn.pydata.org/)
+* [Matplotlib library (version 3.4.2)](https://matplotlib.org/)
+* [Ptitprince package (version 0.2.5)](https://pypi.org/project/ptitprince/)
+* [RainCloudPlots package (version 2)](https://github.com/RainCloudPlots/RainCloudPlots)
+* [Seaborn library (version 0.11.1)](https://seaborn.pydata.org/)
 
 
 ## References
