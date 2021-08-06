@@ -1,18 +1,36 @@
 # Chlorophyll-*a* growth window dataset
-The scripts within this repository were used to standardize and compile a dataset of *in situ* chlorophyll-*a* data and related water quality data and for lakes at or above 40°N across the Northern hemisphere. Original data files are not included, but can be found by following the links listed under "Data sources" below. 
+The scripts within this repository were used to standardize and compile a dataset of *in situ* chlorophyll-*a* data and related water quality data for lakes at or above 40° N across the Northern hemisphere. Original data files are not included, but can be found by following the links listed under "Data sources" below. 
 
-The chlorophyll-*a* growth window dataset contains chlorophyll-*a* rate of increase along with  mean water quality variables (i.e., surface water temperature, nutrients, and solar radiation) during periods of rapid algal growth referred to as the _**growth window**_. Growth windows were defined based on the rate of change in the fluctuating chlorophyll-*a* concentration sampled over the year, and categorized as occurring in the spring, summer, or as a "single" growth window when there was one main period of growth. Additional lake parorgameters were included from the [HydroLAKES](https://hydrosheds./page/hydrolakes) and [HydroATLAS](https://hydrosheds.org/page/hydroatlas) databases, and trophic status index was calculated from chlorophyll-*a* data.
+The chlorophyll-*a* growth window dataset contains chlorophyll-*a* rate of increase along with  mean water quality variables (i.e., surface water temperature, nutrients, and solar radiation) during periods of rapid algal growth referred to as the _**growth window**_. Growth windows were defined based on the rate of change in the fluctuating chlorophyll-*a* concentration sampled over the year, and categorized as occurring in the spring, summer, or as a "single" growth window when there was one main period of growth. Additional lake parameters were included from the [HydroLAKES](https://hydrosheds./page/hydrolakes) and [HydroATLAS](https://hydrosheds.org/page/hydroatlas) databases, and trophic status index (TSI) was calculated from chlorophyll-*a* concentrations.
 
-This dataset is meant to be used to explore trends between different environmental conditions and algal growth. However, as a compiled dataset, the growth window data is based on lakes samples collected from a variety of organizations with differing methods. Great care was taken to standardize the data and provide all relevant metadata wherever possible. However, it is recommended that the dataset be uniquely subsetted depending on the research question (e.g., for sampling frequency or depth). 
+This dataset is intended to be used to explore trends between changing environmental conditions and lake productivity. However, as a compiled dataset, the growth window data is based on lakes samples collected from a variety of organizations with differing methods. Great care was taken to standardize the data and provide all relevant metadata wherever possible. However, it is recommended that the dataset be uniquely subsetted depending on the research question (e.g., for sampling frequency). 
 
  
 ## Data sources
 
-*In situ* lake physiochemical data and solar radiation data were collected from open source international, federal, and regional databases between May 2020 and January 2021 from the following sources: 
+*In situ* lake physiochemical data and solar radiation data were collected from open source international, federal, and regional databases between May 2020 and January 2021. A summary of the sources are listed below:
+ 
+| database                                        | Region       | start | end  | parameters                                                                      | Link to data                                                                                                                                            |
+|-------------------------------------------------|--------------|-------|------|---------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Open Canada                                     | Canada       | 1991  | 2017 | Depth and chlorophyll                                                           |  https://open.canada.ca/data/en/dataset/d155effe-048d-45cf-8683-d827dadc428b                                                                            |
+| Lake Winnipeg Datastream                        | Manitoba     | 2002  | 2020 | Depth, N, ammonia, P, DIC, DOC, chlorophyll, pH, alkalinity                     | https://lakewinnipegdatastream.ca/                                                                                                                      |
+| University of Winnipeg                          | Manitoba     | 1996  | 2009 | Depth, N, ammonia, P, DIC, DOC, chlorophyll, pH, alkalinity                     | http://lwbin-datahub.ad.umanitoba.ca/dataset/lwpg-namao-chem/resource/931532fe-1785-4a9f-a857-f5d6ddab43e9?view_id=61484de8-2fe6-46df-abd3-37ac9ca9f4f1 |
+| IISD-ELA private database                       | Ontario      | 1968  | 2019 | chlorophyll (composite sample from entire epilimnion), DOC, PAR,   temperature  | https://www.iisd.org/ela/science-data/our-data/data-requests/                                                                                           |
+| Alberta Environment and Parks data   repository | Alberta      | 1978  | 2018 | Secchi depth, chlorophyll, P, N, TDS, alkalinity misc. ions                     | http://environment.alberta.ca/apps/EdwReportViewer/LakeWaterQuality.aspx                                                                                |
+| LUBW data and map service                       | Germany      | 1998  | 2019 | chlorophyll                                                                     | https://udo.lubw.baden-wuerttemberg.de/public/index.xhtml                                                                                               |
+| GEMS                                            | Japan        | 1977  | 2018 | Seccchi, OC, N, C/N, Depth, chlorophyll                                         | http://db.cger.nies.go.jp/gem/inter/GEMS/database/kasumi/contents/datalist.html                                                                         |
+| VISS (request by email)                         | Sweden       | 1945  | 2020 | chlorophyll                                                                     | https://viss.lansstyrelsen.se/                                                                                                                          |
+| UK Environment Agency                           | UK           | 2000  | 2020 | chloprophyll, P, N, water temperature, misc   ions                              | https://environment.data.gov.uk/water-quality/view/download                                                                                             |
+| UK Centre for Ecology and Hydrology             | UK           | 1965  | 2013 | Water temperature, pH, chlorophyll, P, N, Secchi depth, alkalinity, misc   ions | https://catalogue.ceh.ac.uk/documents/f385b60a-2a6b-432e-aadd-a9690415a0ca                                                                              |
+| Environmental Data Initiative portal            | Global       | 2020  | 2020 | Water temperature, pH, chlorophyll, P, N, Secchi depth, alkalinity, misc   ions | https://portal.edirepository.org/nis/home.jsp                                                                                                           |
+| KNB                                             | Colerado     | 2000  | 2019 | Depth, water temperature, chlorophyll, pH, DO, conductivity, nitrate, PAR       | https://knb.ecoinformatics.org/view/kgordon.35.96                                                                                                       |
+| University of Wisconsin NLTER                   | Wisconsin    | 1981  | 2018 | chlorophyll, depth                                                              | https://lter.limnology.wisc.edu/node/55078                                                                                                              |
+| DataONe                                         | Pennsylvania | 1989  | 2018 | depth, chlorophyll, water temperature, N, P, alkalinity, etc                    | https://search.dataone.org/view/https%3A%2F%2Fpasta.lternet.edu%2Fpackage%2Fmetadata%2Feml%2Fedi%2F186%2F3                                              |
+| USGS and USEPA water quality                    | USA          | 2010  | 2010 | chlorophyll, water temperature, Secchi delth, pH, TKN, POC, TP                  | https://www.waterqualitydata.us/#:~:text=The%20Water%20Quality%20Portal%20(WQP,%2C%20tribal%2C%20and%20local%20agencies.                                |
 ### Lake data 
- * [Open Canada](https://open.canada.ca/data/en/dataset/d155effe-048d-45cf-8683-d827dadc428b)
+ * [Open Canada](https://open.canada.ca/en)
  * [Lake Winnipeg DataStream](https://lakewinnipegdatastream.ca/)
- * [University of Winnipeg](http://lwbin-datahub.ad.umanitoba.ca/dataset/lwpg-namao-chem/resource/931532fe-1785-4a9f-a857-f5d6ddab43e9?view_id=61484de8-2fe6-46df-abd3-37ac9ca9f4f1)
+ * [CanWIN Data HUB](http://lwbin-datahub.ad.umanitoba.ca/dataset/lwpg-namao-chem/resource/931532fe-1785-4a9f-a857-f5d6ddab43e9?view_id=61484de8-2fe6-46df-abd3-37ac9ca9f4f1)
  * [IISD-ELA private database](https://www.iisd.org/ela/science-data/our-data/data-requests/)
  * [Alberta Environment and Parks data repository](http://environment.alberta.ca/apps/EdwReportViewer/LakeWaterQuality.aspx)
  * [LUBW data and map service](https://udo.lubw.baden-wuerttemberg.de/public/index.xhtml)
@@ -20,7 +38,7 @@ This dataset is meant to be used to explore trends between different environment
  * [VISS](https://viss.lansstyrelsen.se/)
  * [UK Environment Agency](https://environment.data.gov.uk/water-quality/view/download)
  * [KNB](https://knb.ecoinformatics.org/view/kgordon.35.96)
- * [University of Wisconsin NLTER](https://lter.limnology.wisc.edu/node/55078)
+ * [University of Wisconsin NLTER](https://lter.limnology.wisc.edu/about/lakes)
  * [DataONe](https://search.dataone.org/view/https%3A%2F%2Fpasta.lternet.edu%2Fpackage%2Fmetadata%2Feml%2Fedi%2F186%2F3)
  * [USGS and USEPA water quality portal](https://www.waterqualitydata.us/#:~:text=The%20Water%20Quality%20Portal%20WQP,%2C%20tribal%2C%20and%20local%20agencies)
 
@@ -48,7 +66,7 @@ Growth windows are defined based on the rate of change in chlorophyll-*a* concen
 
 Mean values were calculated for all water quality variables sampled during the growth window and are provided in the [daily_mean.csv]() file.
 
-##### Quality assurance
+#### Quality assurance
 
 Data files from varying sources were formatted to have consistent units and column headers; we removed all data recorded as below the instrument detection limit and selected years where samples were collected a minimum of 8 times over the ice-free season.
 

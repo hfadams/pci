@@ -92,3 +92,6 @@ The growth window dataset consists of 3137 rows of unique growth windows with 42
 ***NaN cells indicate no available data***
 
 Complete summary is available in the *growth\_window\_variable\_description.csv* file in the supplementary data folder
+
+## References
+N. Lead PI, J. Magnuson, S. Carpenter, and E. Stanley. 2019. North Temperate Lakes LTER: Chlorophyll - Trout Lake Area 1981 - current ver 30. Environmental Data Initiative. https://doi.org/10.6073/pasta/6c8ee65f6876a7274bfe7714ae7c3a70. Accessed 2021-08-05.

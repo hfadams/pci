@@ -6,7 +6,7 @@ This folder contains the main scripts for the growth window dataset preparation.
 
 2. Growth windows are calculated using the *growth\_window\_calculations.py* script, which calls on functions from the *growth\_window\_functions.py* file. The output is the growth window dataset without paired surface solar radiation data.
 
-3. The growth window data file is imported into QGIS as a point vector layer, and the *ssr\_lakes\_pairing\_qgis.py*, *lakes\_dem\_extraction.py*, and *ssr\_dem\_extraction.py* scripts are opened in QGIS under plugins > Python console (usiing the "Show Editor" icon in the Python console to open and edit the scripts). 
+3. The growth window data file is imported into QGIS as a point vector layer, and the *ssr\_lakes\_pairing\_qgis.py*, *lakes\_dem\_extraction.py*, and *ssr\_dem\_extraction.py* alongside the [Global Multi-resolution Terrain Elevation Data (GMTED2010)](https://www.usgs.gov/core-science-systems/eros/coastal-changes-and-impacts/gmted2010?qt-science_support_page_related_con=0#qt-science_support_page_related_con) model.
 
 	a) **ssr\_lakes\_pairing\_qgis.py** generates a copy of the lake points layer, with the paired SSR point data appended to each lake point along with distance between the lake and SSR stations
 
@@ -58,6 +58,8 @@ This folder contains the main scripts for the growth window dataset preparation.
 ## References
 
 Allen M, Poggiali D, Whitaker K et al. (2021). Raincloud plots: a multi-platform tool for robust data visualization [version 2.0.5; peer review: 2 approved]. *Wellcome Open Res*. 4:63. DOI:[10.12688/wellcomeopenres.15191.2](https://wellcomeopenresearch.org/articles/4-63/v1)
+
+Danielson, J., and Gesch, D. (2010). Global Multi-resolution Terrain Elevation Data (GMTED2010). *US Geological Survey* [https://pubs.usgs.gov/of/2011/1073/pdf/of2011-1073.pdf](https://pubs.usgs.gov/of/2011/1073/pdf/of2011-1073.pdf).
 
 Harris, C. R., Millman, K. J., van der Walt, S. J., Gommers, R., Virtanen, P., Cournapeau, D., … Oliphant, T. E. (2020, September). Array programming with NumPy. Nature, Vol. 585, pp. 357–362. [https://doi.org/10.1038/s41586-020-2649-2](https://doi.org/10.1038/s41586-020-2649-2)
 
