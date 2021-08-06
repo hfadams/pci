@@ -1,4 +1,4 @@
-# Chlorophyll-*a* growth window dataset description and supplementary files
+# Chlorophyll-*a* growth window dataset: supplementary files
 This folder contains source files used to generate the growth window dataset. *lake\_name\_formatting.csv* and *all_lake_coordinates.csv* files are used for generating the growth window dataset, in addition to the daily mean *in situ* water quality data, which can be found in the [FRDR repository]() along with the growth window dataset.
 
 ## Folder directory
