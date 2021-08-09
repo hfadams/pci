@@ -1,4 +1,6 @@
 # Chlorophyll-*a* growth window dataset
+
+[![DOI](https://zenodo.org/badge/390777007.svg)](https://zenodo.org/badge/latestdoi/390777007)
 The scripts within this repository were used to standardize and compile a dataset of *in situ* chlorophyll-*a* data and related water quality data for lakes at or above 40° N across the Northern hemisphere. Original data files are not included, but can be found by following the links listed under "Data sources" below. 
 
 The chlorophyll-*a* growth window dataset contains chlorophyll-*a* rate of increase along with  mean water quality variables (i.e., surface water temperature, nutrients, and solar radiation) during periods of rapid algal growth referred to as the _**growth window**_. Growth windows were defined based on the rate of change in the fluctuating chlorophyll-*a* concentration sampled over the year, and categorized as occurring in the spring, summer, or as a "single" growth window when there was one main period of growth. Additional lake parameters were included from the [HydroLAKES](https://hydrosheds./page/hydrolakes) and [HydroATLAS](https://hydrosheds.org/page/hydroatlas) databases, and trophic status index (TSI) was calculated from chlorophyll-*a* concentrations.
