@@ -76,7 +76,6 @@ Source files used to generate the growth window dataset
   	   	     
 * [lake_name_formatting.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_name_formatting.csv): conversion of lake names from original sampling location ID to name in the growth window dataset
 * [all\_lake\_coords.csv](https://github.com/hfadams/growth_window/blob/ac46b91a203430bf76440d42d7880bbb072b425e/supplementary_data/all_lake_coordinates.csv): list of coordinates for all lakes in the dataset, used in the growth window calculation scripts. Coordinates were collected from the original data files or searched within the database where possible, otherwise they were estimated based on sampling location name.
-* [HydroATLASclimatezones.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/HydroATLASclimatezones.csv): legend for HydroATLAS climate zone values
   	   	     
 ### Folder 2: code    
       	
@@ -105,23 +104,26 @@ This work is funded by the Canada First Research Excellence Fund’s Global Wate
 Adams, H., Ye, J., Slowinski, S., Persaud, B., Kheyrollah Pour, H., van Cappellen, P. (2021). Chlorophyll-*a* growth rates and related environmental variables in temperate and cold-temperate lakes: An open dataset. DOI: ___
 
 ## Authors
-### Scripts
-**Hannah Adams** - *Author* - [LinkedIn](https://www.linkedin.com/in/hannah-adams-624122219/), [GitHub](https://github.com/hfadams)
 
-**Jane Ye:** - *Co-author* - [LinkedIn](https://www.linkedin.com/in/janeye98/), [GitHub](https://github.com/jane801)
+### Scripts
+
+**Hannah Adams** - *Author* - [LinkedIn](https://www.linkedin.com/in/hannah-adams-624122219/), [GitHub](https://github.com/hfadams), [ORCID iD](https://orcid.org/0000-0003-2647-8021)
+
+**Jane Ye:** - *Co-author* - [LinkedIn](https://www.linkedin.com/in/janeye98/)
 
 ### Manuscript
-**Hannah Adams** - *Author* - [LinkedIn](https://www.linkedin.com/in/hannah-adams-624122219/), [GitHub](https://github.com/hfadams)
 
-**Jane Ye:** - *Co-author* - [LinkedIn](https://www.linkedin.com/in/janeye98/), [GitHub](https://github.com/jane801)
+**Hannah Adams** - *Author* - [LinkedIn](https://www.linkedin.com/in/hannah-adams-624122219/), [GitHub](https://github.com/hfadams), [ORCID iD](https://orcid.org/0000-0003-2647-8021)
 
-**Stephanie Slowinski:** -*Co-author* - [LinkedIn](https://www.linkedin.com/in/steph-slowinski/), [GitHub](https://github.com/s-slowinski)
+**Jane Ye:** - *Co-author* - [LinkedIn](https://www.linkedin.com/in/janeye98/)
 
-**Bhaleka Persaud:** -*Co-author* - [GitHub]()
+**Stephanie Slowinski:** -*Co-author* - [LinkedIn](https://www.linkedin.com/in/steph-slowinski/)
 
-**Homa Kheyrollah-Pour:** -*Principle Investigator* - [Google Scholar](https://scholar.google.ca/citations?hl=en&user=0gMCo6wAAAAJ), [ReSEC lab](https://www.wlu.ca/academics/faculties/faculty-of-science/faculty-profiles/homa-kheyrollah-pour/index.html?ref=academics%2Ffaculties%2Ffaculty-of-arts%2Ffaculty-profiles%2Fhoma-kheyrollah-pour%2Findex.html)
+**Bhaleka Persaud:** -*Co-author* - [ORCID iD](https://orcid.org/0000-0003-2785-3954)
 
-**Philippe van Cappellen:** -*Principle Investigator*- [Google Scholar](https://scholar.google.ca/citations?user=E0Vw3FwAAAAJ&hl=en), [Ecohydrology Research Group](https://uwaterloo.ca/ecohydrology/people-profiles/philippe-van-cappellen) 
+**Homa Kheyrollah Pour:** -*Principle Investigator* - [Google Scholar](https://scholar.google.ca/citations?hl=en&user=0gMCo6wAAAAJ), [ReSEC lab](https://www.wlu.ca/academics/faculties/faculty-of-science/faculty-profiles/homa-kheyrollah-pour/index.html?ref=academics%2Ffaculties%2Ffaculty-of-arts%2Ffaculty-profiles%2Fhoma-kheyrollah-pour%2Findex.html)
+
+**Philippe Van Cappellen:** -*Principle Investigator*- [Google Scholar](https://scholar.google.ca/citations?user=E0Vw3FwAAAAJ&hl=en), [Ecohydrology Research Group](https://uwaterloo.ca/ecohydrology/people-profiles/philippe-van-cappellen) 
 
 
 
