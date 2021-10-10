@@ -126,7 +126,7 @@ Adams, H., Ye, J., Slowinski, S., Persaud, B., Kheyrollah Pour, H., van Cappelle
 
 **Homa Kheyrollah Pour:** -*Principle Investigator* - [Google Scholar](https://scholar.google.ca/citations?hl=en&user=0gMCo6wAAAAJ), [ReSEC lab](https://www.wlu.ca/academics/faculties/faculty-of-science/faculty-profiles/homa-kheyrollah-pour/index.html?ref=academics%2Ffaculties%2Ffaculty-of-arts%2Ffaculty-profiles%2Fhoma-kheyrollah-pour%2Findex.html)
 
-**Philippe Van Cappellen:** -*Principle Investigator*- [Google Scholar](https://scholar.google.ca/citations?user=E0Vw3FwAAAAJ&hl=en), [Ecohydrology Research Group](https://uwaterloo.ca/ecohydrology/people-profiles/philippe-van-cappellen) 
+**Philippe Van Cappellen:** -*Principle Investigator*- [Google Scholar](https://scholar.google.ca/citations?user=E0Vw3FwAAAAJ&hl=en), [Ecohydrology Research Group](https://uwaterloo.ca/ecohydrology/people-profiles/philippe-van-cappellen), [ORCID iD](https://orcid.org/0000-0001-5476-082)
 
 
 
