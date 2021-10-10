@@ -104,7 +104,7 @@ This work is funded by the Canada First Research Excellence Fund’s Global Wate
 
 ## Recommended citation 
 
-Adams, H., Ye, J., Slowinski, S., Persaud, B., Kheyrollah Pour, H., van Cappellen, P. (2021). Chlorophyll-*a* growth rates and related environmental variables in temperate and cold-temperate lakes: An open dataset. DOI: ___
+Adams, H., Ye, J., Slowinski, S., Persaud, B., Kheyrollah Pour, H., van Cappellen, P. (2021). Chlorophyll-*a* growth rates and related environmental variables in global temperate and cold-temperate lakes. DOI:10.20383/102.0488.
 
 ## Authors
 
