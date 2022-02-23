@@ -17,14 +17,14 @@ t_min = 0
 t_opt = 25
 min_gw_length = 2
 alpha = 0.05
-threshold_inc = 0.05
+threshold_inc = 0.2
 
 # read in coordinates and lake formatting file
-coords_df = pd.read_csv('../../data/all_lake_coordinates.csv', encoding='latin-1')
-formatted_lake_names = pd.read_csv('../../supplementary_info/lake_name_formatting.csv', encoding='latin-1')
+coords_df = DplyFrame(pd.read_csv('supplementary_data/all_lake_coordinates.csv', encoding='latin-1'))
+formatted_lake_names = DplyFrame(pd.read_csv('data/lake_name_formatting.csv', encoding='latin-1'))
 
 # read in and concatenate formatted lake data files
-files = glob.glob('../../data/ins_situ_data/*.csv', encoding='latin-1')
+files = glob.glob('data/ins_situ_data/*.csv')
 
 all_lakes = pd.DataFrame()
 for f in files:
@@ -53,7 +53,7 @@ trophic_status_summary, ts_coords = get_tsi_coords(selected_daily_mean, coords_d
 gw_coords_ts = get_coords_ts(springsummer_gw_data, ts_coords)
 
 # make a summary table of all lakes
-lake_summary_df = lake_summary(selected_daily_mean, ts_coords, gw_coords_ts)
+lake_summary_df = lake_summary(DplyFrame(selected_daily_mean), ts_coords)
 
 # format lake names for main files
 final_growth_window_data = format_lake_name(gw_coords_ts, formatted_lake_names)

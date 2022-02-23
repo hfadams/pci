@@ -17,7 +17,6 @@ Functions:
 
 Hannah Adams
 """
-
 import pandas as pd
 from dplython import DplyFrame, X, sift, select, arrange, mutate
 import numpy as np
@@ -93,12 +92,14 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
         """
 
     # make empty dataframes (will be appended to later)
-    master_gw_df = pd.DataFrame(columns=['lake', 'date', 'year', 'season', 'day_of_year', 'start_day', 'end_day', 'chla_increase', 'chla_roc',
-                                         'chla', 'poc', 'tp', 'srp', 'par', 'ph', 'tkn', 'tdn', 'nh4',  'no2',
-                                         'no3', 'nox'])
-    master_prev_2weeks_gw_df = pd.DataFrame(columns=['lake', 'date', 'year', 'season', 'day_of_year', 'start_day', 'end_day',
-                                         'chla', 'chla_roc', 'poc', 'tp', 'srp', 'par', 'ph', 'tkn', 'tdn', 'nh4',  'no2',
-                                         'no3', 'nox'])
+    master_gw_df = pd.DataFrame(
+        columns=['lake', 'date', 'year', 'season', 'day_of_year', 'start_day', 'end_day', 'chla_increase', 'chla_roc',
+                 'chla', 'poc', 'tp', 'srp', 'par', 'ph', 'tkn', 'tdn', 'nh4', 'no2',
+                 'no3', 'nox'])
+    master_prev_2weeks_gw_df = pd.DataFrame(
+        columns=['lake', 'date', 'year', 'season', 'day_of_year', 'start_day', 'end_day',
+                 'chla', 'chla_roc', 'poc', 'tp', 'srp', 'par', 'ph', 'tkn', 'tdn', 'nh4', 'no2',
+                 'no3', 'nox'])
 
     # sift data for minimum sampling frequency
     df = df >> sift(X.num_samples >= num_sample_threshold)
@@ -131,14 +132,14 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
         peak_df = group.loc[group.index.intersection(peaks[0])]
         peak_df['max_flag'] = True
         group = pd.merge(group, (peak_df >> select(X.day_of_year, X.max_flag)), how='left', left_on='day_of_year',
-                            right_on='day_of_year')
+                         right_on='day_of_year')
 
         # flag minima in the dataframe
         minima = DplyFrame(minima)
         trough_df = group.loc[group.index.intersection(minima[0])]
         trough_df['min_flag'] = True
         group = pd.merge(group, (trough_df >> select(X.day_of_year, X.min_flag)), how='left',
-                             left_on='day_of_year', right_on='day_of_year')
+                         left_on='day_of_year', right_on='day_of_year')
 
         # 2) find spring and summer or single growth windows for lakes with 2 or 1 defined peaks, respectively
         num_peaks = len(group['max_flag'].dropna())  # count the number of optima in the data
@@ -157,16 +158,21 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
                 spring_start_index = spring_group.where(spring_group.chla_increase == True).first_valid_index()
 
                 if spring_start_index is None:  # if there is no valid increase beforehand
-                    spring_start_index = spring_group.where(spring_group.chla_roc > 0).first_valid_index()  # find first day with a rate above zero
+                    spring_start_index = spring_group.where(
+                        spring_group.chla_roc > 0).first_valid_index()  # find first day with a rate above zero
                     if spring_start_index is None:
-                        spring_start_day = spring_group.loc[spring_group.first_valid_index(), 'day_of_year'] # select first sampling day
+                        spring_start_day = spring_group.loc[
+                            spring_group.first_valid_index(), 'day_of_year']  # select first sampling day
                     else:
-                        spring_start_day = spring_group.loc[(spring_start_index - 1), 'day_of_year']  # select first day with rate > 0
+                        spring_start_day = spring_group.loc[
+                            (spring_start_index - 1), 'day_of_year']  # select first day with rate > 0
                 else:
-                    spring_start_day = spring_group.loc[(spring_start_index - 1), 'day_of_year']  # select first day with rate > threshold_inc
+                    spring_start_day = spring_group.loc[
+                        (spring_start_index - 1), 'day_of_year']  # select first day with rate > threshold_inc
 
             if num_minima > 0:  # a previous minimum is present
-                spring_start_index = spring_group.where(spring_group.min_flag == True).last_valid_index()  # select day with minimum closest to the max
+                spring_start_index = spring_group.where(
+                    spring_group.min_flag == True).last_valid_index()  # select day with minimum closest to the max
                 spring_start_day = spring_group.loc[spring_start_index, 'day_of_year']
 
             # sift growth window data based on start and end dates
@@ -206,7 +212,7 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
                     if summer_start_index is None:
                         summer_start_day = summer_group.loc[summer_group.first_valid_index(), 'day_of_year']
                     else:
-                        summer_start_day = summer_group.loc[(summer_start_index-1), 'day_of_year']
+                        summer_start_day = summer_group.loc[(summer_start_index - 1), 'day_of_year']
                 else:
                     summer_start_day = summer_group.loc[(summer_start_index - 1), 'day_of_year']
 
@@ -250,7 +256,7 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
                     if single_gw_start_index is None:
                         single_gw_start_day = single_group.loc[single_group.first_valid_index(), 'day_of_year']
                     else:
-                        single_gw_start_day = single_group.loc[(single_gw_start_index-1), 'day_of_year']
+                        single_gw_start_day = single_group.loc[(single_gw_start_index - 1), 'day_of_year']
                 else:
                     single_gw_start_day = single_group.loc[(single_gw_start_index - 1), 'day_of_year']
 
@@ -259,7 +265,8 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
                 single_gw_start_day = single_group.loc[single_gw_start_index, 'day_of_year']
 
             # sift single growth window data based on start and end dates
-            single_gw_gw = single_group >> sift(X.day_of_year <= single_gw_end_day) >> sift(X.day_of_year >= single_gw_start_day)
+            single_gw_gw = single_group >> sift(X.day_of_year <= single_gw_end_day) >> sift(
+                X.day_of_year >= single_gw_start_day)
             single_gw_gw.loc[:, 'season'] = 'single'
             single_gw_gw.loc[:, 'start_day'] = single_gw_start_day
             single_gw_gw.loc[:, 'end_day'] = single_gw_end_day
@@ -284,7 +291,239 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
     return master_gw_df, springsummer_gw_doy, master_prev_2weeks_gw_df
 
 
-def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_2weeks_springsummer_data, min_gw_length, t_max, t_min, t_opt):
+def calc_growth_window_normalized(df, threshold_inc, threshold_r, num_sample_threshold):
+    """
+        Detects the growth window period based on the the rate of change in chlorophyll-a concentration that has been
+        smoothed with the Savitzky-Golay filter. First, optima are flagged in the data using the find_peaks function,
+        indicating the end of a growth window. The growth window begins at the preceding minimum or when the rate
+        increases past the num_sample threshold (and if it doesn't increase past that threshold, it begins where the
+        rate increases above zero). Daily mean data is sifted for samples collected both within the growth window and
+        during the 1 and 2 weeks leading up to it (the pre-growth window), to be analyzed by the growth_window_means
+        function. See associated manuscript for full explanation of methods and rationale.
+
+        input:
+            df: DplyFrame containing daily mean in situ data for all lakes to be analyzed (from format_lake_data)
+            threshold_inc: minimum chlorophyll-a rate of change to constitute the start of the growth window when there
+                           is no minimum flagged in the data.
+            num_sample_threshold: Minimum number of samples per year that will be retained in the growth window dataset.
+
+        output:
+            master_gw_df: Water quality data for all detected growth windows, compiled into one DplyFrame
+            springsummer_gw_doy: Dataframe containing the day of year for the start and end of each growth window
+            master_prev_2weeks_gw_df: Compiled water quality data for each 2 week pre-growth window
+        """
+
+    # make empty dataframes (will be appended to later)
+    master_gw_df = pd.DataFrame(
+        columns=['lake', 'date', 'year', 'season', 'day_of_year', 'start_day', 'end_day', 'chla_increase', 'chla_roc',
+                 'chla', 'poc', 'tp', 'srp', 'par', 'ph', 'tkn', 'tdn', 'nh4', 'no2',
+                 'no3', 'nox'])
+    master_prev_2weeks_gw_df = pd.DataFrame(
+        columns=['lake', 'date', 'year', 'season', 'day_of_year', 'start_day', 'end_day',
+                 'chla', 'chla_roc', 'poc', 'tp', 'srp', 'par', 'ph', 'tkn', 'tdn', 'nh4', 'no2',
+                 'no3', 'nox'])
+
+    # sift data for minimum sampling frequency
+    df = df >> sift(X.num_samples >= num_sample_threshold)
+
+    for name, group in df.groupby(['lake', 'year']):  # group by lake and year to detect growth windows
+        group.reset_index(inplace=True)
+
+        # determine savgol_filter window length (smaller window for fewer samples)
+        if group.loc[0, 'num_samples'] <= 15:
+            window_len = 3
+        else:
+            window_len = 5
+
+        # 1) smooth the data and find location of the optima along the smoothed line
+        savgol = savgol_filter(group['chla'], window_length=window_len, polyorder=1)
+        group.loc[:, 'savgol_chla'] = savgol
+
+        # calculate the first derivative using the savgol filter
+        savgol1 = savgol_filter(group['chla'], window_length=window_len, polyorder=1, deriv=1,
+                                delta=group.loc[1, 'day_of_year'] - group.loc[0, 'day_of_year'])
+        group.loc[:, 'savgol_chla_1deriv'] = savgol1
+
+        # calculate R by dividing smoothed data by the 1st derivative and flag all days above the threshold as true
+        group.loc[:, 'chlr'] = group.loc[:, 'savgol_chla'] / group.loc[:, 'savgol_chla_1deriv']
+        group.loc[:, 'chlr_pos'] = group.loc[:, 'chlr'].gt(threshold_r)
+
+        # calculate chlorophyll rate of change and flag all days above the threshold as true
+        # group.loc[:, 'chla_roc'] = group.loc[:, 'savgol_chla'].diff() / group.loc[:, 'day_of_year'].diff()
+        # group.loc[:, 'chla_increase'] = group.loc[:, 'chla_roc'].gt(threshold_inc)
+
+        # find peaks and minima
+        y = group['savgol_chla']
+        peaks, properties = find_peaks(y, prominence=2)
+        y2 = y * -1  # use -y to find the minima
+        minima, min_properties = find_peaks(y2, prominence=0.5)
+
+        # flag peaks in the dataframe
+        peaks = DplyFrame(peaks)
+        peak_df = group.loc[group.index.intersection(peaks[0])]
+        peak_df['max_flag'] = True
+        group = pd.merge(group, (peak_df >> select(X.day_of_year, X.max_flag)), how='left', left_on='day_of_year',
+                         right_on='day_of_year')
+
+        # flag minima in the dataframe
+        minima = DplyFrame(minima)
+        trough_df = group.loc[group.index.intersection(minima[0])]
+        trough_df['min_flag'] = True
+        group = pd.merge(group, (trough_df >> select(X.day_of_year, X.min_flag)), how='left',
+                         left_on='day_of_year', right_on='day_of_year')
+
+        # 2) find spring and summer or single growth windows for lakes with 2 or 1 defined peaks, respectively
+        num_peaks = len(group['max_flag'].dropna())  # count the number of optima in the data
+
+        if num_peaks == 2:  # spring and summer growth windows occur
+
+            # find end date of growth window
+            spring_end_index = group.where(group.max_flag == True).first_valid_index()
+            spring_end_day = group.loc[spring_end_index, 'day_of_year']
+
+            # find start date of growth window
+            spring_group = group >> sift(X.day_of_year < spring_end_day)
+            num_minima = len(spring_group['min_flag'].dropna())
+
+            if num_minima == 0:  # no previous min, use the first increase above threshold_inc
+                spring_start_index = spring_group.where(spring_group.chla_increase == True).first_valid_index()
+
+                if spring_start_index is None:  # if there is no valid increase beforehand
+                    spring_start_index = spring_group.where(
+                        spring_group.chla_roc > 0).first_valid_index()  # find first day with a rate above zero
+                    if spring_start_index is None:
+                        spring_start_day = spring_group.loc[
+                            spring_group.first_valid_index(), 'day_of_year']  # select first sampling day
+                    else:
+                        spring_start_day = spring_group.loc[
+                            (spring_start_index - 1), 'day_of_year']  # select first day with rate > 0
+                else:
+                    spring_start_day = spring_group.loc[
+                        (spring_start_index - 1), 'day_of_year']  # select first day with rate > threshold_inc
+
+            if num_minima > 0:  # a previous minimum is present
+                spring_start_index = spring_group.where(
+                    spring_group.min_flag == True).last_valid_index()  # select day with minimum closest to the max
+                spring_start_day = spring_group.loc[spring_start_index, 'day_of_year']
+
+            # sift growth window data based on start and end dates
+            spring_gw = group >> sift(X.day_of_year <= spring_end_day) >> sift(X.day_of_year >= spring_start_day)
+            spring_gw.loc[:, 'season'] = 'spring'
+            spring_gw.loc[:, 'start_day'] = spring_start_day
+            spring_gw.loc[:, 'end_day'] = spring_end_day
+
+            # sift out 1 and 2 week pre-growth window data
+            spring_prev_2weeks_start_day = spring_start_day - 15
+
+            prev_2weeks_spring_df = group >> sift(X.day_of_year >= spring_prev_2weeks_start_day) >> sift(
+                X.day_of_year <= spring_start_day)
+            prev_2weeks_spring_df.loc[:, 'season'] = 'spring'
+            prev_2weeks_spring_df.loc[:, 'start_day'] = spring_prev_2weeks_start_day
+            prev_2weeks_spring_df.loc[:, 'end_day'] = spring_start_day
+
+            # append spring gw data to main dataframe
+            master_gw_df = pd.concat([master_gw_df, spring_gw], axis=0)
+            master_prev_2weeks_gw_df = pd.concat([master_prev_2weeks_gw_df, prev_2weeks_spring_df], axis=0)
+
+            # sift out spring data and repeat for summer
+            summer_df = group >> sift(X.day_of_year > spring_end_day)
+
+            # find end date of growth window
+            summer_end_index = summer_df.where(summer_df.max_flag == True).first_valid_index()
+            summer_end_day = summer_df.loc[summer_end_index, 'day_of_year']
+
+            # find start date of growth window
+            summer_group = summer_df >> sift(X.day_of_year < summer_end_day)
+            num_minima = len(summer_group['min_flag'].dropna())
+
+            if num_minima == 0:  # no previous min, use the first increase above threshold_inc
+                summer_start_index = summer_group.where(summer_group.chla_increase == True).first_valid_index()
+                if summer_start_index is None:
+                    summer_start_index = summer_group.where(summer_group.chla_roc > 0).first_valid_index()
+                    if summer_start_index is None:
+                        summer_start_day = summer_group.loc[summer_group.first_valid_index(), 'day_of_year']
+                    else:
+                        summer_start_day = summer_group.loc[(summer_start_index - 1), 'day_of_year']
+                else:
+                    summer_start_day = summer_group.loc[(summer_start_index - 1), 'day_of_year']
+
+            if num_minima > 0:  # a previous min is present
+                summer_start_index = summer_group.where(summer_group.min_flag == True).first_valid_index()
+                summer_start_day = summer_group.loc[summer_start_index, 'day_of_year']
+
+            # sift summer growth window data based on start and end dates
+            summer_gw = summer_df >> sift(X.day_of_year <= summer_end_day) >> sift(X.day_of_year >= summer_start_day)
+            summer_gw.loc[:, 'season'] = 'summer'
+            summer_gw.loc[:, 'start_day'] = summer_start_day
+            summer_gw.loc[:, 'end_day'] = summer_end_day
+
+            # sift out 1 and 2 week pre-growth window data
+            summer_prev_2weeks_start_day = summer_start_day - 15
+
+            prev_2weeks_summer_df = group >> sift(X.day_of_year >= summer_prev_2weeks_start_day) >> sift(
+                X.day_of_year <= summer_start_day)
+            prev_2weeks_summer_df.loc[:, 'season'] = 'summer'
+            prev_2weeks_summer_df.loc[:, 'start_day'] = summer_prev_2weeks_start_day
+            prev_2weeks_summer_df.loc[:, 'end_day'] = summer_start_day
+
+            # append summer gw data to main dataframe
+            master_gw_df = pd.concat([master_gw_df, summer_gw], axis=0)
+            master_prev_2weeks_gw_df = pd.concat([master_prev_2weeks_gw_df, prev_2weeks_summer_df], axis=0)
+
+        if num_peaks == 1:  # single growth window
+
+            # find end date of growth window
+            single_gw_end_index = group.where(group.max_flag == True).first_valid_index()
+            single_gw_end_day = group.loc[single_gw_end_index, 'day_of_year']
+
+            # find start date of growth window
+            single_group = group >> sift(X.day_of_year < single_gw_end_day)
+            num_minima = len(single_group['min_flag'].dropna())
+
+            if num_minima == 0:  # no previous min, use the first increase above threshold_inc
+                single_gw_start_index = single_group.where(single_group.chla_increase == True).first_valid_index()
+                if single_gw_start_index is None:
+                    single_gw_start_index = single_group.where(single_group.chla_roc > 0).first_valid_index()
+                    if single_gw_start_index is None:
+                        single_gw_start_day = single_group.loc[single_group.first_valid_index(), 'day_of_year']
+                    else:
+                        single_gw_start_day = single_group.loc[(single_gw_start_index - 1), 'day_of_year']
+                else:
+                    single_gw_start_day = single_group.loc[(single_gw_start_index - 1), 'day_of_year']
+
+            if num_minima > 0:  # a previous min is present
+                single_gw_start_index = single_group.where(single_group.min_flag == True).last_valid_index()
+                single_gw_start_day = single_group.loc[single_gw_start_index, 'day_of_year']
+
+            # sift single growth window data based on start and end dates
+            single_gw_gw = single_group >> sift(X.day_of_year <= single_gw_end_day) >> sift(
+                X.day_of_year >= single_gw_start_day)
+            single_gw_gw.loc[:, 'season'] = 'single'
+            single_gw_gw.loc[:, 'start_day'] = single_gw_start_day
+            single_gw_gw.loc[:, 'end_day'] = single_gw_end_day
+
+            # sift out 1 and 2 week pre-growth window data
+            single_gw_prev_2weeks_start_day = single_gw_start_day - 15
+
+            prev_2weeks_single_gw_df = group >> sift(X.day_of_year >= single_gw_prev_2weeks_start_day) >> sift(
+                X.day_of_year <= single_gw_start_day)
+            prev_2weeks_single_gw_df.loc[:, 'season'] = 'single'
+            prev_2weeks_single_gw_df.loc[:, 'start_day'] = single_gw_prev_2weeks_start_day
+            prev_2weeks_single_gw_df.loc[:, 'end_day'] = single_gw_start_day
+
+            # append single gw data to main dataframe
+            master_gw_df = pd.concat([master_gw_df, single_gw_gw], axis=0)
+            master_prev_2weeks_gw_df = pd.concat([master_prev_2weeks_gw_df, prev_2weeks_single_gw_df], axis=0)
+
+        # create a separate doy file
+        springsummer_gw_doy = DplyFrame(master_gw_df) >> select(X.lake, X.year, X.season, X.start_day, X.end_day)
+        springsummer_gw_doy.drop_duplicates(inplace=True)
+
+    return master_gw_df, springsummer_gw_doy, master_prev_2weeks_gw_df
+
+
+def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_2weeks_springsummer_data, min_gw_length,
+                        t_max, t_min, t_opt):
     """
     This function calculates chlorophyll-a rate, maximum chlorophyll-a concentration, accumulated chlorophyll-a,and mean
     values for environmental variables during each growth window. Mean water temperature, solar radiation, and total
@@ -310,21 +549,22 @@ def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_
     # calculate growth window length in "spring and summer doy" file and merge with "spring and summer selected"
     spring_and_summer_doy = spring_and_summer_doy >> mutate(growth_window_length=X.end_day - X.start_day)
     springsummer_data = pd.merge(spring_and_summer_selected, spring_and_summer_doy, how='left',
-                               left_on=['lake', 'year', 'season', 'start_day', 'end_day'],
-                               right_on=['lake', 'year', 'season', 'start_day', 'end_day'])
+                                 left_on=['lake', 'year', 'season', 'start_day', 'end_day'],
+                                 right_on=['lake', 'year', 'season', 'start_day', 'end_day'])
 
     # make an empty dataframe
-    springsummer_gw_data = pd.DataFrame(columns=['lake', 'year', 'season', 'chla_rate', 'max_chla', 'poc_rate', 'chla_to_poc',
-                                               'gw_temp', 'gw_tp', 'gw_srp', 'gw_secchi', 'gw_ph',
-                                               'gw_tkn', 'gw_tdn', 'gw_length',
-                                               'start_day', 'end_day', 'specific_chla_rate', 'f_temp',
-                                               'temp_corrected_specific_chla_rate'])
+    springsummer_gw_data = pd.DataFrame(
+        columns=['lake', 'year', 'season', 'chla_rate', 'max_chla', 'poc_rate', 'chla_to_poc',
+                 'gw_temp', 'gw_tp', 'gw_srp', 'gw_secchi', 'gw_ph',
+                 'gw_tkn', 'gw_tdn', 'gw_length',
+                 'start_day', 'end_day', 'specific_chla_rate', 'f_temp',
+                 'temp_corrected_specific_chla_rate'])
 
     for name, group in springsummer_data.groupby(['lake', 'year', 'season']):
-
         first_index = group.first_valid_index()  # first index in the group
         last_index = group.last_valid_index()  # last index in the group
-        group.loc[:, 'gw_length'] = group.loc[last_index, 'day_of_year'] - group.loc[first_index, 'day_of_year']  # growth window length (days)
+        group.loc[:, 'gw_length'] = group.loc[last_index, 'day_of_year'] - group.loc[
+            first_index, 'day_of_year']  # growth window length (days)
 
         # calculate the chlorophyll-a rate, specific rate, and max concentration
         group.loc[:, 'chla_max-min'] = group.loc[last_index, 'chla'] - group.loc[first_index, 'chla']
@@ -340,7 +580,7 @@ def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_
         group.loc[:, 'poc_rate'] = group.loc[:, 'poc_max-min'] / group.loc[:, 'gw_length']
 
         # calculate chla:poc ratio after converting chlorophyll-a to mg/L
-        group.loc[:, 'chla_to_poc'] = (group.loc[:, 'chla']/1000) /group.loc[:, 'poc']
+        group.loc[:, 'chla_to_poc'] = (group.loc[:, 'chla'] / 1000) / group.loc[:, 'poc']
 
         # calculate mean environmental variables during the window
         group.loc[:, 'gw_temp'] = group.loc[:, 'temp'].mean()
@@ -368,7 +608,6 @@ def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_
     prev_2weeks_data = pd.DataFrame(columns=['lake', 'year', 'season', 'pre_gw_temp', 'pre_gw_tp', 'pre_gw_tkn'])
 
     for name, group in prev_2weeks_springsummer_data.groupby(['lake', 'year', 'season']):
-
         # calculate mean water quality variables during the window
         group.loc[:, 'pre_gw_temp'] = group.loc[:, 'temp'].mean()
         group.loc[:, 'pre_gw_tp'] = group.loc[:, 'tp'].mean()
@@ -377,12 +616,12 @@ def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_
         # keep one row and concatenate onto the prev_2weeks_data dataframe
         prev_2wks = group.head(1)
         prev_2wks = DplyFrame(prev_2wks) >> select(X.lake, X.year, X.season, X.pre_gw_temp, X.pre_gw_tp,
-                                                         X.pre_gw_tkn)
+                                                   X.pre_gw_tkn)
         prev_2weeks_data = pd.concat([prev_2weeks_data, prev_2wks], axis=0)
 
     # merge the three dataframes together
     springsummer_gw_data = pd.merge(springsummer_gw_data, prev_2weeks_data, left_on=['lake', 'year', 'season'],
-                                  right_on=['lake', 'year', 'season'], how='left')
+                                    right_on=['lake', 'year', 'season'], how='left')
 
     # sift columns based on chlorophyll rate and growth window length
     springsummer_gw_data = DplyFrame(springsummer_gw_data) >> sift(X.chla_rate >= 0) >> sift(
@@ -401,7 +640,6 @@ def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_
 
 
 def gw_summary(gw_data):
-
     # print % of each growth window type
     perc_spring = len(gw_data.loc[(gw_data['season'] == 'spring')]) / len(gw_data['season']) * 100
     perc_summer = len(gw_data.loc[(gw_data['season'] == 'summer')]) / len(gw_data['season']) * 100
@@ -518,11 +756,11 @@ def lake_summary(daily_mean, ts_coords):
                                               'days_sampled', 'parameters'])
         group_summary.loc[0, 'lake'] = group.loc[0, 'lake']
         group_summary.loc[0, 'start_sampling'] = group.loc[0, 'year']
-        group_summary.loc[0, 'end_sampling'] = group.loc[(len(group)-1), 'year']
+        group_summary.loc[0, 'end_sampling'] = group.loc[(len(group) - 1), 'year']
         group_summary.loc[0, 'days_sampled'] = len(group['day'])
-        group_summary = group_summary >> mutate(years_sampled=X.start_sampling-X.end_sampling + 1)
+        group_summary = group_summary >> mutate(years_sampled=X.start_sampling - X.end_sampling + 1)
         variable_df = group.drop(['lake', 'date', 'year', 'month', 'day', 'day_of_year', 'num_samples',
-                                   'index'], axis=1)
+                                  'index'], axis=1)
         variable_df.dropna(how='all', axis=1, inplace=True)
         group_summary.loc[0, 'variables'] = list(variable_df.columns.values)
 
