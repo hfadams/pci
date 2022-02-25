@@ -106,6 +106,8 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
 
     for name, group in df.groupby(['lake', 'year']):  # group by lake and year to detect growth windows
         group.reset_index(inplace=True)
+        print(group.lake.unique())
+        print(group.year.unique())
 
         # determine savgol_filter window length (smaller window for fewer samples)
         if group.loc[0, 'num_samples'] <= 15:
@@ -198,23 +200,24 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
             summer_df = group >> sift(X.day_of_year > spring_end_day)
 
             # find end date of growth window
-            summer_end_index = summer_df.where(summer_df.max_flag == True).first_valid_index()
-            summer_end_day = summer_df.loc[summer_end_index, 'day_of_year']
+            if summer_df.where(summer_df.max_flag == True) is not None:
+                summer_end_index = summer_df.where(summer_df.max_flag == True).first_valid_index()
+                summer_end_day = summer_df.loc[summer_end_index, 'day_of_year']
 
-            # find start date of growth window
-            summer_group = summer_df >> sift(X.day_of_year < summer_end_day)
-            num_minima = len(summer_group['min_flag'].dropna())
+                # find start date of growth window
+                summer_group = summer_df >> sift(X.day_of_year < summer_end_day)
+                num_minima = len(summer_group['min_flag'].dropna())
 
-            if num_minima == 0:  # no previous min, use the first increase above threshold_inc
-                summer_start_index = summer_group.where(summer_group.chla_increase == True).first_valid_index()
-                if summer_start_index is None:
-                    summer_start_index = summer_group.where(summer_group.chla_roc > 0).first_valid_index()
+                if num_minima == 0:  # no previous min, use the first increase above threshold_inc
+                    summer_start_index = summer_group.where(summer_group.chla_increase == True).first_valid_index()
                     if summer_start_index is None:
-                        summer_start_day = summer_group.loc[summer_group.first_valid_index(), 'day_of_year']
+                        summer_start_index = summer_group.where(summer_group.chla_roc > 0).first_valid_index()
+                        if summer_start_index is None:
+                            summer_start_day = summer_group.loc[summer_group.first_valid_index(), 'day_of_year']
+                        else:
+                            summer_start_day = summer_group.loc[(summer_start_index - 1), 'day_of_year']
                     else:
                         summer_start_day = summer_group.loc[(summer_start_index - 1), 'day_of_year']
-                else:
-                    summer_start_day = summer_group.loc[(summer_start_index - 1), 'day_of_year']
 
             if num_minima > 0:  # a previous min is present
                 summer_start_index = summer_group.where(summer_group.min_flag == True).first_valid_index()
