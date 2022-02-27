@@ -294,9 +294,9 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
     return master_gw_df, springsummer_gw_doy, master_prev_2weeks_gw_df
 
 
-def calc_growth_window_normalized(df, threshold_inc, threshold_r, num_sample_threshold):
+def calc_growth_window_normalized(df, threshold_inc, threshold_rthreshold_r, num_sample_threshold):
     """
-        Detects the growth window period based on the the rate of change in chlorophyll-a concentration that has been
+        Detects the growth window period based on the the normalized chlorophyll-a rate of change that has been
         smoothed with the Savitzky-Golay filter. First, optima are flagged in the data using the find_peaks function,
         indicating the end of a growth window. The growth window begins at the preceding minimum or when the rate
         increases past the num_sample threshold (and if it doesn't increase past that threshold, it begins where the
