@@ -294,15 +294,17 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
     return master_gw_df, springsummer_gw_doy, master_prev_2weeks_gw_df
 
 
-def calc_growth_window_normalized(df, threshold_inc, threshold_rthreshold_r, num_sample_threshold):
+def calc_growth_window_normalized(df, threshold_inc, num_sample_threshold):
     """
-        Detects the growth window period based on the the normalized chlorophyll-a rate of change that has been
-        smoothed with the Savitzky-Golay filter. First, optima are flagged in the data using the find_peaks function,
-        indicating the end of a growth window. The growth window begins at the preceding minimum or when the rate
-        increases past the num_sample threshold (and if it doesn't increase past that threshold, it begins where the
-        rate increases above zero). Daily mean data is sifted for samples collected both within the growth window and
-        during the 1 and 2 weeks leading up to it (the pre-growth window), to be analyzed by the growth_window_means
-        function. See associated manuscript for full explanation of methods and rationale.
+        Detects the growth window period based on the the normalized chlorophyll-a rate of change that is calculated
+        from the first derivative of the raw chlorophyll-a data and divided by the chlorophyll concentration that has
+        been smoothed with the Savitzky-Golay filter. First, optima are flagged in the smoothed data using the
+        find_peaks function, indicating the end of a growth window. The growth window begins at the preceding date when
+        the normalized rate of change in chlorophyll concentration first reaches the threshold_inc value (and if it
+        doesn't meet the threshold, it begins where the rate is first positive). Daily mean data is sifted for samples
+        collected both within the growth window and during the 1 and 2 weeks leading up to it (the pre-growth window),
+        to be analyzed by the growth_window_means function. See associated manuscript for full explanation of methods
+        and rationale.
 
         input:
             df: DplyFrame containing daily mean in situ data for all lakes to be analyzed (from format_lake_data)
@@ -339,27 +341,21 @@ def calc_growth_window_normalized(df, threshold_inc, threshold_rthreshold_r, num
             window_len = 5
 
         # 1) smooth the data and find location of the optima along the smoothed line
-        savgol = savgol_filter(group['chla'], window_length=window_len, polyorder=1)
-        group.loc[:, 'savgol_chla'] = savgol
+        smooth_chla = savgol_filter(group['chla'], window_length=window_len, polyorder=1)
+        group.loc[:, 'smoothed_chla'] = smooth_chla
 
         # calculate the first derivative using the savgol filter
-        savgol1 = savgol_filter(group['chla'], window_length=window_len, polyorder=1, deriv=1,
-                                delta=group.loc[1, 'day_of_year'] - group.loc[0, 'day_of_year'])
-        group.loc[:, 'savgol_chla_1deriv'] = savgol1
+        first_deriv = savgol_filter(group['chla'], window_length=window_len, polyorder=1, deriv=1, delta=1)
+        group.loc[:, 'chla_first_deriv'] = first_deriv
 
-        # calculate R by dividing smoothed data by the 1st derivative and flag all days above the threshold as true
-        group.loc[:, 'chlr'] = group.loc[:, 'savgol_chla'] / group.loc[:, 'savgol_chla_1deriv']
-        group.loc[:, 'chlr_pos'] = group.loc[:, 'chlr'].gt(threshold_r)
+        # calculate the first order rate constant by dividing the 1st derivative by the smoothed data and flag all days
+        # above threshold as true
+        group.loc[:, 'normalized_chla_rate'] = group.loc[:, 'chla_first_deriv'] / group.loc[:, 'smoothed_chla']
+        group.loc[:, 'norm_chla_rate_pos'] = group.loc[:, 'normalized_chla_rate'].gt(threshold_inc)
 
-        # calculate chlorophyll rate of change and flag all days above the threshold as true
-        # group.loc[:, 'chla_roc'] = group.loc[:, 'savgol_chla'].diff() / group.loc[:, 'day_of_year'].diff()
-        # group.loc[:, 'chla_increase'] = group.loc[:, 'chla_roc'].gt(threshold_inc)
-
-        # find peaks and minima
-        y = group['savgol_chla']
+        # find peaks in the smoothed data
+        y = group['smoothed_chla']
         peaks, properties = find_peaks(y, prominence=2)
-        y2 = y * -1  # use -y to find the minima
-        minima, min_properties = find_peaks(y2, prominence=0.5)
 
         # flag peaks in the dataframe
         peaks = DplyFrame(peaks)
@@ -367,13 +363,6 @@ def calc_growth_window_normalized(df, threshold_inc, threshold_rthreshold_r, num
         peak_df['max_flag'] = True
         group = pd.merge(group, (peak_df >> select(X.day_of_year, X.max_flag)), how='left', left_on='day_of_year',
                          right_on='day_of_year')
-
-        # flag minima in the dataframe
-        minima = DplyFrame(minima)
-        trough_df = group.loc[group.index.intersection(minima[0])]
-        trough_df['min_flag'] = True
-        group = pd.merge(group, (trough_df >> select(X.day_of_year, X.min_flag)), how='left',
-                         left_on='day_of_year', right_on='day_of_year')
 
         # 2) find spring and summer or single growth windows for lakes with 2 or 1 defined peaks, respectively
         num_peaks = len(group['max_flag'].dropna())  # count the number of optima in the data
@@ -386,28 +375,22 @@ def calc_growth_window_normalized(df, threshold_inc, threshold_rthreshold_r, num
 
             # find start date of growth window
             spring_group = group >> sift(X.day_of_year < spring_end_day)
-            num_minima = len(spring_group['min_flag'].dropna())
 
-            if num_minima == 0:  # no previous min, use the first increase above threshold_inc
-                spring_start_index = spring_group.where(spring_group.chla_increase == True).first_valid_index()
+            # Find the first normalized rate of increase above threshold_inc
+            spring_start_index = spring_group.where(spring_group.norm_chla_rate_pos == True).first_valid_index()
 
-                if spring_start_index is None:  # if there is no valid increase beforehand
-                    spring_start_index = spring_group.where(
-                        spring_group.chla_roc > 0).first_valid_index()  # find first day with a rate above zero
-                    if spring_start_index is None:
-                        spring_start_day = spring_group.loc[
-                            spring_group.first_valid_index(), 'day_of_year']  # select first sampling day
-                    else:
-                        spring_start_day = spring_group.loc[
-                            (spring_start_index - 1), 'day_of_year']  # select first day with rate > 0
+            if spring_start_index is None:  # if there is no valid increase beforehand
+                spring_start_index = spring_group.where(
+                    spring_group.normalized_chla_rate > 0).first_valid_index()  # find first day with a normalized rate above zero
+                if spring_start_index is None:
+                    spring_start_day = spring_group.loc[
+                        spring_group.first_valid_index(), 'day_of_year']  # select first sampling day
                 else:
                     spring_start_day = spring_group.loc[
-                        (spring_start_index - 1), 'day_of_year']  # select first day with rate > threshold_inc
-
-            if num_minima > 0:  # a previous minimum is present
-                spring_start_index = spring_group.where(
-                    spring_group.min_flag == True).last_valid_index()  # select day with minimum closest to the max
-                spring_start_day = spring_group.loc[spring_start_index, 'day_of_year']
+                        (spring_start_index), 'day_of_year']  # select first day with normalized rate > 0
+            else:
+                spring_start_day = spring_group.loc[
+                    (spring_start_index), 'day_of_year']  # select first day with normalized rate > threshold_inc
 
             # sift growth window data based on start and end dates
             spring_gw = group >> sift(X.day_of_year <= spring_end_day) >> sift(X.day_of_year >= spring_start_day)
@@ -437,22 +420,16 @@ def calc_growth_window_normalized(df, threshold_inc, threshold_rthreshold_r, num
 
             # find start date of growth window
             summer_group = summer_df >> sift(X.day_of_year < summer_end_day)
-            num_minima = len(summer_group['min_flag'].dropna())
 
-            if num_minima == 0:  # no previous min, use the first increase above threshold_inc
-                summer_start_index = summer_group.where(summer_group.chla_increase == True).first_valid_index()
+            summer_start_index = summer_group.where(summer_group.norm_chla_rate_pos == True).first_valid_index()
+            if summer_start_index is None:
+                summer_start_index = summer_group.where(summer_group.normalized_chla_rate > 0).first_valid_index()
                 if summer_start_index is None:
-                    summer_start_index = summer_group.where(summer_group.chla_roc > 0).first_valid_index()
-                    if summer_start_index is None:
-                        summer_start_day = summer_group.loc[summer_group.first_valid_index(), 'day_of_year']
-                    else:
-                        summer_start_day = summer_group.loc[(summer_start_index - 1), 'day_of_year']
+                    summer_start_day = summer_group.loc[summer_group.first_valid_index(), 'day_of_year']
                 else:
-                    summer_start_day = summer_group.loc[(summer_start_index - 1), 'day_of_year']
-
-            if num_minima > 0:  # a previous min is present
-                summer_start_index = summer_group.where(summer_group.min_flag == True).first_valid_index()
-                summer_start_day = summer_group.loc[summer_start_index, 'day_of_year']
+                    summer_start_day = summer_group.loc[(summer_start_index), 'day_of_year']
+            else:
+                summer_start_day = summer_group.loc[(summer_start_index), 'day_of_year']
 
             # sift summer growth window data based on start and end dates
             summer_gw = summer_df >> sift(X.day_of_year <= summer_end_day) >> sift(X.day_of_year >= summer_start_day)
@@ -481,22 +458,16 @@ def calc_growth_window_normalized(df, threshold_inc, threshold_rthreshold_r, num
 
             # find start date of growth window
             single_group = group >> sift(X.day_of_year < single_gw_end_day)
-            num_minima = len(single_group['min_flag'].dropna())
 
-            if num_minima == 0:  # no previous min, use the first increase above threshold_inc
-                single_gw_start_index = single_group.where(single_group.chla_increase == True).first_valid_index()
+            single_gw_start_index = single_group.where(single_group.norm_chla_rate_pos == True).first_valid_index()
+            if single_gw_start_index is None:
+                single_gw_start_index = single_group.where(single_group.normalized_chla_rate > 0).first_valid_index()
                 if single_gw_start_index is None:
-                    single_gw_start_index = single_group.where(single_group.chla_roc > 0).first_valid_index()
-                    if single_gw_start_index is None:
-                        single_gw_start_day = single_group.loc[single_group.first_valid_index(), 'day_of_year']
-                    else:
-                        single_gw_start_day = single_group.loc[(single_gw_start_index - 1), 'day_of_year']
+                    single_gw_start_day = single_group.loc[single_group.first_valid_index(), 'day_of_year']
                 else:
-                    single_gw_start_day = single_group.loc[(single_gw_start_index - 1), 'day_of_year']
-
-            if num_minima > 0:  # a previous min is present
-                single_gw_start_index = single_group.where(single_group.min_flag == True).last_valid_index()
-                single_gw_start_day = single_group.loc[single_gw_start_index, 'day_of_year']
+                    single_gw_start_day = single_group.loc[(single_gw_start_index), 'day_of_year']
+            else:
+                single_gw_start_day = single_group.loc[(single_gw_start_index), 'day_of_year']
 
             # sift single growth window data based on start and end dates
             single_gw_gw = single_group >> sift(X.day_of_year <= single_gw_end_day) >> sift(
