@@ -117,14 +117,14 @@ def calc_growth_window(df, threshold_inc, num_sample_threshold):
 
         # 1) smooth the data and find location of the optima along the smoothed line
         savgol = savgol_filter(group['chla'], window_length=window_len, polyorder=1)
-        group.loc[:, 'savgol_chla'] = savgol
+        group.loc[:, 'smoothed_chla'] = savgol
 
         # calculate chlorophyll rate of change and flag all days above the threshold as true
-        group.loc[:, 'chla_roc'] = group.loc[:, 'savgol_chla'].diff() / group.loc[:, 'day_of_year'].diff()
+        group.loc[:, 'chla_roc'] = group.loc[:, 'smoothed_chla'].diff() / group.loc[:, 'day_of_year'].diff()
         group.loc[:, 'chla_increase'] = group.loc[:, 'chla_roc'].gt(threshold_inc)
 
         # find peaks and minima
-        y = group['savgol_chla']
+        y = group['smoothed_chla']
         peaks, properties = find_peaks(y, prominence=2)
         y2 = y * -1  # use -y to find the minima
         minima, min_properties = find_peaks(y2, prominence=0.5)
@@ -547,7 +547,7 @@ def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_
         group.loc[:, 'max_chla'] = group.loc[:, 'chla'].max()
 
         # Calculate accumulated chlorophyll-a as the area under the curve during the growth window
-        group.loc[:, 'acc_chla'] = np.trapz(group.loc[:, 'savgol_chla'], x=group.loc[:, 'day_of_year'])
+        group.loc[:, 'acc_chla'] = np.trapz(group.loc[:, 'smoothed_chla'], x=group.loc[:, 'day_of_year'])
 
         # calculate the rate of change in poc concentration (mg/L)
         group.loc[:, 'poc_max-min'] = group.loc[last_index, 'poc'] - group.loc[first_index, 'poc']

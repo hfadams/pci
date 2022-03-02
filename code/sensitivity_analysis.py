@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 from dplython import DplyFrame, select, X, arrange
-from growth_window_functions import growth_window_means, calc_growth_window, format_lake_name
+from growth_window_functions import growth_window_means, calc_growth_window_normalized, format_lake_name, \
+    calc_growth_window
 
 # define parameters
 t_max = 40
@@ -16,12 +17,9 @@ t_min = 0
 t_opt = 25
 min_gw_length = 2
 alpha = 0.05
-threshold_inc_list = [0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.8, 0.9, 0.1, 0.2]
-
-# find out why it's breaking for eutrophic lakes!!
-
-# make a vector of trophic classes to loop through
-# trophic_status_list = ['oligotrophic', 'mesotrophic', 'eutrophic', 'hypereutrophic']
+threshold_inc_list = [0, 0.05, 0.1, 0.2, 0.4, 0.6, 0.8, 1, 1.2]  # oligotrophic
+# threshold_inc_list = [0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.2]
+# , 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 
 # read in coordinates and lake formatting file
 coords_df = DplyFrame(pd.read_csv('supplementary_data/all_lake_coordinates.csv', encoding='latin-1'))
@@ -38,23 +36,10 @@ daily_mean_ts = pd.merge(daily_mean_renamed, (trophic_status >> select(X.lake, X
 # convert to datetime
 daily_mean_ts.loc[:, 'date'] = pd.to_datetime(daily_mean_ts.loc[:, 'date'])
 
-# Make a function that takes in trophic status and a string of threshold values to loop through
 # subset trophic class of the lakes (for loop on trophic class)
-subset_df = DplyFrame(daily_mean_ts.loc[daily_mean_ts['trophic_st'] == 'eutrophic'])
+subset_df = DplyFrame(daily_mean_ts.loc[daily_mean_ts['trophic_st'] == 'oligotrophic'])
 subset_df = DplyFrame(subset_df.loc[subset_df['lake'] != 'Lake winnipeg'])
 subset_df = subset_df >> arrange(X.lake, X.date)
-print(subset_df.lake.unique())
-
-# ----------------
-winnipeg = DplyFrame(daily_mean_ts.loc[daily_mean_ts['lake'] == 'Lake winnipeg'])
-winnipeg = winnipeg >> arrange(X.date)
-winnipeg_subset = DplyFrame(winnipeg.loc[winnipeg['year'] == 2005])
-plt.plot(winnipeg_subset.loc[:,'date'], winnipeg_subset.loc[:,'chla'])
-plt.show()
-
-plt.plot(winnipeg.loc[:,'date'], winnipeg.loc[:,'chla'])
-plt.show()
-# ----------------
 
 # make an empty dataframe for all threshold values within each lake
 master_gw_df = DplyFrame(pd.DataFrame())
@@ -69,7 +54,7 @@ for i in threshold_inc_list:
 
     # use growth window function on the dataset of daily means
     spring_and_summer_df, spring_and_summer_doy, prev_2weeks_spring_and_summer_df = \
-        calc_growth_window(df=subset_df, threshold_inc=threshold_inc, num_sample_threshold=6)
+        calc_growth_window_normalized(df=subset_df, threshold_inc=threshold_inc, num_sample_threshold=6)
 
     # calculate chlorophyll-a rate and mean temperature during each growth window
     springsummer_gw_data = growth_window_means(spring_and_summer_doy, spring_and_summer_df,
@@ -84,11 +69,14 @@ for i in threshold_inc_list:
 # concat all dataframes for the each lake into one dataframe
 master_gw_df = pd.concat([master_gw_df, master_thresh_df], axis=0)
 
-master_gw_df.loc[:, 'trophic_status'] = "eutrophic"
+master_gw_df.loc[:, 'trophic_status'] = "oligotrophic"
+master_gw_df.to_csv('output/sensitivity_test_norm_oligotrophic.csv')
+
+
 
 # ---------------------------------------
 # read in files to plot
-oligo_df = DplyFrame(pd.read_csv('output/sensitivity_test_oligotrophic.csv', encoding='latin-1'))
+oligo_df = DplyFrame(pd.read_csv('output/sensitivity_test_norm_oligotrophic.csv', encoding='latin-1'))
 subset_oligo = DplyFrame(oligo_df.loc[oligo_df['lake'] == 'Ennerdale water -bowness knott'])
 
 meso_df = DplyFrame(pd.read_csv('output/sensitivity_test_mesotrophic.csv', encoding='latin-1'))
@@ -100,27 +88,51 @@ subset_eu = DplyFrame(eu_df.loc[eu_df['lake'] == 'Bassenthwaite'])
 hyper_df = DplyFrame(pd.read_csv('output/sensitivity_test_hypereutrophic.csv', encoding='latin-1'))
 subset_hyper = DplyFrame(hyper_df.loc[hyper_df['lake'] == 'Ranworth broad'])
 
+# edit these for easy plotting
+df = oligo_df
+subset_col = 'season'
+subset_val = 'single'
+
 # make box plots for each threshold
-sns.boxplot(x="trophic_status", y="gw_length", hue='thresh_val',  data=subset_hyper)
+sns.boxplot(x="trophic_status", y="gw_length", hue='thresh_val',  data=df.loc[df[subset_col] == subset_val])
 plt.ylabel('growth window length (days)')
 plt.xlabel('')
+plt.title(subset_val)
 plt.show()
 
-sns.boxplot(x="trophic_status", y="start_day", hue='thresh_val',  data=subset_hyper)
+sns.boxplot(x="trophic_status", y="start_day", hue='thresh_val',  data=df.loc[df[subset_col] == subset_val])
 plt.ylabel('Start day (day of year)')
 plt.xlabel('')
+plt.title(subset_val)
 plt.show()
 
-sns.boxplot(x="trophic_status", y="gw_temp", hue='thresh_val',  data=subset_hyper)
+sns.boxplot(x="trophic_status", y="gw_temp", hue='thresh_val',  data=df.loc[df[subset_col] == subset_val])
 plt.ylabel('growth window temperature (degrees C)')
 plt.xlabel('')
+plt.title(subset_val)
 plt.show()
 
-sns.boxplot(x="trophic_status", y="specific_chla_rate", hue='thresh_val',  data=subset_hyper)
+sns.boxplot(x="trophic_status", y="specific_chla_rate", hue='thresh_val',  data=df.loc[df[subset_col] == subset_val])
 plt.ylabel('specific chl-a rate (day^-1)')
 plt.ylim(0, 0.1)
 plt.xlabel('')
+plt.title(subset_val)
 plt.show()
+
+# making a larger grid of subplots using matplotlib
+fig, axs = plt.subplots(3)
+fig.suptitle('Vertically stacked subplots')
+# axs[0].plot(x, y)
+# axs[1].plot(x, -y)
+# axs[1].plot(x, -y)
+
+# or use seaborn
+g = sns.FacetGrid(oligo_df, col="season", row='trophic_status', hue='')
+
+g = sns.FacetGrid(oligo_df, col="season", hue="thresh_val")  # hue=""
+g.map(sns.boxplot, "start_day")
+plt.show()
+g.add_legend()
 
 # master_gw_df.to_csv('output/sensitivity_test_eutrophic.csv')
 
@@ -144,3 +156,14 @@ plt.show()
 # plt.ylabel('start day')
 # plt.xlabel('threshold = 0 ug/L/day')
 # plt.show()
+
+# What's up with winnipeg? ----------------
+# winnipeg = DplyFrame(daily_mean_ts.loc[daily_mean_ts['lake'] == 'Lake winnipeg'])
+# winnipeg = winnipeg >> arrange(X.date)
+# winnipeg_subset = DplyFrame(winnipeg.loc[winnipeg['year'] == 2005])
+# plt.plot(winnipeg_subset.loc[:,'date'], winnipeg_subset.loc[:,'chla'])
+# plt.show()
+
+# plt.plot(winnipeg.loc[:,'date'], winnipeg.loc[:,'chla'])
+# plt.show()
+# ----------------
