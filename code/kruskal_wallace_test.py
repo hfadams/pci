@@ -1,0 +1,9 @@
+stats.kruskal((df.loc[(df.thresh_val == 0) & (df.season == season_val)] >> select(X.start_day)),
+              (df.loc[(df.thresh_val == 0.05) & (df.season == season_val)] >> select(X.start_day)),
+              (df.loc[(df.thresh_val == 0.1) & (df.season == season_val)] >> select(X.start_day)),
+              (df.loc[(df.thresh_val == 0.2) & (df.season == season_val)] >> select(X.start_day)),
+              (df.loc[(df.thresh_val == 0.4) & (df.season == season_val)] >> select(X.start_day)),
+              (df.loc[(df.thresh_val == 0.6) & (df.season == season_val)] >> select(X.start_day)),
+              (df.loc[(df.thresh_val == 0.8) & (df.season == season_val)] >> select(X.start_day)),
+              (df.loc[(df.thresh_val == 1) & (df.season == season_val)] >> select(X.start_day)),
+              (df.loc[(df.thresh_val == 1.2) & (df.season == season_val)] >> select(X.start_day)))
