@@ -10,6 +10,7 @@ from dplython import DplyFrame, select, X
 from growth_window_functions import format_lake_data, growth_window_means, get_coords_ts, get_tsi_coords, \
     select_daily_mean, lake_summary, calc_growth_window, format_lake_name
 import glob
+import numpy as np
 
 # define parameters
 t_max = 40
@@ -112,6 +113,7 @@ lake_summary = pd.merge(lake_summary, (climate_zones >> select(X.lake, X.climate
 
 
 gw_data_cz_ts.to_csv('output/gw_data_cz_ts.csv')
+selected_daily_mean.to_csv('output/selected_daily_mean.csv')
 lake_summary.to_csv('output/lake_summary.csv')
 
 # formatting summary documents
@@ -125,3 +127,13 @@ lake_summary.to_csv('output/lake_summary.csv')
 
 # 8) redo SSR calculations!!! send to Jane once things are mostly organized (do before editing column headers, so
 # actually step 3.5). Jane (or I) can edit the SSR code as well
+
+# calculating % of different things
+perc_oligo = len(gw_data_cz_ts.loc[gw_data_cz_ts['trophic_status'] == 'oligotrophic'])/len(gw_data_cz_ts.loc[:,'lake'])*100
+perc_meso = len(gw_data_cz_ts.loc[gw_data_cz_ts['trophic_status'] == 'mesotrophic'])/len(gw_data_cz_ts.loc[:,'lake'])*100
+perc_eu = len(gw_data_cz_ts.loc[gw_data_cz_ts['trophic_status'] == 'eutrophic'])/len(gw_data_cz_ts.loc[:,'lake'])*100
+perc_hyper = len(gw_data_cz_ts.loc[gw_data_cz_ts['trophic_status'] == 'hypereutrophic'])/len(gw_data_cz_ts.loc[:,'lake'])*100
+
+oligo_lakes = gw_data_cz_ts.loc[gw_data_cz_ts['trophic_status'] == 'oligotrophic']
+oligo_perc_single = len(oligo_lakes.loc[oligo_lakes['season'] == 'single'])/len(oligo_lakes.loc[:,'lake'])*100
+median_pci_length = np.median(gw_data_cz_ts.loc[:, 'gw_length'])
