@@ -1,0 +1,347 @@
+,lake,tsi,trophic_status,lake_lat,lake_long
+0,Experimental lake 224,34.3578906,oligotrophic,49.41,-93.43
+1,Experimental lake 442,39.24780878,oligotrophic,49.46,-93.49
+2,Alfhildsgrund W.,34.44695258,oligotrophic,58.735,12.55
+3,Brotherswater,37.98119325,oligotrophic,54.505,-2.924
+4,Buttermere,37.93594732,oligotrophic,54.536,-3.28
+5,Blanksjön,39.32073899,oligotrophic,56.212,15.178
+6,Bösjön,34.72282215,oligotrophic,61.324,14.292
+7,Crystal lake,37.65703383,oligotrophic,46.003,-89.612
+8,Ennerdale water -bowness knott,35.41165799,oligotrophic,54.52,-3.373
+9,Giles lake,33.9405354,oligotrophic,41.376,-75.093
+10,Lake huron,31.04467596,oligotrophic,43.09,-82.392
+11,Källsjön,38.71517462,oligotrophic,61.634,16.736
+12,Kånkåstjärnen,36.53680018,oligotrophic,62.608,16.896
+13,Lien,38.19314742,oligotrophic,59.811,15.521
+14,Lindöviken W.,34.94049942,oligotrophic,60.022,23.194
+15,Lake ontario,39.2304471,oligotrophic,43.314,-79.751
+16,Red tarn -stillwater,38.94860804,oligotrophic,54.53,-3.006
+17,Tryssjön,34.88574797,oligotrophic,60.435,15.083
+18,Wastwater -stillwater,33.80081571,oligotrophic,54.427,-3.319
+19,Övre Skärsjön,38.90738096,oligotrophic,59.837,15.55
+20,Experimental lake 239,40.35195524,mesotrophic,49.41,-93.44
+21,Törn,49.92021274,mesotrophic,56.564,15.539
+22,Allequash lake,49.56095182,mesotrophic,46.038,-89.701
+23,Allgunnen,47.03593176,mesotrophic,57.223,14.615
+24,Bassenthwaite -england,49.63385666,mesotrophic,54.655,-3.221
+25,Blea tarn,41.08390313,mesotrophic,54.429,-3.092
+26,Bromlee lough overflow,47.38788208,mesotrophic,55.021,-2.334
+27,Big Muskellunge lake,40.24658203,mesotrophic,46.021,-89.612
+28,Brunnsjön,46.35779966,mesotrophic,60.272,15.97
+29,Carsington water,43.97901364,mesotrophic,53.048,-1.635
+30,Clear lake- alms,49.90347597,mesotrophic,50.15,-113.417
+31,Clear lake,49.90347597,mesotrophic,50.679,-100.007
+32,Coniston water,42.81869017,mesotrophic,54.353,-3.066
+33,Coniston water -stillwater,44.67711745,mesotrophic,54.3,-3.093
+34,Cotswold lake 12,47.70865157,mesotrophic,51.67,-1.909
+35,Cotswold lake 12 outflow,47.13425307,mesotrophic,51.668,-1.907
+36,Constance untersee -rhein river,42.21644755,mesotrophic,47.652,8.895
+37,Derwentwater -england,43.96636183,mesotrophic,54.579,-3.146
+38,Derwentwater,46.86655714,mesotrophic,54.575,-3.146
+39,Elterwater -stillwater,41.54932315,mesotrophic,54.427,-3.023
+40,Elterwater -outer basin,42.94738519,mesotrophic,54.428,-3.025
+41,Lake erie -cruise,41.23244325,mesotrophic,42.791,-79.208
+42,Fiolen,47.12515984,mesotrophic,57.092,14.53
+43,Grasmere -england,47.52268382,mesotrophic,54.45,-3.026
+44,Green valley lake,44.50773331,mesotrophic,40.056,-105.617
+45,Grönskogssjön,48.35785143,mesotrophic,57.163,16.347
+46,Gyltigesjön,42.62541328,mesotrophic,56.753,13.174
+47,Haunted lake,49.35680434,mesotrophic,52.404,-113.159
+48,Hawes water -stillwater,47.5091983,mesotrophic,54.181,-2.801
+49,Hagsjön,44.21244709,mesotrophic,58.762,15.934
+50,Hulingen,48.73334171,mesotrophic,57.478,15.856
+51,Kolsundet SE.,46.46999718,mesotrophic,59.355,17.295
+52,Lacawac,45.12764593,mesotrophic,41.381,-75.292
+53,Lambarfjärden,49.99061433,mesotrophic,59.359,17.795
+54,Levrasjön,45.16237035,mesotrophic,56.104,14.491
+55,Lillasjön,44.28309224,mesotrophic,56.96,15.398
+56,Långsjön,47.23081214,mesotrophic,60.598,16.276
+57,Malham tarn,47.90450078,mesotrophic,54.092,-2.163
+58,Melbourne lake,47.71262063,mesotrophic,52.811,-1.432
+59,Mariestadsviken  -site 2,44.45838401,mesotrophic,58.771,13.869
+60,Mossjön,47.89570666,mesotrophic,57.636,15.695
+61,Mälaren -erikssund,46.00406881,mesotrophic,59.638,17.62
+62,Oneida lake,48.77346452,mesotrophic,43.205,-75.923
+63,Paul Lake,44.30111755,mesotrophic,46.25,-89.5
+64,Prästfjärden,47.25728287,mesotrophic,59.427,17.427
+65,Rothay,45.59191528,mesotrophic,54.447,-2.984
+66,Björkfjärden SE.,46.25162536,mesotrophic,59.29,17.52
+67,Semer water,49.17161537,mesotrophic,54.283,-2.122
+68,Skifsen,42.44503574,mesotrophic,60.076,14.412
+69,Sparkling lake,40.14393783,mesotrophic,46.008,-89.701
+70,St Skärsjön,44.54611021,mesotrophic,57.168,14.509
+71,Stengårdshultasjön,42.46115235,mesotrophic,57.558,13.802
+72,Stensjön,42.83615916,mesotrophic,59.174,18.324
+73,Storsjön,48.33346311,mesotrophic,61.643,15.791
+74,Thirlmere -stillwater,40.62794195,mesotrophic,54.561,-3.068
+75,Tindale tarn,46.76297818,mesotrophic,54.923,-2.611
+76,Trout lake,41.10999182,mesotrophic,46.029,-89.665
+77,Ullswater -south buoy,44.70388601,mesotrophic,54.55,-2.945
+78,Ullswater -wfd,43.79801941,mesotrophic,54.563,-2.93
+79,USGS-491528094470601,49.22708344,mesotrophic,49.258,-94.785
+80,USGS-492142094421501,49.59550225,mesotrophic,49.362,-94.704
+81,Windermere -stillwater,49.74527615,mesotrophic,54.274,-2.955
+82,Windermere -north basin (wfd),45.31011032,mesotrophic,54.401,-2.956
+83,Winderemere -south basin (wfd),49.07992844,mesotrophic,54.316,-2.951
+84,Whirlpool lake,49.26391791,mesotrophic,50.715,-99.791
+85,Windermere -north basin,47.43837101,mesotrophic,54.385,-2.937
+86,Kyrksjön,53.94334758,eutrophic,56.535,15.601
+87,Experimental lake 114,50.53208283,eutrophic,49.4,-93.45
+88,Trummen mitt,60.22837403,eutrophic,56.861,14.827
+89,Växjösjön mitt,60.23527497,eutrophic,56.863,14.82
+90,Getasjön,52.82712036,eutrophic,56.669,15.569
+91,Alderfen broad N.,60.35139228,eutrophic,52.724,1.486
+92,Alderfen inflow,53.49741509,eutrophic,52.726,1.481
+93,Alton water,54.37015394,eutrophic,51.995,1.111
+94,Anglesey outflow,54.67658132,eutrophic,52.663,-1.941
+95,Aqualate mere,63.60603473,eutrophic,52.778,-2.333
+96,Attenborough,68.84200876,eutrophic,52.896,-1.24
+97,Baptiste lake N.,65.0169751,eutrophic,54.783,-113.55
+98,Baptiste lake S.,64.56839275,eutrophic,54.75,-113.55
+99,Barton broad E.,68.11863065,eutrophic,52.745,1.497
+100,Barton broad inflow,60.81951481,eutrophic,52.75,1.498
+101,Barton broad outflow,67.93922465,eutrophic,52.736,1.499
+102,Betley mere inlet,66.44891555,eutrophic,53.029,-2.378
+103,Blagdon lake,59.00923698,eutrophic,51.34,-2.711
+104,Belham tarn -england,54.34905737,eutrophic,54.398,-2.975
+105,Bowyers water,56.32154581,eutrophic,51.693,-0.025
+106,Buck lake,61.76379168,eutrophic,52.983,-114.767
+107,Buffalo lake main,53.83789191,eutrophic,52.483,-112.867
+108,Bassenthwaite,54.89159678,eutrophic,54.653,-3.25
+109,Belhalm tarn,57.71408305,eutrophic,54.396,-2.977
+110,Björkesåkrasjön,58.60585111,eutrophic,55.529,13.404
+111,Björsund,57.51222271,eutrophic,59.469,16.698
+112,Blacken lake,52.60604885,eutrophic,59.474,16.544
+113,Calling lake,59.55354806,eutrophic,55.25,-113.333
+114,Carr,59.43659142,eutrophic,52.814,-1.441
+115,Castle water,56.84814828,eutrophic,50.93,0.739
+116,Chapel mere,63.78030057,eutrophic,53.062,-2.688
+117,Coal lake,67.5863233,eutrophic,53.056,-113.253
+118,Cockshoot broad,61.98504528,eutrophic,52.686,1.468
+119,Cole mere,65.66024292,eutrophic,52.895,-2.851
+120,Colliford lake,66.13321733,eutrophic,50.51,-4.573
+121,Comber mere,62.48685476,eutrophic,52.995,-2.601
+122,Crag lough,52.7403367,eutrophic,55.006,-2.362
+123,Cromes broad,62.12689682,eutrophic,52.722,1.514
+124,Cromes broad,62.12689682,eutrophic,52.723,1.514
+125,Crose mere S.,64.11957149,eutrophic,52.871,-2.848
+126,Central long lake,56.15345677,eutrophic,45.613,-79.009
+127,Crystal bog,66.68300691,eutrophic,46.008,-89.606
+128,Driedmeat lake -site 2,68.59062076,eutrophic,52.892,-112.788
+129,Eagle lake,65.28497465,eutrophic,51,-113.317
+130,Elterwater -inner basin,59.42339288,eutrophic,54.429,-3.035
+131,Elterwater -middle basin,53.08592719,eutrophic,54.429,-3.03
+132,Esthwaite water -lakes tour,53.75285615,eutrophic,54.363,-2.988
+133,Ethel Lake -cold lake,50.54059637,eutrophic,54.53,-110.354
+134,East long lake,60.27541829,eutrophic,46.24,-89.5
+135,Ekoln Vreta Udd,54.69847104,eutrophic,59.758,17.594
+136,Ekoln special,54.96139979,eutrophic,59.787,17.616
+137,Esthwaite water,60.25868843,eutrophic,54.362,-2.986
+138,Figure eight lake,66.25455548,eutrophic,56.301,-117.903
+139,Filby broad,61.99618434,eutrophic,52.662,1.638
+140,Fonthill lake -outlet,63.27968818,eutrophic,51.079,-2.09
+141,Fork lake,60.10192113,eutrophic,54.489,-111.586
+142,Fritton lake -country park,69.49944535,eutrophic,52.542,1.653
+143,Fritton lakes -lound mill,69.69412361,eutrophic,52.547,1.689
+144,Fish lake,54.20553398,eutrophic,43.287,-89.652
+145,Funbosjön,64.65128251,eutrophic,59.86,17.86
+146,Goose lake,63.33211047,eutrophic,54.318,-115.114
+147,Grasmere -stillwater,50.69666481,eutrophic,54.449,-3.019
+148,Great lake,69.71061149,eutrophic,53.25,-1.135
+149,Great puckstone lake,63.51141217,eutrophic,51.305,1.17
+150,Greatstone lake,63.85530432,eutrophic,50.958,0.958
+151,Greenlee lough,51.66496273,eutrophic,55.019,-2.366
+152,Gregoire lake,51.47211201,eutrophic,56.444,-111.097
+153,Galten,60.29448583,eutrophic,59.453,16.151
+154,Galten W.,61.36104635,eutrophic,59.469,16.088
+155,Garnsviken,50.18134794,eutrophic,59.514,18.262
+156,Geten,55.7174121,eutrophic,58.561,15.722
+157,Glan,51.55815415,eutrophic,58.2,15.959
+158,Granfj. Djurgårds Udde,53.3941796,eutrophic,59.494,16.811
+159,Grasmere,52.77241068,eutrophic,54.449,-3.02
+160,Grönsöfjärden Selaön,51.92334633,eutrophic,59.466,17.269
+161,Gyslättasjön,52.18130023,eutrophic,57.108,14.448
+162,Görväln S.,51.39610567,eutrophic,59.419,17.74
+163,Hatch mere,67.00406391,eutrophic,53.244,-2.671
+164,Heigham sound,68.05042641,eutrophic,52.726,1.605
+165,Hickling broad,69.09778888,eutrophic,52.74,1.581
+166,Horsey mere,63.93346039,eutrophic,52.741,1.627
+167,Hoveton great broad,68.98381028,eutrophic,52.697,1.428
+168,Hoveton great broad -edge,69.33503118,eutrophic,52.692,1.426
+169,Hoveton little broad,65.0234639,eutrophic,52.705,1.443
+170,Hudson's bay E.,68.18878328,eutrophic,52.698,1.424
+171,Havgårdssjön,57.72877248,eutrophic,55.488,13.357
+172,Hjulstabron W.,51.6313597,eutrophic,59.532,17.009
+173,Häckebergasjön,69.11154143,eutrophic,55.582,13.427
+174,Iosegun lake,63.69099151,eutrophic,54.467,-116.833
+175,Isle lake,66.31671518,eutrophic,53.633,-114.733
+176,Jackfish lake,54.97212423,eutrophic,53.479,-114.256
+177,Kolsundet W.,53.14345816,eutrophic,59.355,17.298
+178,Krageholmssjön,66.0041482,eutrophic,55.496,13.762
+179,Kvicksundsbron,55.75399654,eutrophic,59.45,16.314
+180,Kyrkfjärden,52.31147404,eutrophic,59.435,18.19
+181,Kållen,60.26108307,eutrophic,57.167,15.394
+182,Ullevifjärden S.,54.12569924,eutrophic,59.596,17.523
+183,Lac la biche E.,63.756429,eutrophic,54.667,-112.033
+184,Lac saint cyr -whole lake,51.7948253,eutrophic,53.905,-111.19
+185,Lac ste. Anne E.,66.75966307,eutrophic,53.708,-114.4
+186,Lac ste. Anne W.,67.62205419,eutrophic,53.717,-114.5
+187,Burghfield lake,54.66407295,eutrophic,51.425,-1.016
+188,Sonning eye lake,50.52835108,eutrophic,51.477,-0.923
+189,Lake McGregor,52.01002868,eutrophic,50.543,-112.896
+190,Lake newell,54.28105451,eutrophic,50.433,-111.917
+191,Little fish lake,68.90745307,eutrophic,51.367,-112.233
+192,Littlesea lake,61.66994306,eutrophic,50.659,-1.962
+193,Long lake -boyle,61.36657759,eutrophic,54.431,-112.756
+194,Loweswater -wq survey,50.38061567,eutrophic,54.584,-3.357
+195,Loweswater,52.67871647,eutrophic,54.579,-3.351
+196,Lillsjön,58.45955179,eutrophic,62.76,15.229
+197,Loch leven,66.65556441,eutrophic,56.197,-3.372
+198,Martham south broad,59.81622632,eutrophic,52.724,1.64
+199,Matchayaw lake,62.67979847,eutrophic,53.711,-114.098
+200,May lake,53.83540743,eutrophic,54.725,-110.394
+201,Mcleod lake E.,54.10926117,eutrophic,54.294,-115.658
+202,Mere ellesmere,61.4329716,eutrophic,52.913,-2.885
+203,Mere mere,64.77320121,eutrophic,53.331,-2.403
+204,Mere mere -edge,60.05110368,eutrophic,53.33,-2.402
+205,Mockbeggar lake,65.44810145,eutrophic,50.875,-1.779
+206,Moonshine lake,59.80939005,eutrophic,55.883,-119.217
+207,Moose lake -vezeau bay,59.69059287,eutrophic,54.277,-110.835
+208,Moose lake -whole lake,60.05331657,eutrophic,54.242,-110.91
+209,Murston angling lake,66.97223972,eutrophic,51.35,0.772
+210,Lake mendota,54.51344062,eutrophic,43.099,-89.405
+211,lake monona,55.08390464,eutrophic,43.063,-89.361
+212,Moon lake,65.70149548,eutrophic,50.883,-100.05
+213,Nakamun lake,66.30721825,eutrophic,53.883,-114.2
+214,Nook lake,61.20942436,eutrophic,50.927,0.744
+215,North buck lake,54.63025505,eutrophic,54.684,-112.566
+216,Nordmyrasjön,58.55597536,eutrophic,60.163,16.868
+217,NorraVänern -ölmeviken,51.06775229,eutrophic,59.335,13.99
+218,Nässjön,53.29010477,eutrophic,57.636,15.695
+219,Oak mere,66.16212114,eutrophic,53.205,-2.639
+220,Oak mere -intersection,66.30535115,eutrophic,53.202,-2.636
+221,Ormesby broad,62.15939412,eutrophic,52.682,1.647
+222,Ormesby little broad,63.94044553,eutrophic,52.669,1.641
+223,Octopus lake,62.4192692,eutrophic,50.617,-99.924
+224,Oppmannasjön,57.61145877,eutrophic,56.083,14.346
+225,Oppmannasjön -arkelstorpsviken,67.93686878,eutrophic,56.161,14.279
+226,Pakowki lake W.,69.24483649,eutrophic,49.375,-111.063
+227,Pigeon lake,58.9480567,eutrophic,53,-114.017
+228,Pine lake,59.61318351,eutrophic,52.103,-113.454
+229,Pine lake -middle,61.9425825,eutrophic,52.068,-113.41
+230,Pine lake -north,61.28397028,eutrophic,52.068,-113.41
+231,Pine lake -south,61.99364075,eutrophic,52.068,-113.41
+232,Primrose lake -north basin,61.45319063,eutrophic,54.901,-109.634
+233,Peter Lake,53.15246391,eutrophic,46.25,-89.5
+234,Rockford lake,52.93999207,eutrophic,50.873,-1.78
+235,Rockland broad,55.20320456,eutrophic,52.593,1.442
+236,Rollesby broad,62.43096576,eutrophic,52.678,1.641
+237,Rostherne mere,64.97233236,eutrophic,53.352,-2.38
+238,Rostherne mere -outlet,58.50407005,eutrophic,53.353,-2.372
+239,Rutland water -hambleton south,56.36719051,eutrophic,52.66,-0.682
+240,Rutland water -tower,51.78578155,eutrophic,52.656,-0.624
+241,Rutland water -north buoy,52.55869007,eutrophic,52.666,-0.672
+242,Rutland water -south buoy,53.60118543,eutrophic,52.648,-0.659
+243,Ridöfjärden,56.90093318,eutrophic,59.52,16.613
+244,Roxen -centrala delen,54.07823344,eutrophic,58.514,15.64
+245,Roxen S.,55.51958852,eutrophic,58.458,15.62
+246,Barken S.,50.89659807,eutrophic,60.009,15.651
+247,Saskatoon lake,66.21996752,eutrophic,55.217,-119.088
+248,Sherborne lake,69.99556067,eutrophic,50.948,-2.503
+249,Shorncliffe lake,52.27086913,eutrophic,52.469,-110.868
+250,Silverwings lake -wraysbury,53.64828774,eutrophic,51.45,-0.549
+251,Skeleton lake -south basin,59.56405972,eutrophic,54.615,-112.728
+252,Skelsmergh tarn,58.43700713,eutrophic,54.363,-2.719
+253,Slapton ley,65.74475553,eutrophic,50.285,-3.651
+254,Smoke lake -composite,62.18837687,eutrophic,54.367,-116.933
+255,Snails lake,56.05809286,eutrophic,50.863,-1.787
+256,Steele (cross) lake,68.39600376,eutrophic,54.65,-113.767
+257,Stewartby lake,53.71967264,eutrophic,52.072,-0.526
+258,Sturgeon lake -main basin,65.346961,eutrophic,55.103,-117.538
+259,Sturgeon lake -west arm,66.717856,eutrophic,55.109,-117.529
+260,Sunbiggin tarn,58.97472324,eutrophic,54.464,-2.501
+261,Salen,60.54431493,eutrophic,56.865,14.556
+262,Salen -längst norrut,57.63941213,eutrophic,56.892,14.558
+263,Sigtunafjärden,55.87469745,eutrophic,59.612,17.721
+264,Skarven,56.71287933,eutrophic,59.554,17.807
+265,South lake,57.18905798,eutrophic,50.646,-100.011
+266,St. Aspen,54.28287313,eutrophic,59.142,16.136
+267,Stockholm,58.79447133,eutrophic,59.303,18.077
+268,Storhjälmaren,53.10797578,eutrophic,59.215,15.735
+269,Strängnäsbron,52.589255,eutrophic,59.384,17.019
+270,Stäket,51.38014564,eutrophic,59.895,18.909
+271,Stäketbron,51.2540787,eutrophic,57.905,16.415
+272,Svinnegarnsviken,58.4840188,eutrophic,59.568,17.071
+273,Sätoftasjön,65.04416327,eutrophic,55.891,13.552
+274,Tabley mere,67.88985845,eutrophic,53.291,-2.418
+275,Talkin tarn,58.51773194,eutrophic,54.925,-2.711
+276,Tallington lakes,51.47087256,eutrophic,52.672,-0.366
+277,Tatton mere -wfd,61.73539983,eutrophic,53.323,-2.369
+278,Techill mere,65.68002919,eutrophic,52.91,-2.889
+279,Thompson water,60.24161205,eutrophic,52.517,0.819
+280,Thompson water -control 2A,51.74673697,eutrophic,52.518,0.821
+281,Thompson water -control 3,58.53094207,eutrophic,52.518,0.821
+282,Thompson water -impact 1,65.18947403,eutrophic,52.517,0.819
+283,Thompson water -impact 2,62.34087691,eutrophic,52.517,0.82
+284,Thompson water -impact 3,63.18569409,eutrophic,52.517,0.82
+285,Fleet lake,53.16020618,eutrophic,51.408,-0.51
+286,Thrapston lake,62.25037428,eutrophic,52.402,-0.542
+287,Thunder lake,67.71652811,eutrophic,54.15,-114.75
+288,Tucker lake,60.17849756,eutrophic,54.536,-110.631
+289,Turnershill marsh,64.6642592,eutrophic,51.706,-0.017
+290,Turnford marsh lake,50.82196542,eutrophic,51.719,-0.019
+291,Trehörningen,50.39409679,eutrophic,59.531,18.355
+292,Trout bog,66.68889367,eutrophic,46.041,-89.686
+293,Tuesday lake,51.30291028,eutrophic,49.113,-89.484
+294,Tåkern -glänås,62.48934186,eutrophic,58.35,14.824
+295,Upton great broad,51.99577257,eutrophic,52.666,1.533
+296,Upton little broad,54.87896686,eutrophic,52.665,1.538
+297,Ulvhällsfjärden,57.85579001,eutrophic,59.368,17.055
+298,Vincent lake,58.60585111,eutrophic,54.115,-111.349
+299,Virginia water,56.53415749,eutrophic,51.408,-0.596
+300,Västeråsfjärden N.,59.32775455,eutrophic,59.593,16.553
+301,Västra Ringsjön,66.35283547,eutrophic,55.884,13.48
+302,Wabamun lake -east basin,53.08119882,eutrophic,53.54,-114.531
+303,Wabamun lake -main basin,54.80403127,eutrophic,53.54,-114.531
+304,Wabamun lake -west basin,55.4543099,eutrophic,53.556,-114.686
+305,Westbere lakes,66.05280658,eutrophic,51.301,1.142
+306,Westbere lakes point 1,66.38058724,eutrophic,51.303,1.146
+307,White mere,63.62666463,eutrophic,52.893,-2.875
+308,Winagami lake,65.80189275,eutrophic,55.617,-116.733
+309,Wroxham broad,67.02221835,eutrophic,52.699,1.416
+310,Waynewood lake,54.50233668,eutrophic,41.396,-75.363
+311,West long lake,51.76312934,eutrophic,46.24,-89.5
+312,Windermere -south basin,51.78342413,eutrophic,54.33,-2.94
+313,Wingra,58.85549072,eutrophic,43.053,-89.425
+314,Ymsen,62.07527446,eutrophic,58.667,13.968
+315,Hamilton harbour,55.27744659,eutrophic,43.297,-79.799
+316,Taihu,67.97317403,eutrophic,31.271,120.219
+317,Älgsjön,56.20414061,eutrophic,59.206,17.088
+318,Öljaren,57.77743176,eutrophic,59.159,15.954
+319,Östra Ringsjön,63.46402669,eutrophic,55.874,13.49
+320,Bergundasjön N.,70.87371173,hypereutrophic,56.865,14.758
+321,Betley mere,72.70166675,hypereutrophic,53.028,-2.376
+322,Betley mere jetty,71.64087758,hypereutrophic,53.029,-2.374
+323,Fordwich lake,73.38877769,hypereutrophic,51.296,1.134
+324,Fjällfotasjön,71.26143801,hypereutrophic,55.521,13.302
+325,Hardley flood,77.00092023,hypereutrophic,52.542,1.508
+326,Hoveton little broad E.,71.13970701,hypereutrophic,52.706,1.448
+327,Hemfjärden,73.96049424,hypereutrophic,59.282,15.339
+328,Hemfjärden,73.96049424,hypereutrophic,59.282,15.339
+329,Lac la nonne,70.43970912,hypereutrophic,53.943,-114.314
+330,Lower mann lake,75.0285683,hypereutrophic,54.175,-111.519
+331,Mellanfjärden,74.85153176,hypereutrophic,59.278,15.491
+332,Mellanfjärden,74.85153176,hypereutrophic,58.738,17.072
+333,North point lake,73.1250321,hypereutrophic,50.945,0.756
+334,Pakowki lake -central,80.20537554,hypereutrophic,49.346,-110.928
+335,Ranworth broad,71.21743246,hypereutrophic,52.685,1.483
+336,Ranworth broad,71.21743246,hypereutrophic,52.683,1.487
+337,Sandy lake -north basin,78.80672919,hypereutrophic,53.809,-114.049
+338,Sandy lake -south basin,73.453847,hypereutrophic,53.772,-114.03
+339,Shearwater lake outflow,72.50205207,hypereutrophic,51.18,-2.212
+340,South walsham broad,75.87580187,hypereutrophic,52.672,1.508
+341,South walsham broad -edge,80.56266548,hypereutrophic,52.672,1.507
+342,Stanborough sailing lake,75.68885471,hypereutrophic,51.783,-0.218
+343,Thompson water -control 1B,72.881313,hypereutrophic,52.52,0.822
+344,Thompson water -control 2B,72.98205666,hypereutrophic,52.519,0.822
+345,Kasumigaura,74.97970703,hypereutrophic,36.051,140.378
