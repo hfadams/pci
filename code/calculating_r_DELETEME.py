@@ -79,13 +79,13 @@ for name, group in wind_1988.groupby(['lake', 'year']):  # group by lake and yea
     ax1 = plt.gca()
     ax1.plot(group.loc[:, 'date'], group.loc[:, 'chla'], color='grey', linestyle='-')
     ax1.plot(group.loc[:, 'date'], group.loc[:, 'smoothed_chla'], color='black', linestyle='-')
-    ax1.plot(group.loc[:, 'date'], group.loc[:, 'chla_first_deriv'], color='black', linestyle=':')
-    # ax2 = ax1.twinx()
-    ax1.plot(group.loc[:, 'date'], group.loc[:, 'normalized_chla_rate'], color='black', linestyle='--')
+    # ax1.plot(group.loc[:, 'date'], group.loc[:, 'chla_first_deriv'], color='black', linestyle=':')
+    ax2 = ax1.twinx()
+    ax2.plot(group.loc[:, 'date'], group.loc[:, 'normalized_chla_rate'], color='black', linestyle='--')
     plt.title(group.year.unique())
     date_form = DateFormatter("%b")
     ax1.xaxis.set_major_formatter(date_form)
-    plt.savefig('output/plots/fig2.png', dpi=1200)
+    plt.savefig('output/plots/fig2test.png', dpi=1200)
     plt.show()
 
 
