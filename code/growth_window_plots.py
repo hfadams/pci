@@ -66,7 +66,7 @@ def raincloud_hist(dx, dy, data, ort, sigma, viol_width, alpha, xlabel, ylabel, 
     if hue == 'yes':  # group by season
         pt.RainCloud(x=dx, y=dy, data=data, hue="season", palette=greys, bw=sigma, width_viol=viol_width, ax=ax, orient=ort, alpha=alpha, move=0.2, dodge=True)
     if hue == 'no':  # don't group by season
-        pt.RainCloud(x=dx, y=dy, data=data, palette=greys, bw=sigma, width_viol=viol_width, ax=ax, orient=ort, alpha=alpha, move=0.2, dodge = True)
+        pt.RainCloud(x=dx, y=dy, data=data, palette=greys, bw=sigma, width_viol=viol_width, ax=ax, orient=ort, alpha=alpha, move=0.2, dodge=True)
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
     ax.spines['bottom'].set_linewidth(2)
@@ -120,7 +120,9 @@ ax.tick_params(width=2)
 plt.savefig(r'output/plots/fig4b.jpg', dpi=1200)
 plt.show()
 
-
+# OR make separate plots
+raincloud_hist('season', 'doy', (start_or_end_df >> sift(X.start_or_end == "PCI start")), 'h', 0.09, 0.6, 0.75, 'PCI start day','Frequency', hue='no', figname='4btest')
+raincloud_hist('season', 'doy', (start_or_end_df >> sift(X.start_or_end == "PCI end")), 'h', 0.09, 0.6, 0.75, 'PCI end day','Frequency', hue='no', figname='4ctest')
 
 
 plt.title("Figure P5\n Raincloud with Boxplot")
