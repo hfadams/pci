@@ -14,7 +14,6 @@ import matplotlib as mpl
 import matplotlib.dates as mdates
 from scipy.signal import savgol_filter
 
-
 mpl.rcParams['font.family'] = 'Segoe UI'
 
 # read in growth window data
