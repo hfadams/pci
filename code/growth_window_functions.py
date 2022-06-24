@@ -783,3 +783,42 @@ def format_lake_name(unformatted_data, formatted_lake_names):
     formatted_data.rename(columns={'lake_formatted': 'lake'}, inplace=True)
 
     return formatted_data
+
+
+def frequency_tsi_climate(gw_data, daily_mean):
+
+    # arrange dataset by lake, year, and day of year
+    daily_mean = daily_mean >> arrange(X.lake, X.year, X.day_of_year)
+
+    master_freq_df = pd.DataFrame()
+
+    # group selected daily mean by lake and year, and calculate number of samples
+    for name, group in daily_mean.groupby(['lake', 'year']):
+
+        # find first and last date for the year and calculate the difference
+        group.loc[:, 'num_samples'] = len(group.loc[:,'lake'])
+        group.loc[:, 'first_day'] = group['day_of_year'].iloc[0]
+        group.loc[:, 'last_day'] = group['day_of_year'].iloc[-1]
+        group.loc[:, 'days_sampled'] = group.loc[:, 'last_day'] - group.loc[:, 'first_day']
+
+        # calculate number of samples per day (total # samples that year/number of days in sampling range)
+        group.loc[:, 'sampling_frequency'] = group.loc[:, 'num_samples'] / group.loc[:, 'days_sampled']
+        group.loc[:, 'mean_time_between_samples'] = group.loc[:, 'days_sampled'] / group.loc[:, 'num_samples']
+
+        master_freq_df = DplyFrame(pd.concat([master_freq_df, group], axis=0))
+
+    # merge with current gw dataset
+    annual_frequency = master_freq_df >> select(X.lake, X.year, X.days_sampled, X.first_day, X.last_day,
+                                                X.sampling_frequency, X.mean_time_between_samples)
+    annual_frequency.drop_duplicates(inplace=True)
+    gw_with_frequency = pd.merge(gw_data, annual_frequency,
+                                 how='left', left_on=['lake', 'year'], right_on=['lake', 'year'])
+
+    # calculate mean number of samples per day for each lake
+    mean_sampling_frequency = (annual_frequency >> select(X.lake, X.sampling_frequency, X.mean_time_between_samples)).groupby(['lake'], as_index=False).mean()
+
+    # merge with the lake summary
+    lake_summary_with_frequency = pd.merge(lake_summary, mean_sampling_frequency,
+                                 how='left', left_on=['lake'], right_on=['lake'])
+
+    return gw_with_frequency, lake_summary_with_frequency
