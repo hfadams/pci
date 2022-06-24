@@ -61,7 +61,7 @@ colours2 = ["#66c2a5", "#fc8d62", "#8da0cb"]
 greys = ["black", "grey", "lightgrey"]
 grey = ["grey"]
 def raincloud_hist(dx, dy, data, ort, sigma, viol_width, alpha, xlabel, ylabel, hue, figname):
-    f, ax = plt.subplots(figsize=(8, 7))
+    f, ax = plt.subplots(figsize=(12, 7))
     if hue == 'yes':  # group by season
         pt.RainCloud(x=dx, y=dy, data=data, hue="season", palette=greys, bw=sigma, width_viol=viol_width, ax=ax, orient=ort, alpha=alpha, move=0.2, dodge=True)
     if hue == 'no':  # don't group by season
@@ -126,7 +126,7 @@ raincloud_hist('season', 'doy', (start_or_end_df >> sift(X.start_or_end == "PCI 
 
 plt.title("Figure P5\n Raincloud with Boxplot")
 # Figure 5: Distribution of water quality variables
-raincloud_hist('no_group', 'gw_temp', gw_data, 'h', 0.05, 0.6, 0.8, 'Surface water temperature (°C)','', hue='yes', figname='5a')
+raincloud_hist('season', 'gw_temp', gw_data, 'h', 0.05, 0.6, 0.8, 'Surface water temperature (°C)','', hue='yes', figname='5atest')
 raincloud_hist('season', 'log_chla_rate', log_chla, 'h', 0.1, 0.6, 0.8, "Log chlorophyll-" + r"$\it{a}$" + " rate ($\mu$g/L/day)",'Frequency', hue='no', figname='5btest')
 gw_data.loc[:, 'log_tp'] = np.log(gw_data.loc[:, 'gw_tp'])  # new column for log TP
 raincloud_hist('season', 'log_tp', gw_data, 'h', 0.05, 0.6, 0.8, 'Log TP (mg/L)','Frequency', hue='no', figname='5ctest')
@@ -135,7 +135,7 @@ raincloud_hist('season', 'gw_secchi', gw_data, 'h', 0.09, 0.6, 0.8, 'Secchi dept
 # new figure 5 plots
 lake_summary_merge = pd.merge(gw_data, lake_summary, how='left', left_on='lake', right_on='lake')
 raincloud_hist('no_group_x', 'lake_area', lake_summary_merge, 'h', 0.09, 0.6, 0.5, r'$Lake~area~(km^{2})$', 'Frequency', hue='no', figname='new_5d')
-raincloud_hist('no_group', 'ssr_lake_d', lake_summary, 'h', 0.09, 0.6, 0.6, 'Lake-SSR station distance (decimal degrees)', 'Frequency', hue='no', figname='new_5ftest')
+raincloud_hist('no_group', 'ssr_lake_d', lake_summary, 'h', 0.09, 0.6, 0.6, 'Lake-SSR station distance (km)', 'Frequency', hue='no', figname='new_5f')
 raincloud_hist('no_group', 'num_samples', gw_data, 'h', 0.09, 0.6, 0.5, 'Days sampled per year', 'Frequency', hue='no', figname='new_5e')
 raincloud_hist('no_group_x', 'lake_depth', lake_summary_merge, 'h', 0.09, 0.6, 0.5, 'Lake depth (m)', 'Frequency', hue='no', figname='new_5g')
 raincloud_hist('no_group_x', 'lake_vol', lake_summary_merge, 'h', 0.09, 0.6, 0.5, r'$Lake~volume~(m{^3})$', 'Frequency', hue='no', figname='new_5h')
@@ -221,20 +221,22 @@ plt.savefig(r'output/fig7b3.jpg', dpi=1200)
 plt.show()
 
 # Figure 8: case study, SSR vs chlorophyll-a rate
+gw_data_ssr = DplyFrame(pd.read_csv('C:/Users/Hannah/PycharmProjects/growth_window/data/SSRLakes_220619_QCed.csv', encoding='latin-1'))
+
 order = ['oligotrophic', 'mesotrophic', 'eutrophic', 'hypereutrophic']
-colors = ["#6495ED", "#DAB870", "#5AB4AC"]
-g = sns.FacetGrid(gw_data, col="trophic_status", col_order=order, hue="season", height=2.5, aspect=1, palette=colors, sharey=True)
-g.map(sns.scatterplot, "gw_ssr", "temp_corrected_specific_chla_rate", alpha=.9, s=60)
+colors = ["black", "grey", "lightgrey"]
+g = sns.FacetGrid(gw_data_ssr, col="trophic_st", col_order=order, hue="season", height=2.5, aspect=1, palette=colors, sharey=True)
+g.map(sns.scatterplot, "mean_ssr", "temp_corre", alpha=.9, s=60)
 g.add_legend()
-# plt.savefig(r'output/fig8a.jpg', dpi=1200)
+plt.savefig(r'output/fig8a.jpg', dpi=1200)
 plt.show()
 
 order = ['oligotrophic', 'mesotrophic', 'eutrophic', 'hypereutrophic']
-colors = ["#6495ED", "#DAB870", "#5AB4AC"]
-g = sns.FacetGrid(gw_data, col="trophic_status", col_order=order, hue="season", height=2.5, aspect=1, palette=colors, sharey=True)
-g.map(sns.scatterplot, "gw_ssr", "specific_chla_rate", alpha=.9, s=60)
+colors = ["black", "grey", "lightgrey"]
+g = sns.FacetGrid(gw_data_ssr, col="trophic_st", col_order=order, hue="season", height=2.5, aspect=1, palette=colors, sharey=True)
+g.map(sns.scatterplot, "mean_ssr", "specific_c", alpha=.9, s=60)
 g.add_legend()
-# plt.savefig(r'output/fig8b.jpg', dpi=1200)
+plt.savefig(r'output/fig8b.jpg', dpi=1200)
 plt.show()
 
 len(gw_data >> sift(X.climate_zone == 11))

@@ -603,8 +603,8 @@ def growth_window_means(spring_and_summer_doy, spring_and_summer_selected, prev_
 
     # select columns to export
     springsummer_gw_data = springsummer_gw_data >> select(X.lake, X.year, X.season, X.start_day, X.end_day, X.gw_length,
-                                                          X.chla_rate, X.max_chla, X.acc_chla, X.poc_rate,
-                                                          X.chla_to_poc, X.gw_temp, X.gw_tp,
+                                                          X.chla_rate, X.normalized_chla_rate, X.max_chla, X.acc_chla,
+                                                          X.poc_rate, X.chla_to_poc, X.gw_temp, X.gw_tp,
                                                           X.gw_secchi, X.gw_ph, X.gw_srp, X.gw_tkn,
                                                           X.specific_chla_rate, X.f_temp,
                                                           X.temp_corrected_specific_chla_rate, X.pre_gw_temp,
@@ -709,7 +709,7 @@ def get_tsi_coords(df, coords_df):
     return trophic_status_summary, ts_coords
 
 
-def lake_summary(daily_mean, ts_coords):
+def lake_summary(daily_mean, ts_coords, climate_zones):
     """
     Creates a summary table with one row for each lake in the daily_mean dataframe
     input:
@@ -733,15 +733,15 @@ def lake_summary(daily_mean, ts_coords):
         group_summary.loc[0, 'end_sampling'] = group.loc[(len(group) - 1), 'year']
         group_summary.loc[0, 'days_sampled'] = len(group['day'])
         group_summary = group_summary >> mutate(years_sampled=X.start_sampling - X.end_sampling + 1)
-        variable_df = group.drop(['lake', 'date', 'year', 'month', 'day', 'day_of_year', 'num_samples',
-                                  'index'], axis=1)
-        variable_df.dropna(how='all', axis=1, inplace=True)
-        group_summary.loc[0, 'variables'] = list(variable_df.columns.values)
 
         lake_summary = pd.concat([lake_summary, group_summary], axis=0)
 
     # merge with coordinates and trophic status
     lake_summary = pd.merge(lake_summary, ts_coords, how='left', left_on=['lake'], right_on=['lake'])
+
+    # merge with climate zone
+    lake_summary = pd.merge(lake_summary, (climate_zones >> select(X.lake, X.climate_zone)), how='left', left_on='lake',
+                            right_on='lake')
 
     return lake_summary
 
