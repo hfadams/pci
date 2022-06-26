@@ -20,10 +20,10 @@ alpha = 0.05
 threshold_inc = 0.4
 
 # read in coordinates and lake formatting file
-coords_df = DplyFrame(pd.read_csv('supplementary_data/all_lake_coordinates.csv', encoding='latin-1'))
-formatted_lake_names = DplyFrame(pd.read_csv('data/lake_name_formatting.csv', encoding='latin-1'))
-climate_zones = DplyFrame(pd.read_csv('output/climate_zones.csv', encoding='latin-1'))
-trophic_status_summary = DplyFrame(pd.read_csv('output/trophic_status_summary.csv', encoding='latin-1'))
+coords_df = DplyFrame(pd.read_csv('supplementary_data/all_lake_coordinates_renamed.csv', encoding='utf-8'))
+formatted_lake_names = DplyFrame(pd.read_csv('data/lake_name_formatting.csv', encoding='utf-8'))
+climate_zones = DplyFrame(pd.read_csv('output/climate_zones.csv', encoding='utf-8'))
+trophic_status_summary = DplyFrame(pd.read_csv('output/trophic_status_summary.csv', encoding='utf-8'))
 
 # read in and concatenate formatted lake data files
 files = glob.glob('data/ins_situ_data/*.csv')
@@ -62,16 +62,20 @@ final_growth_window_data = format_lake_name(gw_coords_ts, formatted_lake_names)
 formatted_lake_summary = format_lake_name(lake_summary_df, formatted_lake_names)
 
 # final formatting
-gw_with_frequency, lake_summary_with_frequency = frequency_tsi_climate(gw_data, daily_mean)
+gw_with_frequency, lake_summary_with_frequency = frequency_tsi_climate(gw_coords_ts, daily_mean, lake_summary_df)
 
-# export both files
-gw_with_frequency.to_csv('output/pci_with_frequency.csv', encoding='utf-8')
-lake_summary_with_frequency.to_csv('output/lake_summary_with_frequency.csv', encoding='utf-8')
+# export files
+gw_with_frequency.to_csv('output/pci_with_frequency_v2.csv', encoding='utf-8')
+lake_summary_with_frequency.to_csv('output/lake_summary_with_frequency_v2.csv', encoding='utf-8')
 selected_daily_mean.to_csv('output/selected_daily_mean_v2.csv')
-lake_summary.to_csv('output/lake_summary_v2.csv')
 
 ### ---- delete soon (starting at pre-calculated daily mean)
-# figure out which year isn't working for ranworth broad and keep the rest!
 daily_mean = DplyFrame(pd.read_csv('output/daily_mean.csv', encoding='utf-8'))
-daily_mean=daily_mean[~daily_mean['lake'].isin(['Lake winnipeg', 'Kasumigaura', 'Taihu', 'Ranworth broad'])]
-## -----
+daily_mean = daily_mean[~daily_mean['lake'].isin(['Lake winnipeg', 'Kasumigaura', 'Taihu'])]
+daily_mean = daily_mean.loc[~((daily_mean['lake'] == 'Ranworth broad') & (daily_mean['year'] == 2006)),:]
+# should start code at the daily mean instead of raw data? double check what is available
+
+# merge new ssr_data with the gw dataset
+ssr_data = DplyFrame(pd.read_csv('C:/Users/Hannah/PycharmProjects/growth_window/data/SSRLakes_220619_QCed.csv', encoding='utf-8')) >> select(
+    X.lake, X.year, X.season, X.SSRStation, X.SSRID_Type, X.    X.lake, X.year, X.season, X.SSRStation, X.SSRID_Type, X.)
+

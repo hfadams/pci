@@ -785,7 +785,7 @@ def format_lake_name(unformatted_data, formatted_lake_names):
     return formatted_data
 
 
-def frequency_tsi_climate(gw_data, daily_mean):
+def frequency_tsi_climate(gw_data, daily_mean, lake_summary):
 
     # arrange dataset by lake, year, and day of year
     daily_mean = daily_mean >> arrange(X.lake, X.year, X.day_of_year)
