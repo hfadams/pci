@@ -17,29 +17,8 @@ from scipy.signal import savgol_filter
 mpl.rcParams['font.family'] = 'Segoe UI'
 
 # read in growth window data
-gw_data = DplyFrame(pd.read_csv('output/pci_with_frequency.csv', encoding='latin-1'))
-gw_coords = DplyFrame(pd.read_csv('output/lake_summary.csv', encoding='latin-1')) >> select(X.lake, X.lake_lat, X.lake_long)
-gw_data_coords = pd.merge(gw_data, gw_coords, how='left', left_on='lake', right_on='lake')
-
-gw_data_coords.to_csv('output/gw_data_cz_ts_coords_finalcpidata.csv')
-
-gw_data = gw_data_coords
-gw_data.loc[:, 'no_group'] = ''  # adds a column that can be used to "group" all data together in pt.RainCloud function
-# read in sensitivity test data and concatenate (initially putting it together)
-# oligo_df = DplyFrame(pd.read_csv('output/sensitivity_test_norm_oligotrophic.csv', encoding='latin-1'))
-# meso_df = DplyFrame(pd.read_csv('output/sensitivity_test_norm_mesotrophic.csv', encoding='latin-1'))
-# eu_df = DplyFrame(pd.read_csv('output/sensitivity_test_norm_eutrophic.csv', encoding='latin-1'))
-# hyper_df = DplyFrame(pd.read_csv('output/sensitivity_test_norm_hypereutrophic.csv', encoding='latin-1'))
-
-# concat_list = [oligo_df, meso_df, eu_df, hyper_df]
-# all_norm_df = pd.concat(concat_list)
-
-# subset for threshold value of 0.4 day^-1
-# gw_data = DplyFrame(all_norm_df.loc[all_norm_df['thresh_val'] == 0.4])
-
-# start here-------------------------
 gw_data = DplyFrame(pd.read_csv('output/gw_data_cz_ts_coords_finalcpidata.csv', encoding='latin-1'))
-gw_data.loc[:, 'no_group'] = ''
+gw_data.loc[:, 'no_group'] = '' # adds a column that can be used to "group" all data together in pt.RainCloud function
 lake_summary = DplyFrame(pd.read_csv('output/lake_summary_with_frequency.csv', encoding='latin-1'))
 lake_summary.loc[:, 'no_group'] = ''
 # gw_data.loc[:, 'date'] = pd.to_datetime(gw_data.loc[:, 'date'])
@@ -166,7 +145,6 @@ violin_plots(log_chla, x='trophic_status', y='log_chla_rate', xlabel='Trophic st
              ylabel="Log chlorophyll-" + r"$\it{a}$" + " rate ($\mu$g/L/day)", violin_order=['oligotrophic', 'mesotrophic', 'eutrophic', 'hypereutrophic'],
              axis_labels=['Oligotrophic', 'Mesotrophic', 'Eutrophic', 'Hypereutrophic'], figname='6a')
 
-# UP TO HERE ------------------------------------
 # merge gw data with climate zones
 climate_zones = DplyFrame(pd.read_csv('supplementary_data/climate_zones.csv', encoding='latin-1'))
 climate_zones.drop_duplicates(inplace=True)
@@ -178,7 +156,6 @@ violin_plots(log_chla, x='lat_group', y='log_chla_rate', xlabel='Latitude (decim
              ylabel='Log chlorophyll-a rate ($\mu$g/L)', violin_order=['30-40', '40-50', '50-60', '60-70'], axis_labels=['30-40', '40-50', '50-60', '60-70'], figname='6b')
 
 # subplot c: lake latitude vs log chl-a rate
-## EDIT: need to add climate zone!
 violin_plots(log_chla, x='climate_zone', y='log_chla_rate', xlabel='Climate zone', colour='lightgray',
              ylabel='Log chlorophyll-a rate ($\mu$g/L)', violin_order=[7, 8, 10, 11], axis_labels=[7, 8, 10, 11], figname='6c')
 
