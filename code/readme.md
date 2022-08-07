@@ -1,6 +1,6 @@
 # Code for formatting and processing lake and solar radiation data
 
-This folder contains the main scripts for the growth window dataset preparation. Order of use is as follows:
+This folder contains the main scripts for the PCI dataset preparation. Order of use is as follows:
 
 1. Basic formatting of original data files for consistent units and headings (code not provided since not all data is openly accessible)
 
