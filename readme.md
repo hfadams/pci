@@ -1,4 +1,4 @@
-# Chlorophyll-*a* PCI dataset
+# PCI dataset
 
 [![DOI](https://zenodo.org/badge/390777007.svg)](https://zenodo.org/badge/latestdoi/390777007)  
 
