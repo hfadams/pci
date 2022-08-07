@@ -1,12 +1,12 @@
-# Chlorophyll-*a* growth window dataset
+# Chlorophyll-*a* PCI dataset
 
 [![DOI](https://zenodo.org/badge/390777007.svg)](https://zenodo.org/badge/latestdoi/390777007)  
 
 The scripts within this repository were used to standardize and compile a dataset of *in situ* chlorophyll-*a* data and related water quality data for lakes at or above 40° N across the Northern hemisphere. Original data files are not included, but can be found by following the links listed under "Data sources" below. 
 
-The chlorophyll-*a* growth window dataset contains chlorophyll-*a* rate of increase along with  mean water quality variables (i.e., surface water temperature, nutrients, and solar radiation) during periods of rapid algal growth referred to as the _**growth window**_. Growth windows were defined based on the rate of change in the fluctuating chlorophyll-*a* concentration sampled over the year, and categorized as occurring in the spring, summer, or as a "single" growth window when there was one main period of growth. Additional lake parameters were included from the [HydroLAKES](https://hydrosheds./page/hydrolakes) and [HydroATLAS](https://hydrosheds.org/page/hydroatlas) databases, and trophic status index (TSI) was calculated from chlorophyll-*a* concentrations.
+The period of chlorophyll-*a* increase (PCI) dataset contains the rate of chlorophyll-*a* increase along with  mean water quality variables (i.e., surface water temperature, nutrients, and solar radiation) during periods of rapid algal growth referred to as the _**PCI**_. PCIs were defined based on the rate of change in the fluctuating chlorophyll-*a* concentration sampled over the year, and categorized as occurring in the spring, summer, or as a "single" PCI when there was one main period of growth. Additional lake parameters were included from the [HydroLAKES](https://hydrosheds./page/hydrolakes) and [HydroATLAS](https://hydrosheds.org/page/hydroatlas) databases, and trophic status index (TSI) was calculated from chlorophyll-*a* concentrations.
 
-This dataset is intended to be used to explore trends between changing environmental conditions and lake productivity. However, as a compiled dataset, the growth window data is based on lake samples collected from a variety of organizations with differing methods. Great care was taken to standardize the data and provide all relevant metadata wherever possible. However, it is recommended that the dataset be uniquely subsetted depending on the research question (e.g., for sampling frequency). The growth window dataset can be found in the FRDR repository, DOI:https://doi.org/10.20383/102.0488
+This dataset is intended to be used to explore trends between changing environmental conditions and lake productivity. However, as a compiled dataset, the PCI data is based on lake samples collected from a variety of organizations with differing methods. Great care was taken to standardize the data and provide all relevant metadata wherever possible. Therefore, it is recommended that the dataset be uniquely subsetted depending on the research question (e.g., for sampling frequency). The PCI dataset can be found in the FRDR repository, DOI:https://doi.org/10.20383/102.0488
 
  
 ## Data sources
@@ -57,7 +57,7 @@ To create the dataset, *in situ* lake physiochemical data and solar radiation da
 
 ## Methods
 
-Growth windows are defined based on the rate of change in chlorophyll-*a* concentration throughout the year after smoothing the annual time series for each lake using the Savitzky-Golay filter [(Savitzky and Golay, 1964)](https://pubs.acs.org/doi/10.1021/ac60214a047) and flagging optima in the smoothed data using the following functions:
+PCIs are defined based on the normalized rate of change in chlorophyll-*a* concentration throughout the year after smoothing the annual time series for each lake using the Savitzky-Golay filter [(Savitzky and Golay, 1964)](https://pubs.acs.org/doi/10.1021/ac60214a047) and flagging optima in the smoothed data using the following functions:
 
 * [scipy.signal savgol_filter](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.savgol_filter.html) 
 * [scipy.signal find_peaks](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html#scipy.signal.find_peaks)
@@ -66,7 +66,7 @@ Mean values were calculated for all water quality variables sampled during the g
 
 #### Quality assurance
 
-Data files from varying sources were formatted to have consistent units and column headers; we removed all data recorded as below the instrument detection limit and selected years where samples were collected a minimum of 8 times over the ice-free season.
+Data files from varying sources were formatted to have consistent units and column headers; we removed all data recorded as below the instrument detection limit and selected years where samples were collected a minimum of 6 times over the year.
 
 ## Software and packages 
 
@@ -75,36 +75,36 @@ All data processing and analyses for this project were implemented using Python 
 ##  Repository directory
 
 ### Folder 1:  Supplementary data: 
-Source files used to generate the growth window dataset
+Source files used to generate the PCI dataset
   	   	     
-* [lake_name_formatting.csv](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_name_formatting.csv): conversion of lake names from original sampling location ID to name in the growth window dataset
-* [all\_lake\_coords.csv](https://github.com/hfadams/growth_window/blob/ac46b91a203430bf76440d42d7880bbb072b425e/supplementary_data/all_lake_coordinates.csv): list of coordinates for all lakes in the dataset, used in the growth window calculation scripts. Coordinates were collected from the original data files or searched within the database where possible, otherwise they were estimated based on sampling location name.
+* [lake_name_formatting.csv](https://github.com/hfadams/pci/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_name_formatting.csv): conversion of lake names from original sampling location ID to name in the growth window dataset
+* [all\_lake\_coords.csv](https://github.com/hfadams/pci/blob/ac46b91a203430bf76440d42d7880bbb072b425e/supplementary_data/all_lake_coordinates.csv): list of coordinates for all lakes in the dataset, used in the PCI calculation scripts. Coordinates were collected from the original data files or searched within the database where possible, otherwise they were estimated based on sampling location name.
   	   	     
 ### Folder 2: code    
       	
-Scripts for formatting data and detecting growth windows
+Scripts for formatting data and detecting PCIs
 
-* [growth_window_functions.py](https://github.com/hfadams/growth_window/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_functions.py): all functions used to generate the growth window dataset   	   
-* [growth_window_calculations.py](https://github.com/hfadams/growth_window/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_calculations.py): script used to call on the growth window functions
-* [ssr\_lakes\_pairing\_qgis.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_lakes_pairing_qgis.py): pairs lakes and SSR stations using PYQGIS
-* [lake\_dem\_extraction.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/lake_dem_extraction.py): uses DEM in PYQGIS to extract lake elevation
-* [ssr\_dem\_extraction.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_dem_extraction.py): uses DEM in PYQGIS to extract SSR station elevation
-* [paired\_stations\_ssr\_calcs.py](https://github.com/hfadams/growth_window/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/paired_stations_ssr_calcs.py): calculates mean SSR during the growth window and pre-growth window period
+* [pci_functions.py](https://github.com/hfadams/pci/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_functions.py): all functions used to generate the PCI dataset   	   
+* [pci_calculations.py](https://github.com/hfadams/pci/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_calculations.py): script used to call on the PCI functions
+* [ssr\_lakes\_pairing\_qgis.py](https://github.com/hfadams/pci/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_lakes_pairing_qgis.py): pairs lakes and SSR stations using PYQGIS
+* [lake\_dem\_extraction.py](https://github.com/hfadams/pci/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/lake_dem_extraction.py): uses DEM in PYQGIS to extract lake elevation
+* [ssr\_dem\_extraction.py](https://github.com/hfadams/pci/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_dem_extraction.py): uses DEM in PYQGIS to extract SSR station elevation
+* [paired\_stations\_ssr\_calcs.py](https://github.com/hfadams/pci/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/paired_stations_ssr_calcs.py): calculates mean SSR during the PCI and pre-PCI period
 
 	**subfolder: formatting_data:**
 
-	Code used for initial formatting of raw data files before being read into the *growth\_window\_calculations.py* script
+	Code used for initial formatting of raw data files before being read into the *pci_calculations.py* script
 	* one python file created for each lake or data source
   	   	   
 ## Sharing and accessing the data
 This project is licensed under the Creative Commons Attribution 4.0 International license, please see [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) for details.
 
 ## Funding
-This work is funded by the Canada First Research Excellence Fund’s Global Water Futures Programme.
+This work was funded by the Lake Futures project within the Global Water Futures (GWF) project supported by the Canada First Research Excellence Fund (CFREF). We would like to thank all the institutions and authors listed in the supplementary information for making their data open source and free to support our work.
 
 ## Recommended citation 
 
-Adams, H., Ye, J., Slowinski, S., Persaud, B., Kheyrollah Pour, H., van Cappellen, P. (2021). Chlorophyll-*a* growth rates and related environmental variables in global temperate and cold-temperate lakes. DOI:10.20383/102.0488.
+Adams, H., Ye, J., Slowinski, S., Persaud, B., Kheyrollah Pour, H., van Cappellen, P. (2021). Rates and timing of chlorophyll-a increases and related environmental variables in global temperate and cold-temperate lakes. DOI:10.20383/102.0488.
 
 ## Authors
 
@@ -127,14 +127,3 @@ Adams, H., Ye, J., Slowinski, S., Persaud, B., Kheyrollah Pour, H., van Cappelle
 **Homa Kheyrollah Pour:** -*Principle Investigator* - [Google Scholar](https://scholar.google.ca/citations?hl=en&user=0gMCo6wAAAAJ), [ReSEC lab](https://www.wlu.ca/academics/faculties/faculty-of-science/faculty-profiles/homa-kheyrollah-pour/index.html?ref=academics%2Ffaculties%2Ffaculty-of-arts%2Ffaculty-profiles%2Fhoma-kheyrollah-pour%2Findex.html)
 
 **Philippe Van Cappellen:** -*Principle Investigator*- [Google Scholar](https://scholar.google.ca/citations?user=E0Vw3FwAAAAJ&hl=en), [Ecohydrology Research Group](https://uwaterloo.ca/ecohydrology/people-profiles/philippe-van-cappellen), [ORCID iD](https://orcid.org/0000-0001-5476-082)
-
-
-
-
-
-
-
-
-
-
-
