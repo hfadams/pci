@@ -1,19 +1,19 @@
 """
-Functions used to compile water quality data from files that have already undergone basic formatting to have the same
+Functions used to compile water quality data from files that have undergone basic formatting to have the same
 column headers and units. List of data sources is available in readme.md file.
 
 Functions:
 * format_lake_data: Create additional columns for date and sampling frequency and round to daily means
-* calc_pci: Detects the growth window for each lake in each year it's sampled using the daily mean dataframe,
-                      and sifts for the data within the growth window and during the pre-growth window period
-* pci_means: Calculates rates and mean values for environmental variables during each growth window and during
-                       the pre-growth window period
-* pci_summary: prints a summary of statistics for bloom type and lake trophic status in the dataset
-* select_daily_mean:
-* get_tsi: calculate the trophic status index (TSI) for each lake and create a dataframe with columns for lake, TSI, and
-           trophic status
-* get_coords_ts: assign coordinates and trophic status to each lake
-* lake_summary:
+* calc_pci_normalized: Detects the PCI for each lake using the daily mean dataframe,
+                      and selects the data within the  PCI and during the pre- PCI window
+* pci_means: Calculates rates and mean values for environmental variables during each PCI and during
+                       the pre-PCI window
+* select_daily_mean: subsets the daily_mean data to remove lakes that were filtered out when detecting the PCIs
+* calc_tsi_coords: calculates the trophic status index (TSI) for each lake and assigns a trophic status to each lake.
+                   Merges the trophic status data with coordinates to be merged with the PCI dataset
+* get_coords_ts: merges coordinates and trophic status to the PCI dataset based on lake name
+* lake_summary: creates a dataframe with attributes for each lake represented in the PCI dataset
+* frequency_climate: calculates the sampling frequency and
 
 Hannah Adams
 """
@@ -28,8 +28,8 @@ from scipy.signal import savgol_filter
 def format_lake_data(all_lakes):
     """
     General formatting for lake data. Adds columns for date (year, month, day, and day of year) and calculates the
-    number of samples collected each year. Creates a separate dataframe rounded to the daily mean and sifted for at
-    least 6 samples collected per year.
+    number of samples collected each year. Creates a separate dataframe rounded to the daily mean and sifted for a
+    minimum of 6 samples collected per year.
     input:
         all_lakes: Compiled DplyFrame containing in situ data for all lakes to be analyzed
     output:
@@ -72,26 +72,26 @@ def format_lake_data(all_lakes):
 
 def calc_pci_normalized(df, threshold_inc, num_sample_threshold):
     """
-        Detects the growth window period based on the the normalized chlorophyll-a rate of change that is calculated
+        Detects the PCI period based on the the normalized chlorophyll-a rate of change that is calculated
         from the first derivative of the raw chlorophyll-a data and divided by the chlorophyll concentration that has
         been smoothed with the Savitzky-Golay filter. First, optima are flagged in the smoothed data using the
-        find_peaks function, indicating the end of a growth window. The growth window begins at the preceding date when
+        find_peaks function, indicating the end of a PCI. The PCI begins at the preceding date when
         the normalized rate of change in chlorophyll concentration first reaches the threshold_inc value (and if it
         doesn't meet the threshold, it begins where the rate is first positive). Daily mean data is sifted for samples
-        collected both within the growth window and during the 1 and 2 weeks leading up to it (the pre-growth window),
+        collected both within the PCI and during the 1 and 2 weeks leading up to it (the pre-PCI),
         to be analyzed by the pci_means function. See associated manuscript for full explanation of methods
         and rationale.
 
         input:
             df: DplyFrame containing daily mean in situ data for all lakes to be analyzed (from format_lake_data)
-            threshold_inc: minimum chlorophyll-a rate of change to constitute the start of the growth window when there
+            threshold_inc: minimum chlorophyll-a rate of change to constitute the start of the PCI when there
                            is no minimum flagged in the data.
-            num_sample_threshold: Minimum number of samples per year that will be retained in the growth window dataset.
+            num_sample_threshold: Minimum number of samples per year that will be retained in the PCI dataset.
 
         output:
-            master_pci_df: Water quality data for all detected growth windows, compiled into one DplyFrame
-            springsummer_pci_doy: Dataframe containing the day of year for the start and end of each growth window
-            master_prev_2weeks_pci_df: Compiled water quality data for each 2 week pre-growth window
+            master_pci_df: Water quality data for all detected PCIs, compiled into one DplyFrame
+            springsummer_pci_doy: Dataframe containing the day of year for the start and end of each PCI
+            master_prev_2weeks_pci_df: Compiled water quality data for each 2 week pre-PCI
         """
 
     # make empty dataframes (will be appended to later)
@@ -107,7 +107,7 @@ def calc_pci_normalized(df, threshold_inc, num_sample_threshold):
     # sift data for minimum sampling frequency
     df = df >> sift(X.num_samples >= num_sample_threshold)
 
-    for name, group in df.groupby(['lake', 'year']):  # group by lake and year to detect growth windows
+    for name, group in df.groupby(['lake', 'year']):  # group by lake and year to detect PCIs
         group.reset_index(inplace=True)
 
         # determine savgol_filter window length (smaller window for fewer samples)
@@ -140,16 +140,16 @@ def calc_pci_normalized(df, threshold_inc, num_sample_threshold):
         group = pd.merge(group, (peak_df >> select(X.day_of_year, X.max_flag)), how='left', left_on='day_of_year',
                          right_on='day_of_year')
 
-        # 2) find spring and summer or single growth windows for lakes with 2 or 1 defined peaks, respectively
+        # 2) find spring and summer or single PCIs for lakes with 2 or 1 defined peaks, respectively
         num_peaks = len(group['max_flag'].dropna())  # count the number of optima in the data
 
-        if num_peaks == 2:  # spring and summer growth windows occur
+        if num_peaks == 2:  # spring and summer PCIs occur
 
-            # find end date of growth window
+            # find end date of PCI
             spring_end_index = group.where(group.max_flag == True).first_valid_index()
             spring_end_day = group.loc[spring_end_index, 'day_of_year']
 
-            # find start date of growth window
+            # find start date of PCI
             spring_group = group >> sift(X.day_of_year < spring_end_day)
 
             # Find the first normalized rate of increase above threshold_inc
@@ -168,13 +168,13 @@ def calc_pci_normalized(df, threshold_inc, num_sample_threshold):
                 spring_start_day = spring_group.loc[
                     (spring_start_index), 'day_of_year']  # select first day with normalized rate > threshold_inc
 
-            # sift growth window data based on start and end dates
+            # sift PCI data based on start and end dates
             spring_pci = group >> sift(X.day_of_year <= spring_end_day) >> sift(X.day_of_year >= spring_start_day)
             spring_pci.loc[:, 'season'] = 'spring'
             spring_pci.loc[:, 'start_day'] = spring_start_day
             spring_pci.loc[:, 'end_day'] = spring_end_day
 
-            # sift out 1 and 2 week pre-growth window data
+            # sift out 1 and 2 week pre-PCI data
             spring_prev_2weeks_start_day = spring_start_day - 15
 
             prev_2weeks_spring_df = group >> sift(X.day_of_year >= spring_prev_2weeks_start_day) >> sift(
@@ -190,11 +190,11 @@ def calc_pci_normalized(df, threshold_inc, num_sample_threshold):
             # sift out spring data and repeat for summer
             summer_df = group >> sift(X.day_of_year > spring_end_day)
 
-            # find end date of growth window
+            # find end date of PCI
             summer_end_index = summer_df.where(summer_df.max_flag == True).first_valid_index()
             summer_end_day = summer_df.loc[summer_end_index, 'day_of_year']
 
-            # find start date of growth window
+            # find start date of PCI
             summer_group = summer_df >> sift(X.day_of_year < summer_end_day)
 
             summer_start_index = summer_group.where(summer_group.norm_chla_rate_pos == True).first_valid_index()
@@ -207,13 +207,13 @@ def calc_pci_normalized(df, threshold_inc, num_sample_threshold):
             else:
                 summer_start_day = summer_group.loc[(summer_start_index), 'day_of_year']
 
-            # sift summer growth window data based on start and end dates
+            # sift summer PCI data based on start and end dates
             summer_pci = summer_df >> sift(X.day_of_year <= summer_end_day) >> sift(X.day_of_year >= summer_start_day)
             summer_pci.loc[:, 'season'] = 'summer'
             summer_pci.loc[:, 'start_day'] = summer_start_day
             summer_pci.loc[:, 'end_day'] = summer_end_day
 
-            # sift out 1 and 2 week pre-growth window data
+            # sift out 1 and 2 week pre-PCI data
             summer_prev_2weeks_start_day = summer_start_day - 15
 
             prev_2weeks_summer_df = group >> sift(X.day_of_year >= summer_prev_2weeks_start_day) >> sift(
@@ -226,13 +226,13 @@ def calc_pci_normalized(df, threshold_inc, num_sample_threshold):
             master_pci_df = pd.concat([master_pci_df, summer_pci], axis=0)
             master_prev_2weeks_pci_df = pd.concat([master_prev_2weeks_pci_df, prev_2weeks_summer_df], axis=0)
 
-        if num_peaks == 1:  # single growth window
+        if num_peaks == 1:  # single PCI
 
-            # find end date of growth window
+            # find end date of PCI
             single_pci_end_index = group.where(group.max_flag == True).first_valid_index()
             single_pci_end_day = group.loc[single_pci_end_index, 'day_of_year']
 
-            # find start date of growth window
+            # find start date of PCI
             single_group = group >> sift(X.day_of_year < single_pci_end_day)
 
             single_pci_start_index = single_group.where(single_group.norm_chla_rate_pos == True).first_valid_index()
@@ -245,14 +245,14 @@ def calc_pci_normalized(df, threshold_inc, num_sample_threshold):
             else:
                 single_pci_start_day = single_group.loc[(single_pci_start_index), 'day_of_year']
 
-            # sift single growth window data based on start and end dates
+            # sift single PCI data based on start and end dates
             single_pci_pci = single_group >> sift(X.day_of_year <= single_pci_end_day) >> sift(
                 X.day_of_year >= single_pci_start_day)
             single_pci_pci.loc[:, 'season'] = 'single'
             single_pci_pci.loc[:, 'start_day'] = single_pci_start_day
             single_pci_pci.loc[:, 'end_day'] = single_pci_end_day
 
-            # sift out 1 and 2 week pre-growth window data
+            # sift out 1 and 2 week pre-PCI data
             single_pci_prev_2weeks_start_day = single_pci_start_day - 15
 
             prev_2weeks_single_pci_df = group >> sift(X.day_of_year >= single_pci_prev_2weeks_start_day) >> sift(
@@ -276,27 +276,28 @@ def pci_means(spring_and_summer_doy, spring_and_summer_selected, prev_2weeks_spr
                         t_max, t_min, t_opt):
     """
     This function calculates chlorophyll-a rate, maximum chlorophyll-a concentration, accumulated chlorophyll-a,and mean
-    values for environmental variables during each growth window. Mean water temperature, solar radiation, and total
-    phosphorus is calculated for the pre-growth window period. The chlorophyll-a rate of increase is corrected for
-    temperature using the f_temp calculation (Rosso et al., 1995).
+    values for environmental variables during each PCI. Mean water temperature, solar radiation, and total
+    phosphorus is calculated for the pre-PCI period. The temperature corrected rate of chlorophyll-a increase is
+    corrected for temperature using the f_temp calculation (Rosso et al., 1995).
 
     input:
-        spring_and_summer_doy: dataframe with the start and end day of year for each growth window
+        spring_and_summer_doy: dataframe with the start and end day of year for each PCI
         spring_and_summer_selected: dataframe with the chlorophyll concentration and temperature for each sampling
-                                  day within each growth window
-        prev_2weeks_springsummer_data: dataframe containing all lake data for the 2 weeks leading up to the spring and summer growth windows
-        min_pci_length: minimum length for the growth window (set to 5 for now)
+                                  day within each PCI
+        prev_2weeks_springsummer_data: dataframe containing all lake data for the 2 weeks leading up to the spring and
+                                       summer PCIs
+        min_pci_length: minimum length for the PCI
         t_max: maximum temperature for the f_temp function
         t_min: minimum temperature for the f_temp function
         t_opt: optimum temperature for the f_temp function
     output:
         springsummer_pci_data: dataframe with a row for each lake/year/season with the chlorophyll rate of increase and
-                          mean temperature during the growth window and pre-growth window period
+                          mean temperature during the PCI and pre-PCI period
     """
 
     print('calculating means')
 
-    # calculate growth window length in "spring and summer doy" file and merge with "spring and summer selected"
+    # calculate PCI length in "spring and summer doy" file and merge with "spring and summer selected"
     spring_and_summer_doy = spring_and_summer_doy >> mutate(pci_length=X.end_day - X.start_day)
     springsummer_data = pd.merge(spring_and_summer_selected, spring_and_summer_doy, how='left',
                                  left_on=['lake', 'year', 'season', 'start_day', 'end_day'],
@@ -314,7 +315,7 @@ def pci_means(spring_and_summer_doy, spring_and_summer_selected, prev_2weeks_spr
         first_index = group.first_valid_index()  # first index in the group
         last_index = group.last_valid_index()  # last index in the group
         group.loc[:, 'pci_length'] = group.loc[last_index, 'day_of_year'] - group.loc[
-            first_index, 'day_of_year']  # growth window length (days)
+            first_index, 'day_of_year']  # PCI length (days)
 
         # calculate the chlorophyll-a rate, specific rate, and max concentration
         group.loc[:, 'chla_max-min'] = group.loc[last_index, 'chla'] - group.loc[first_index, 'chla']
@@ -322,7 +323,7 @@ def pci_means(spring_and_summer_doy, spring_and_summer_selected, prev_2weeks_spr
         group.loc[:, 'specific_chla_rate'] = group.loc[:, 'chla_rate'] / group.loc[first_index, 'chla']
         group.loc[:, 'max_chla'] = group.loc[:, 'chla'].max()
 
-        # Calculate accumulated chlorophyll-a as the area under the curve during the growth window
+        # Calculate accumulated chlorophyll-a as the area under the curve during the PCI
         group.loc[:, 'acc_chla'] = np.trapz(group.loc[:, 'smoothed_chla'], x=group.loc[:, 'day_of_year'])
 
         # calculate the rate of change in poc concentration (mg/L)
@@ -354,7 +355,7 @@ def pci_means(spring_and_summer_doy, spring_and_summer_selected, prev_2weeks_spr
         chla_temp = group.head(1)
         springsummer_pci_data = pd.concat([springsummer_pci_data, chla_temp], axis=0)
 
-    # 2 week pre-growth window calculations
+    # 2 week pre-PCI calculations
     prev_2weeks_data = pd.DataFrame(columns=['lake', 'year', 'season', 'pre_pci_temp', 'pre_pci_tp', 'pre_pci_tkn'])
 
     for name, group in prev_2weeks_springsummer_data.groupby(['lake', 'year', 'season']):
@@ -373,7 +374,7 @@ def pci_means(spring_and_summer_doy, spring_and_summer_selected, prev_2weeks_spr
     springsummer_pci_data = pd.merge(springsummer_pci_data, prev_2weeks_data, left_on=['lake', 'year', 'season'],
                                     right_on=['lake', 'year', 'season'], how='left')
 
-    # sift columns based on chlorophyll rate and growth window length
+    # sift columns based on chlorophyll rate and PCI length
     springsummer_pci_data = DplyFrame(springsummer_pci_data) >> sift(X.chla_rate >= 0) >> sift(
         X.pci_length >= min_pci_length)
 
@@ -390,7 +391,13 @@ def pci_means(spring_and_summer_doy, spring_and_summer_selected, prev_2weeks_spr
 
 
 def pci_summary(pci_data):
-    # print % of each growth window type
+    """
+    Prints the percentage of each PCI type, and the number of lake and percentage of each trophic status in the PCI
+    dataset.
+    Input:
+        pci_data: PCI dataframe (output from the pci_means function)
+    """
+    # print % of each PCI type
     perc_spring = len(pci_data.loc[(pci_data['season'] == 'spring')]) / len(pci_data['season']) * 100
     perc_summer = len(pci_data.loc[(pci_data['season'] == 'summer')]) / len(pci_data['season']) * 100
     perc_single = len(pci_data.loc[(pci_data['season'] == 'single')]) / len(pci_data['season']) * 100
@@ -421,12 +428,12 @@ def pci_summary(pci_data):
 
 def select_daily_mean(daily_mean, pci_data):
     """
-    Select the lakes in the daily_mean file that are retained in the final growth window.
+    Selects the lakes in the daily_mean file that are retained in the final PCI.
     Input:
         daily_mean: dataframe with all compiled daily mean water quality data
-        pci_data: growth window dataframe (output from the pci_means function)
+        pci_data: PCI dataframe (output from the pci_means function)
     Output:
-        selected_daily_mean: Dataframe of daily mean data for all lakes within the growth window dataset
+        selected_daily_mean: Dataframe of daily mean data for all lakes within the PCI dataset
     """
 
     final_lakes_list = pci_data.lake.unique()
@@ -436,7 +443,7 @@ def select_daily_mean(daily_mean, pci_data):
     return selected_daily_mean
 
 
-def get_tsi_coords(df, coords_df):
+def calc_tsi_coords(df, coords_df):
     """
     This function calculates the trophic status index (TSI) for each lake using the mean chlorophyll-a concentration
     for all samples and the equation provided by the North American lake Management Society (NALMS). A trophic
@@ -524,12 +531,12 @@ def lake_summary(daily_mean, ts_coords, climate_zones):
 
 def get_coords_ts(springsummer_pci_data, ts_coords):
     """
-    Merge data frame containing all lake coordinates to the data frame of growth window data.
+    Merges the data frame containing all lake coordinates to the data frame of PCI data.
     Input:
-        springsummer_pci_data: growth window dataset
+        springsummer_pci_data: PCI dataset
         ts_coords: dataframe with columns for lake, tsi, trophic_status, lake_lat, and lake_long
     Output:
-        pci_with_coords: growth window data with coordinates, tsi, and trophic status added
+        pci_with_coords: PCI data with coordinates, tsi, and trophic status added
     """
 
     # merge with the all lakes for ML file
@@ -561,7 +568,16 @@ def format_lake_name(unformatted_data, formatted_lake_names):
     return formatted_data
 
 
-def frequency_tsi_climate(pci_data, daily_mean, lake_summary):
+def frequency_climate(pci_data, daily_mean, lake_summary):
+    """
+    Replaces old lake names with formatted version.
+    Input:
+        unformatted_data: file with lake names that need to be formatted
+        formatted_lake_names: file with columns for unformatted lake names (that match lakes in the unformatted data
+                              file) and a formatted version.
+    output:
+        formatted data: file with formatted lake names
+    """
 
     # arrange dataset by lake, year, and day of year
     daily_mean = daily_mean >> arrange(X.lake, X.year, X.day_of_year)
