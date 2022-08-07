@@ -84,8 +84,8 @@ Source files used to generate the PCI dataset
       	
 Scripts for formatting data and detecting PCIs
 
-* [pci_functions.py](https://github.com/hfadams/pci/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_functions.py): all functions used to generate the PCI dataset   	   
-* [pci_calculations.py](https://github.com/hfadams/pci/blob/862bc82edc4b0be763f729d8ec3e078828750e47/code/growth_window_calculations.py): script used to call on the PCI functions
+* [pci_functions.py](https://https://github.com/hfadams/pci/blob/main/code/pci_functions.py): all functions used to generate the PCI dataset   	   
+* [pci_calculations.py](https://https://github.com/hfadams/pci/blob/main/code/pci_calculations.py): script used to call on the PCI functions
 * [ssr\_lakes\_pairing\_qgis.py](https://github.com/hfadams/pci/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_lakes_pairing_qgis.py): pairs lakes and SSR stations using PYQGIS
 * [lake\_dem\_extraction.py](https://github.com/hfadams/pci/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/lake_dem_extraction.py): uses DEM in PYQGIS to extract lake elevation
 * [ssr\_dem\_extraction.py](https://github.com/hfadams/pci/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/code/ssr_dem_extraction.py): uses DEM in PYQGIS to extract SSR station elevation
