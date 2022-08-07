@@ -1,6 +1,5 @@
 """
-Reads in and compiles the formatted data files from a selected folder and runs the functions found in the
-growth_window_functions.py script.
+Reads in and compiles the lake data files, and runs functions found in the pci_functions.py script
 
 Hannah Adams
 """
@@ -26,7 +25,7 @@ formatted_lake_names = DplyFrame(pd.read_csv('data/lake_name_formatting.csv', en
 climate_zones = DplyFrame(pd.read_csv('output/climate_zones.csv', encoding='latin-1'))
 
 # read in and concatenate formatted lake data files
-files = glob.glob('data/ins_situ_data/*.csv')
+files = glob.glob('data/in_situ_data/*.csv')
 
 all_lakes = pd.DataFrame()
 for f in files:
