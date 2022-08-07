@@ -78,7 +78,7 @@ All data processing and analyses for this project were implemented using Python 
 Source files used to generate the PCI dataset
   	   	     
 * [lake_name_formatting.csv](https://github.com/hfadams/pci/blob/662c87faba3d5bd954d160357da87cf4741a9d4c/data/supplementary%20_data/lake_name_formatting.csv): conversion of lake names from original sampling location ID to name in the growth window dataset
-* [all\_lake\_coords.csv](https://github.com/hfadams/pci/blob/ac46b91a203430bf76440d42d7880bbb072b425e/supplementary_data/all_lake_coordinates.csv): list of coordinates for all lakes in the dataset, used in the PCI calculation scripts. Coordinates were collected from the original data files or searched within the database where possible, otherwise they were estimated based on sampling location name.
+* [all\_lake\_coordinates.csv](https://github.com/hfadams/pci/blob/ac46b91a203430bf76440d42d7880bbb072b425e/supplementary_data/all_lake_coordinates.csv): list of coordinates for all lakes in the dataset, used in the PCI calculation scripts. Coordinates were collected from the original data files or searched within the database where possible, otherwise they were estimated based on sampling location name.
   	   	     
 ### Folder 2: code    
       	
