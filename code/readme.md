@@ -4,9 +4,9 @@ This folder contains the main scripts for the growth window dataset preparation.
 
 1. Basic formatting of original data files for consistent units and headings (code not provided since not all data is openly accessible)
 
-2. Growth windows are calculated using the *growth\_window\_calculations.py* script, which calls on functions from the *growth\_window\_functions.py* file. The output is the growth window dataset without paired surface solar radiation data.
+2. PCIs are calculated using the *pci_calculations.py* script, which calls on functions from the *pci_functions.py* file. The output is the PCI dataset without paired surface solar radiation data.
 
-3. The growth window data file is imported into QGIS as a point vector layer, and the *ssr\_lakes\_pairing\_qgis.py*, *lakes\_dem\_extraction.py*, and *ssr\_dem\_extraction.py* alongside the [Global Multi-resolution Terrain Elevation Data (GMTED2010)](https://www.usgs.gov/core-science-systems/eros/coastal-changes-and-impacts/gmted2010?qt-science_support_page_related_con=0#qt-science_support_page_related_con) model.
+3. The PCI data file is imported into QGIS as a point vector layer, and the *ssr\_lakes\_pairing\_qgis.py*, *lakes\_dem\_extraction.py*, and *ssr\_dem\_extraction.py* alongside the [Global Multi-resolution Terrain Elevation Data (GMTED2010)](https://www.usgs.gov/core-science-systems/eros/coastal-changes-and-impacts/gmted2010?qt-science_support_page_related_con=0#qt-science_support_page_related_con) model.
 
 	a) **ssr\_lakes\_pairing\_qgis.py** generates a copy of the lake points layer, with the paired SSR point data appended to each lake point along with distance between the lake and SSR stations
 
@@ -14,16 +14,16 @@ This folder contains the main scripts for the growth window dataset preparation.
 
 	c) **ssr\_dem\_extraction.py** generates a copy of the input SSR points layer, with the SSR elevation added.
 
-	Attributes from these generated layers are then merged with the growth window dataset.
+	Attributes from these generated layers are then merged with the PCI dataset.
 
 
-4. SSR growth window and pre-growth window means are calculated using the *paired\_stations\_ssr\_calcs.py* script.
+4. SSR PCI and pre-PCI means are calculated using the *paired\_stations\_ssr\_calcs.py* script.
 
 ## Scripts
 
 ### Lakes
-* growth\_window\_calculations.py
-* growth\_window\_functions.py
+* pci_calculations.py
+* pci_functions.py
 
 ### QGIS
 * ssr\_lakes\_pairing\_qgis.py
@@ -44,7 +44,7 @@ This folder contains the main scripts for the growth window dataset preparation.
 * [Dplython library (version 0.0.4)](https://pythonhosted.org/dplython/)
 * [glob module](https://docs.python.org/3.7/library/glob.html)
 
-#### Growth window analysis
+#### PCI detection
 * [scipy.signal find_peaks function (SciPy version 1.4.1)](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html)
 * [scipy.signal savgol_filter function (SciPy version 1.4.1)](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.savgol_filter.html)
 
