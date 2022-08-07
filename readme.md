@@ -110,20 +110,20 @@ Adams, H., Ye, J., Slowinski, S., Persaud, B., Kheyrollah Pour, H., van Cappelle
 
 ### Scripts
 
-**Hannah Adams** - *Author* - [LinkedIn](https://www.linkedin.com/in/hannah-adams-624122219/), [GitHub](https://github.com/hfadams), [ORCID iD](https://orcid.org/0000-0003-2647-8021)
+**Hannah Adams** - *Author* - [LinkedIn](https://www.linkedin.com/in/hannah-adams-624122219/), [GitHub](https://github.com/hfadams), [ORCiD](https://orcid.org/0000-0003-2647-8021)
 
 **Jane Ye:** - *Co-author* - [LinkedIn](https://www.linkedin.com/in/janeye98/)
 
 ### Manuscript
 
-**Hannah Adams** - *Author* - [LinkedIn](https://www.linkedin.com/in/hannah-adams-624122219/), [GitHub](https://github.com/hfadams), [ORCID iD](https://orcid.org/0000-0003-2647-8021)
+**Hannah Adams** - *Author* - [LinkedIn](https://www.linkedin.com/in/hannah-adams-624122219/), [GitHub](https://github.com/hfadams), [ORCiD](https://orcid.org/0000-0003-2647-8021)
 
 **Jane Ye:** - *Co-author* - [LinkedIn](https://www.linkedin.com/in/janeye98/)
 
 **Stephanie Slowinski:** -*Co-author* - [LinkedIn](https://www.linkedin.com/in/steph-slowinski/)
 
-**Bhaleka Persaud:** -*Co-author* - [ORCID iD](https://orcid.org/0000-0003-2785-3954)
+**Bhaleka Persaud:** -*Co-author* - [ORCiD](https://orcid.org/0000-0003-2785-3954)
 
 **Homa Kheyrollah Pour:** -*Principle Investigator* - [Google Scholar](https://scholar.google.ca/citations?hl=en&user=0gMCo6wAAAAJ), [ReSEC lab](https://www.wlu.ca/academics/faculties/faculty-of-science/faculty-profiles/homa-kheyrollah-pour/index.html?ref=academics%2Ffaculties%2Ffaculty-of-arts%2Ffaculty-profiles%2Fhoma-kheyrollah-pour%2Findex.html)
 
-**Philippe Van Cappellen:** -*Principle Investigator*- [Google Scholar](https://scholar.google.ca/citations?user=E0Vw3FwAAAAJ&hl=en), [Ecohydrology Research Group](https://uwaterloo.ca/ecohydrology/people-profiles/philippe-van-cappellen), [ORCID iD](https://orcid.org/0000-0001-5476-082)
+**Philippe Van Cappellen:** -*Principle Investigator*- [Google Scholar](https://scholar.google.ca/citations?user=E0Vw3FwAAAAJ&hl=en), [Ecohydrology Research Group](https://uwaterloo.ca/ecohydrology/people-profiles/philippe-van-cappellen), [ORCiD](https://orcid.org/0000-0001-5476-082)
